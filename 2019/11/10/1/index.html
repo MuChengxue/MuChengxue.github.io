@@ -1,414 +1,102 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <link rel="alternate" href="/atom.xml" title="暮成雪的个人博客" type="application/atom+xml">
+extends includes/layout.pug
 
-<link rel="stylesheet" href="/css/main.css">
+block top_img
+  - var top_img =  page.top_img || page.cover || theme.post_meta.top_img || theme.default_top_img
+  - var bg_img = top_img !== true ? `background-image: url(${top_img})` : ''
+  div#top-container(style=bg_img)
+    #post-info
+      #post-title
+          .posttitle= page.title || _p('no_title')
+      #post-meta
+        if (theme.post_meta.date_type)
+          if (theme.post_meta.date_type === 'both')
+            time.post-meta__date
+              i.fa.fa-calendar.fa-fw(aria-hidden="true")
+              =' '+_p('post.created')+' '+date(page.date, config.date_format)
+              span.post-meta__separator |
+              i.fa.fa-history.fa-fw(aria-hidden="true")
+              =' '+_p('post.updated')+' '+date(page.updated, config.date_format)
+          else
+            - var date_type = theme.post_meta.date_type === 'updated' ? 'updated' : 'date'
+            time.post-meta__date #[i.fa.fa-calendar.fa-fw(aria-hidden="true")] #[=date(page[date_type], config.date_format)]
+                  
+        if (theme.post_meta.categories && page.categories.data.length > 0)
+          if (theme.post_meta.date_type)
+            span.post-meta__separator |
+          span
+            each item, index in page.categories.data
+              i.fa.fa-inbox.post-meta__icon.fa-fw(aria-hidden="true")
+              a(href=url_for(item.path)).post-meta__categories #[=item.name]
+              if (index < page.categories.data.length - 1)
+                i.fa.fa-angle-right.fa-fw(aria-hidden="true")
+        .post-meta-wordcount
+          if (theme.wordcount && theme.wordcount.enable)
+            i.fa.fa-file-word-o.post-meta__icon.fa-fw(aria-hidden="true")
+            span= _p('post.wordcount') + ':'
+            span.word-count= wordcount(page.content)
+            span.post-meta__separator |
+            i.fa.fa-clock-o.post-meta__icon.fa-fw(aria-hidden="true")
+            span= _p('post.min2read', min2read(page.content, {cn: 350, en: 160}))
+          .post-meta-pv-cv
+            if (theme.wordcount && theme.wordcount.enable && theme.busuanzi.page_pv)
+              span.post-meta__separator |
+            if theme.busuanzi.page_pv       
+              span
+                i.fa.fa-eye.post-meta__icon.fa-fw(aria-hidden="true") 
+                =_p('post.page_pv') + ':'
+              span#busuanzi_value_page_pv
+            if (theme.disqus && theme.disqus.enable && theme.disqus.count && page.comments !== false)
+              if (theme.busuanzi && theme.busuanzi.page_pv)
+                span.post-meta__separator |
+              i.fa.fa-comment-o.post-meta__icon.fa-fw(aria-hidden="true")
+              span= _p('post.comments') + ':'
+              a(href=url_for(page.path) + '#post-comment')
+                span.disqus-comment-count(data-disqus-url=page.permalink)
+            if (theme.valine && theme.valine.enable && theme.valine.count && page.comments !== false)
+              if (theme.busuanzi && theme.busuanzi.page_pv)
+                span.post-meta__separator |
+              i.fa.fa-comments-o.post-meta__icon.fa-fw(aria-hidden="true")
+              span= _p('post.comments') + ':'
+              a(href=url_for(page.path) + '#post-comment' itemprop="discussionUrl")
+                span.valine-comment-count.comment-count(data-xid=url_for(page.path) itemprop="commentCount")
+            if (theme.gitalk && theme.gitalk.enable && theme.gitalk.count && page.comments !== false)
+              if (theme.busuanzi && theme.busuanzi.page_pv)
+                span.post-meta__separator |
+              i.fa.fa-comments-o.post-meta__icon.fa-fw(aria-hidden="true")
+              span= _p('post.comments') + ':'
+              a(href=url_for(page.path) + '#post-comment')
+                span.gitalk-comment-count.comment-count
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="丹妮莉丝 在一片绿色草海中，山丘宛如一座石岛。 丹妮花了半个上午的时间才从上面爬了下来。当她到达山底的时候已经喘不过气了。她全身肌肉酸痛，并且感觉像是有了发烧的前兆。岩石也擦破了她的双手。不过这样要比以前好多了，她挑出一个烂掉的水泡一边心想。她的皮肤变得粉红而又娇嫩，一丝淡淡的乳白色液体从她碎裂的手掌中渗漏出来，但是她烫伤的部位在逐渐愈合。 在下面看上去山丘显得更为庞大。丹妮已经习惯地把这座山丘称">
-<meta property="og:type" content="article">
-<meta property="og:title" content="魔龙的狂舞">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;10&#x2F;1&#x2F;index.html">
-<meta property="og:site_name" content="暮成雪的个人博客">
-<meta property="og:description" content="丹妮莉丝 在一片绿色草海中，山丘宛如一座石岛。 丹妮花了半个上午的时间才从上面爬了下来。当她到达山底的时候已经喘不过气了。她全身肌肉酸痛，并且感觉像是有了发烧的前兆。岩石也擦破了她的双手。不过这样要比以前好多了，她挑出一个烂掉的水泡一边心想。她的皮肤变得粉红而又娇嫩，一丝淡淡的乳白色液体从她碎裂的手掌中渗漏出来，但是她烫伤的部位在逐渐愈合。 在下面看上去山丘显得更为庞大。丹妮已经习惯地把这座山丘称">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;10&#x2F;1&#x2F;2.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;10&#x2F;1&#x2F;1.jpeg">
-<meta property="og:updated_time" content="2020-01-13T11:42:14.587Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;10&#x2F;1&#x2F;2.jpg">
-
-<link rel="canonical" href="http://yoursite.com/2019/11/10/1/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>魔龙的狂舞 | 暮成雪的个人博客</title>
+block content
+  article#post(class="")
+    #post-content.article-container!= page.content
+  if (theme.post_copyright && theme.post_copyright.enable && page.copyright != false)
+    .post-copyright
+      .post-copyright__author
+        span.post-copyright-meta= _p('post.copyright.author') + ": "
+        span.post-copyright-info
+          a(href=`mailto:${config.email}`) #[=config.author]
+      .post-copyright__type
+        span.post-copyright-meta= _p('post.copyright.link') + ": "
+        span.post-copyright-info
+          a(href=url_for(page.permalink)) #[=page.permalink]
+      .post-copyright__notice
+        span.post-copyright-meta= _p('post.copyright.copyright_notice') + ": "
+        span.post-copyright-info!= _p('post.copyright.copyright_content', theme.post_copyright.license_url, theme.post_copyright.license, config.url, config.title)
   
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">暮成雪的个人博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
-            
-
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/10/1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="暮成雪">
-      <meta itemprop="description" content="It's time to make a change.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="暮成雪的个人博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          魔龙的狂舞
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-10 14:51:52" itemprop="dateCreated datePublished" datetime="2019-11-10T14:51:52+08:00">2019-11-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-13 19:42:14" itemprop="dateModified" datetime="2020-01-13T19:42:14+08:00">2020-01-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="丹妮莉丝"><a href="#丹妮莉丝" class="headerlink" title="丹妮莉丝"></a>丹妮莉丝</h2><p> 在一片绿色草海中，山丘宛如一座石岛。</p>
-<p>丹妮花了半个上午的时间才从上面爬了下来。当她到达山底的时候已经喘不过气了。她全身肌肉酸痛，并且感觉像是有了发烧的前兆。岩石也擦破了她的双手。不过这样要比以前好多了，她挑出一个烂掉的水泡一边心想。她的皮肤变得粉红而又娇嫩，一丝淡淡的乳白色液体从她碎裂的手掌中渗漏出来，但是她烫伤的部位在逐渐愈合。</p>
-<p>在下面看上去山丘显得更为庞大。丹妮已经习惯地把这座山丘称之为龙石，一个和自己出生时所在城堡一样的名字。虽然对于龙石岛她毫无记忆，但她并不大可能会忘记这座龙石山。矮树丛和多刺的灌木丛覆盖了龙石山的低山坡；高处只见一排参差不齐的裸露岩石以险峻之势直指天空。就在那儿，在那破碎的巨砾、锋利的山脊以及针状的尖顶之中，卓耿在一个很浅的山洞里筑起了自己的巢穴。他已经在那住了好一段时间了，第一眼见到山丘的时候丹妮便意识到。空气中充斥着灰烬的味道，视线之内所有岩石和树木均被烧成焦黑色，地上散落着燃尽的碎骨，而这也正是他的家。</p>
-<p>丹妮明白家的诱惑有多大。</p>
-<p>就在两天前，她在岩石的尖顶攀爬时发现了一条指南的水源，在落日的余晖下闪烁着一丝微光。一条小溪，丹妮心想。虽然细小，但是会把她带到稍微大一点的溪流，然后随后流入某条河流，而在世界这边所有的河流都是斯卡扎单河的分支。一旦找到斯卡扎单河，她只需要顺流而下便能回到奴隶湾。</p>
-<p>当然了，她宁愿骑在龙翼上飞回弥林。可是卓耿似乎并没有这个意思。</p>
-<p>古瓦雷利亚的龙骑士靠的是强大的咒语和带法力的号角来控制自己的坐骑。而丹妮莉丝用的是一个词和一条鞭子。骑在龙背上，她常有种再次初学骑乘的感觉。当她鞭打自己银母马的右肋时，母马便向左奔去，因为马匹的第一本能是远离危险。而当她的鞭子落在卓耿的右侧时，他却转向右方，因为龙的天性便是进攻。然而，有时她鞭打哪里似乎都没有关系，有些时候他会按照自己的意愿载着她飞行。要是他不愿意，无论用鞭子或者语言都无法让卓耿转向。鞭子对他造成的愤怒远比伤害要多，她已经意识到；他的龙鳞已经变得比牛角还要坚硬。</p>
-<p>无论黑龙每天飞的再怎么远，到了傍晚他也会凭着本能回到在龙石山的家。这里是他的家，不是我的。她的家在弥林，在她丈夫和情人那。那里才是属于她的地方，是的。</p>
-<p>继续走下去。如果回头我就完了。</p>
-<p>天高云淡，回忆并辔而行。长草中疾驰而过的马匹有如蝼蚁。而那一轮银月却仿佛触手可及。明亮湛蓝的溪水从山下淌过，在阳光下泛起粼粼波光。我还能见到这样的景色吗？在卓耿的背上她才感到完整。在天空中飞翔时，全世界的苦难都无法触及她。叫她如何抛弃这一切呢？ </p>
-<p><img src="/2019/11/10/1/2.jpg" alt="3123"></p>
-<p>。。。。。。</p>
-<p> 傍晚在不知不觉中降临。随着金色余晖浮现于遥远的龙石山尖顶上，丹妮绊倒在一座低矮的石墙旁，周围杂草丛生，残破不堪。也许这是一座寺庙的某个部分，或者某个村子领主的大厅残余。而在石墙前面，更多的废墟映入眼帘——一口古老的井，还有一圈圈小茅屋压出的草印，虽然它们已不复存在。它们应该是用泥土和草茎搭起来的，她判断，但是长期的风雨也已经将其冲刷成一片残迹。在日落之前丹妮一共发现了八个茅屋废墟，不过在更遥远的草海中，一定埋藏着更多。</p>
-<p>这座石墙比其余废墟存活的都要久。虽然它甚至还没三尺高，充其量由两块建筑物的突起相遇而成，可它仍然能够提供遮蔽，再加上夜晚很快将至。丹妮缩进一个角落，扯下废墟周围的一些杂草，并给自己搭起了小窝。她全身疲乏，双脚上都起了新鲜的水泡，还有几个对称的印在通红的脚趾上。一定我走路的方式，她咯咯地笑着想。</p>
-<p>随着黑夜的降临，丹妮安顿了下来，并合上了眼睛，但她却一直睡不着。草原上的夜晚是寒冷的，土地如冰一样硬，自己的肚子也是空的。她不自觉地想起了弥林，想起了她的情人达里奥，她的丈夫希兹达赫，伊莉和姬琪，让人心疼的弥桑黛，巴利斯坦爵士，雷兹纳克还有剃头人斯卡哈日。他们会怕我已经死了吗？毕竟我骑在龙背上飞走。他们会不会觉得他吃了我？她想知道兹达赫是否还是国王。他的皇冠是从她那得到的，而他又能否在她缺席期间保住王位呢？他想让卓耿去死。我听到他说那句话了。“杀了它，”他尖叫道，“杀了这个野兽，”他的脸上充满了兽欲。壮汉贝沃斯当时跪在地上，边发抖边呕吐。毒药，一定是毒药。那些蜂蜜蝗虫。希兹达赫一直想让我尝尝，但是贝沃斯把它们都吃光了。她让希兹达赫成为了她的国王，带他上了自己的床，为了他再次开放角斗场，他没有理由想让她死。但还能有谁呢？雷兹纳克，这个洒满香水的总管？渊凯人？还是鹰身女妖之子？</p>
-<p>远方，一声狼嚎响起。这让她感到伤心而又孤单，但最主要还是饥饿。月亮从草海中爬上天空，丹妮终于在不知不觉中进入了不安宁的睡眠中。</p>
-<p>她进入了梦乡。所有的烦恼，所有的疼痛都烟消云散，她仿佛漂浮了起来，上升到云空中。她再一次飞了起来，盘旋着，欢笑着跳着飞翔之舞，群星在她周围旋转，在她耳边絮絮低语，道出秘密。“要去北方，你必须南行。要达西境，你必须往东。若要前进，你必须后退。若要光明，你必须通过阴影。”</p>
-<p>“魁蜥？”丹妮喊。“魁蜥，你在哪里？”</p>
-<p>她看见了。她的面罩由星光组成。“记住你的身份，丹妮莉丝，”一个妇女的声音在星辰中低语道。“龙是知道的，可是你知道吗？” </p>
-<p><img src="/2019/11/10/1/1.jpeg" alt="1-1"></p>
-<p><strong>More info:</strong> <a href="https://github.com/MuChengxue" target="_blank" rel="noopener">GitHub</a></p>
-
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-
+  .tag_share
+    if (theme.post_meta.tags)
+      .post-meta__tag-list
+        each item, index in page.tags.data
+          a(href=url_for(item.path)).post-meta__tags #[=item.name]    
+    include includes/share/index.pug
         
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/10/2/" rel="next" title="魔龙的狂舞">
-                  <i class="fa fa-chevron-left"></i> 魔龙的狂舞
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2019/11/10/test/" rel="prev" title="test">
-                  test <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
-    
-  </article>
+  if theme.reward.enable
+    include includes/reward.pug
+  include includes/pagination.pug
   
-  
-  
-
-  </div>
-
-
-          </div>
-          
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#丹妮莉丝"><span class="nav-number">1.</span> <span class="nav-text">丹妮莉丝</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">暮成雪</p>
-  <div class="site-description" itemprop="description">It's time to make a change.</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">6</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-  </nav>
-</div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">暮成雪</span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.5.0
-  </div>
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-</body>
-</html>
+  if theme.related_post && theme.related_post.enable
+    != related_posts(page,site.posts)
+  if page.comments !== false
+    include includes/comments/index.pug
