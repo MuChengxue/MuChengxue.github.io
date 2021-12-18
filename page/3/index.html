@@ -1,0 +1,434 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>暮成雪的博客 - 记录学习，记录生活</title><meta name="keywords" content="JAVA"><meta name="author" content="MuChengxue"><meta name="copyright" content="MuChengxue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="记录学习，记录生活">
+<meta property="og:type" content="website">
+<meta property="og:title" content="暮成雪的博客">
+<meta property="og:url" content="http://example.com/page/3/index.html">
+<meta property="og:site_name" content="暮成雪的博客">
+<meta property="og:description" content="记录学习，记录生活">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/myFavicon.jpg">
+<meta property="article:author" content="MuChengxue">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/myFavicon.jpg"><link rel="shortcut icon" href="/img/myFavicon.jpg"><link rel="canonical" href="http://example.com/page/3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: MuChengxue","link":"链接: ","source":"来源: 暮成雪的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '暮成雪的博客',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-12-18 14:46:31'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/myFavicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('/img/747964.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮成雪的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">暮成雪的博客</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97PriorityQueue/" title="优先队列">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="优先队列"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97PriorityQueue/" title="优先队列">优先队列</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:43.672Z" title="发表于 2021-12-18 14:42:43">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-14T07:52:32.000Z" title="更新于 2020-03-14 07:52:32">2020-03-14</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/JavaSE%E9%83%A8%E5%88%86/">JavaSE部分</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">优先队列</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97PriorityQueue/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97PriorityQueue/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">1.定义堆（英语：heap)是计算机科学中一类特殊的数据结构的统称。
+堆通常是一个可以被看做一棵树的数组对象。堆总是满足下列性质：1.堆中某个节点的值总是不大于或不小于其父节点的值；2.堆总是一棵完全二叉树，有可能的例外是在最底层，底层的元素从左到右填入。
+常见的堆有二叉堆、斐波那契堆等。
+
+堆的定义：n个元素的序列{k1,k2,ki,…,kn}当且仅当满足下关系时，称之为堆。(ki &lt;= k2i,ki &lt;= k2i+1)或者(ki &gt;= k2i,ki &gt;= k2i+1), (i = 1,2,3,4…n/2)
+
+堆是一颗完全二叉树，在这棵树中，所有父节点都满足大于等于其子节点的堆叫大根堆，所有父节点都满足小于等于其子节点的堆叫小根堆。堆虽然是一颗树，但是通常存放在一个数组中，父节点和孩子节点的父子关系通过数组下标来确定。
+从图中，我们可以很容易总结出，通过一个节点在数组中的索引怎么计算出它的父节点及左右孩子节点的索引？下面直接给出对应的Java代码：
+public int left(int i) &#123;      return arr[2*i];  &#1 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" title="优先队列">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="优先队列"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" title="优先队列">优先队列</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:43.665Z" title="发表于 2021-12-18 14:42:43">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-27T07:49:12.000Z" title="更新于 2020-03-27 07:49:12">2020-03-27</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/JavaSE%E9%83%A8%E5%88%86/">JavaSE部分</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">优先队列</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E4%BA%8C%E5%8F%89%E5%A0%86-%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">1.定义堆（英语：heap)是计算机科学中一类特殊的数据结构的统称。
+堆通常是一个可以被看做一棵树的数组对象。堆总是满足下列性质：1.堆中某个节点的值总是不大于或不小于其父节点的值；2.堆总是一棵完全二叉树，有可能的例外是在最底层，底层的元素从左到右填入。
+常见的堆有二叉堆、斐波那契堆等。
+
+堆的定义：n个元素的序列{k1,k2,ki,…,kn}当且仅当满足下关系时，称之为堆。(ki &lt;= k2i,ki &lt;= k2i+1)或者(ki &gt;= k2i,ki &gt;= k2i+1), (i = 1,2,3,4…n/2)
+
+堆是一颗完全二叉树，在这棵树中，所有父节点都满足大于等于其子节点的堆叫大根堆，所有父节点都满足小于等于其子节点的堆叫小根堆。堆虽然是一颗树，但是通常存放在一个数组中，父节点和孩子节点的父子关系通过数组下标来确定。
+从图中，我们可以很容易总结出，通过一个节点在数组中的索引怎么计算出它的父节点及左右孩子节点的索引？下面直接给出对应的Java代码：
+public int left(int i) &#123;      return arr[2*i];  &#1 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/LongAdder%E5%8E%9F%E7%90%86/" title="LongAdder原理">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LongAdder原理"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/LongAdder%E5%8E%9F%E7%90%86/" title="LongAdder原理">LongAdder原理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:43.660Z" title="发表于 2021-12-18 14:42:43">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-18T15:27:18.000Z" title="更新于 2020-03-18 15:27:18">2020-03-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/">关键字</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/LongAdder%E5%8E%9F%E7%90%86/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/LongAdder%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">ongAdder是jdk8新增的用于并发环境的计数器，目的是为了在高并发情况下，代替AtomicLong/AtomicInt，成为一个用于高并发情况下的高效的通用计数器。高并发下计数，一般最先想到的应该是AtomicLong/AtomicInt，AtmoicXXX使用硬件级别的指令 CAS 来更新计数器的值，这样可以避免加锁，机器直接支持的指令，效率也很高。但是AtomicXXX中的 CAS 操作在出现线程竞争时，失败的线程会白白地循环一次，在并发很大的情况下，因为每次CAS都只有一个线程能成功，竞争失败的线程会非常多。失败次数越多，循环次数就越多，很多线程的CAS操作越来越接近 自旋锁（spin lock）。计数操作本来是一个很简单的操作，实际需要耗费的cpu时间应该是越少越好，AtomicXXX在高并发计数时，大量的cpu时间都浪费会在 自旋 上了，这很浪费，也降低了实际的计数效率。
+ public class AtomicLong &#123;        // setup to use Unsafe.compareAndSwapInt for updates        p ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%92%8CHashMap%E6%BA%90%E7%A0%81/" title="集合">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="集合"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%92%8CHashMap%E6%BA%90%E7%A0%81/" title="集合">集合</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:43.640Z" title="发表于 2021-12-18 14:42:43">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-18T15:33:04.000Z" title="更新于 2020-03-18 15:33:04">2020-03-18</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/JavaSE%E9%83%A8%E5%88%86/">JavaSE部分</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%9B%86%E5%90%88/">集合</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%92%8CHashMap%E6%BA%90%E7%A0%81/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ConcurrentHashMap%E6%BA%90%E7%A0%81%E5%92%8CHashMap%E6%BA%90%E7%A0%81/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">0. 集合类博客大神博客
+一、读HashMap源码
+
+初窥HashMapJava集合类的源码是深入学习Java非常好的素材，源码里很多优雅的写法和思路，会让人叹为观止。HashMap的源码尤为经典，是非常值得去深入研究的。HashMap是应用更广泛的哈希表HashTable实现，而且大部分情况下，都能在常数时间性能的情况下进行put和get操作。要掌握HashMap，主要从如下几点来把握：
+
+jdk1.7中底层是由数组（也有叫做“位桶”的）+链表实现；jdk1.8中底层是由数组(位桶)+链表/红黑树实现
+可以存储null键和null值，线程不安全
+初始size为16，扩容：newsize = oldsize*2，size一定为2的n次幂
+扩容针对整个Map，每次扩容时，原来数组中的元素依次重新计算存放位置，并重新插入
+插入元素后才判断该不该扩容，有可能无效扩容（插入后如果扩容，如果没有再次插入，就会产生无效扩容）
+当Map中元素总数超过Entry数组的**75%**，触发扩容操作，为了减少链表长度，元素分配更均匀
+1.7中是先扩容后插入新值的，1.8中是先插值再扩容
+
+为什么说Hash ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ArrayList%E6%BA%90%E7%A0%81%E5%92%8Clinkedlist%E6%BA%90%E7%A0%81/" title="list">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="list"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ArrayList%E6%BA%90%E7%A0%81%E5%92%8Clinkedlist%E6%BA%90%E7%A0%81/" title="list">list</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:43.635Z" title="发表于 2021-12-18 14:42:43">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-02-23T06:12:38.000Z" title="更新于 2020-02-23 06:12:38">2020-02-23</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/JavaSE%E9%83%A8%E5%88%86/">JavaSE部分</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/list/">list</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ArrayList%E6%BA%90%E7%A0%81%E5%92%8Clinkedlist%E6%BA%90%E7%A0%81/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/ArrayList%E6%BA%90%E7%A0%81%E5%92%8Clinkedlist%E6%BA%90%E7%A0%81/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">1 读ArrayList源码一、基本性质public class ArrayList&lt;E&gt; extends AbstractList&lt;E&gt;        implements List&lt;E&gt;, RandomAccess, Cloneable, java.io.Serializable&#123;    private static final long serialVersionUID = 8683452581122892189L;    /**     * Default initial capacity.     */    private static final int DEFAULT_CAPACITY = 10;    /**     * Shared empty array instance used for empty instances.     */    private static final Object[] EMPTY_ELEMENTDATA = &#123;&#125;;    /**     * Shared empty ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E4%B9%8BCOWArrayList_%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="COWArrayList">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="COWArrayList"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E4%B9%8BCOWArrayList_%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" title="COWArrayList">COWArrayList</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:26.247Z" title="发表于 2021-12-18 14:42:26">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-25T16:28:16.000Z" title="更新于 2020-03-25 16:28:16">2020-03-25</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8/">并发容器</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/">关键字</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E4%B9%8BCOWArrayList_%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8%E4%B9%8BCOWArrayList_%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">COW简介ArrayList是一种“列表”数据机构，其底层是通过数组来实现元素的随机访问。JDK1.5之前，如果想要在并发环境下使用“列表”，一般有以下3种方式：
+
+使用Vector类
+使用Collections.synchronizedList返回一个同步代理类；
+自己实现ArrayList的子类，并进行同步/加锁。
+
+前两种方式都相当于加了一把“全局锁”，访问任何方法都需要首先获取锁。第3种方式，需要自己实现，复杂度较高。JDK1.5时，随着J.U.C引入了一个新的集合工具类——CopyOnWriteArrayList。大多数业务场景都是一种“读多写少”的情形，CopyOnWriteArrayList就是为适应这种场景而诞生的。
+CopyOnWriteArrayList，运用了一种“写时复制”的思想。通俗的理解就是当我们需要修改（增/删/改）列表中的元素时，不直接进行修改，而是先将列表Copy，然后在新的副本上进行修改，修改完成之后，再将引用从原列表指向新列表。这样做的好处是读/写是不会冲突的，可以并发进行，读操作还是在原列表，写操作在新列表。仅仅当有多个线程同时进行写操作时，才会 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" title="并发编程之进程和线程由来">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="并发编程之进程和线程由来"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" title="并发编程之进程和线程由来">并发编程之进程和线程由来</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:26.242Z" title="发表于 2021-12-18 14:42:26">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-16T05:11:54.000Z" title="更新于 2020-03-16 05:11:54">2020-03-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/">进程和线程</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">并发与操作系统的生命历程息息相关。进程的出现，使得程序状态的保存变为现实，为进程间的切换提供了可能，实现了操作系统的并发，大大提高资源利用率。虽然进程的出现解决了操作系统的并发问题，但人们对实时性又有了更高的要求。由于一个进程由若干个子任务组成，所以人们就发明了线程，让每个线程负责一个独立的子任务，提高程序的响应灵敏度。一个进程虽然包括多个线程，但是这些线程是共同享有进程占有的资源和地址空间的。因此，虽然多线程提高了资源利用率，保证了实时性，但同时也带来了包括安全性、活跃性和性能等问题。总的来说，进程让操作系统的并发性成为可能，而线程让进程的内部并发成为可能。
+一. 进程和线程的由来(1). 操作系统中为什么会出现进程？说起进程的由来，我们需要从操作系统的发展历史谈起。也许在今天，我们无法想象在很多年以前计算机是什么样子。我们现在可以用计算机来做很多事情：办公、娱乐、上网，但是在 计算机刚出现的时候，是为了解决数学计算的问题，因为很多大量的计算通过人力去完成是很耗时间和人力成本的。 在最初的时候，计算机只能接受一些特定的指令，用户输入一个指令，计算机就做一个操作。当用户在思考或者输入数 ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81/" title="线程的状态">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="线程的状态"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81/" title="线程的状态">线程的状态</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:26.239Z" title="发表于 2021-12-18 14:42:26">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-16T08:49:24.000Z" title="更新于 2020-03-16 08:49:24">2020-03-16</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/">关键字</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">State源码public enum State &#123;    /**     * Thread state for a thread which has not yet started.     */    NEW,    /**     * Thread state for a runnable thread.  A thread in the runnable     * state is executing in the Java virtual machine but it may     * be waiting for other resources from the operating system     * such as processor.     */    RUNNABLE,    /**     * Thread state for a thread blocked waiting for a monitor lock.     * A thread in the blocked state is waiting for a monitor lock ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%A1%E6%95%B0%E5%99%A8/" title="多线程">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="多线程"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%A1%E6%95%B0%E5%99%A8/" title="多线程">多线程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:26.235Z" title="发表于 2021-12-18 14:42:26">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-05T06:52:22.000Z" title="更新于 2020-03-05 06:52:22">2020-03-05</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/JavaSE%E9%83%A8%E5%88%86/">JavaSE部分</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%A1%E6%95%B0%E5%99%A8/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E8%AE%A1%E6%95%B0%E5%99%A8/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">线程安全的计数器package test.test0224;import java.util.concurrent.atomic.AtomicInteger;public class Counter implements Runnable &#123;//    // 设置计数初值为0//    private static AtomicInteger count = new AtomicInteger(0);////    @Override//    public void run() &#123;//        while (count.get()&lt;10000) &#123;//            System.out.println(&quot;线程:&quot; + Thread.currentThread().getName() + &quot; :&quot; + count.incrementAndGet());//        &#125;//    &#125;    private static int count1 = 0;    public  ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8BThreadLocal/" title="ThreadLocal">     <img class="post_bg" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ThreadLocal"></a></div><div class="recent-post-info"><a class="article-title" href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8BThreadLocal/" title="ThreadLocal">ThreadLocal</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:26.229Z" title="发表于 2021-12-18 14:42:26">2021-12-18</time><span class="article-meta__separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-20T16:33:40.000Z" title="更新于 2020-03-20 16:33:40">2020-03-20</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">并发编程</a></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/ThreadLocal/">ThreadLocal</a></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-comments"></i><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8BThreadLocal/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B9%8BThreadLocal/" itemprop="commentCount"></span></a><span class="article-meta-label"> 条评论</span></span></div><div class="content">一、ThreadLocal 概述ThreadLocal 的注释
+* This class provides thread-local variables.  These variables differ from* their normal counterparts in that each thread that accesses one (via its* &#123;@code get&#125; or &#123;@code set&#125; method) has its own, independently initialized* copy of the variable.  &#123;@code ThreadLocal&#125; instances are typically private* static fields in classes that wish to associate state with a thread (e.g.,* a user ID or Transaction ID).** &lt;p&gt;For example, the cla ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/#content-inner">8</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/myFavicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">MuChengxue</div><div class="author-info__description">记录学习，记录生活</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/muchengxue"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">记录学习，记录生活</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.169Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="无题"><img src="https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.165Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Sentinel/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Sentinel/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.161Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Replication/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Replication/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.155Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="关键字"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关键字"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="关键字">关键字</a><time datetime="2021-12-18T14:44:09.151Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div></div></div><div class="card-widget" id="card-newest-comments"><div class="item-headline"><i class="fas fa-comment-dots"></i><span>最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/JVM/"><span class="card-category-list-name">JVM</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/JavaSE%E9%83%A8%E5%88%86/"><span class="card-category-list-name">JavaSE部分</span><span class="card-category-list-count">24</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Redis/"><span class="card-category-list-name">Redis</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Test/"><span class="card-category-list-name">Test</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/open-source/"><span class="card-category-list-name">open-source</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B9%B6%E5%8F%91%E5%AE%B9%E5%99%A8/"><span class="card-category-list-name">并发容器</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><span class="card-category-list-name">并发编程</span><span class="card-category-list-count">18</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><span class="card-category-list-name">计算机网络</span><span class="card-category-list-count">6</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/hello-world/" style="font-size: 1.15em; color: rgb(134, 108, 4)">hello world</a><a href="/tags/%E5%85%B3%E9%94%AE%E5%AD%97/" style="font-size: 1.45em; color: rgb(10, 152, 3)">关键字</a><a href="/tags/%E5%B9%B3%E5%8F%B0%E6%97%A0%E5%85%B3%E6%80%A7/" style="font-size: 1.15em; color: rgb(186, 165, 195)">平台无关性</a><a href="/tags/%E8%AF%AD%E6%B3%95%E7%B3%96/" style="font-size: 1.15em; color: rgb(52, 144, 37)">语法糖</a><a href="/tags/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(147, 16, 96)">java内存模型</a><a href="/tags/Java%E5%9F%BA%E7%A1%80/" style="font-size: 1.27em; color: rgb(43, 9, 114)">Java基础</a><a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 1.33em; color: rgb(25, 106, 102)">面向对象</a><a href="/tags/java8/" style="font-size: 1.15em; color: rgb(186, 101, 146)">java8</a><a href="/tags/java%E5%9F%BA%E7%A1%80/" style="font-size: 1.15em; color: rgb(30, 114, 17)">java基础</a><a href="/tags/%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B7%B1%E6%8B%B7%E8%B4%9D/" style="font-size: 1.15em; color: rgb(87, 109, 55)">浅拷贝和深拷贝</a><a href="/tags/JMM/" style="font-size: 1.39em; color: rgb(116, 85, 81)">JMM</a><a href="/tags/AQS/" style="font-size: 1.33em; color: rgb(46, 4, 2)">AQS</a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.15em; color: rgb(127, 48, 150)">多线程</a><a href="/tags/ThreadLocal/" style="font-size: 1.15em; color: rgb(135, 35, 161)">ThreadLocal</a><a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/" style="font-size: 1.15em; color: rgb(162, 150, 167)">进程和线程</a><a href="/tags/HTTP/" style="font-size: 1.21em; color: rgb(153, 175, 97)">HTTP</a><a href="/tags/UDP/" style="font-size: 1.15em; color: rgb(41, 189, 147)">UDP</a><a href="/tags/TCP/" style="font-size: 1.15em; color: rgb(32, 73, 153)">TCP</a><a href="/tags/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/" style="font-size: 1.15em; color: rgb(140, 198, 0)">可靠性传输</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" style="font-size: 1.15em; color: rgb(37, 51, 99)">计算机网络体系结构</a><a href="/tags/list/" style="font-size: 1.15em; color: rgb(87, 122, 175)">list</a><a href="/tags/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" style="font-size: 1.21em; color: rgb(167, 19, 72)">优先队列</a><a href="/tags/TreeMap/" style="font-size: 1.15em; color: rgb(77, 1, 199)">TreeMap</a><a href="/tags/GC/" style="font-size: 1.15em; color: rgb(109, 102, 185)">GC</a><a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 1.15em; color: rgb(118, 68, 46)">集合</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/12/"><span class="card-archive-list-date">十二月 2021</span><span class="card-archive-list-count">78</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/04/"><span class="card-archive-list-date">四月 2020</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">79</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2018-06-06T16:00:00.000Z"></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2021-12-18T14:46:29.122Z"></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/747964.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By MuChengxue</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  function loadValine () {
+    function initValine () {
+      let initData = {
+        el: '#vcomment',
+        appId: 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        appKey: 'Q5AgpWIhyjBqzKm5oObDrcz2',
+      }
+      
+      const valine = new Valine(initData)
+    }
+
+    if (typeof Valine === 'function') initValine() 
+    else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+  }
+
+  window.pjax ? loadValine() : window.addEventListener('load', loadValine)
+})()</script><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "记录学习&#44;记录生活,Never put off till tomorrow what you can do today".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '记录学习&#44;记录生活'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://E5eH22JQ.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        "X-LC-Key": 'Q5AgpWIhyjBqzKm5oObDrcz2',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 2/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="627070825" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="true" data-text="^_^,^_^,^_^" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

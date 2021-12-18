@@ -1,0 +1,459 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>暮成雪的博客 | 暮成雪的博客</title><meta name="keywords" content="JAVA"><meta name="author" content="MuChengxue"><meta name="copyright" content="MuChengxue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="模块间调用在一个应用系统中，无论使用何种语言开发，必然存在模块之间的调用，调用的方式分为几种： （1）同步调用 同步调用是最基本并且最简单的一种调用方式，类A的方法a()调用类B的方法b()，一直等待b()方法执行完毕，a()方法继续往下走。这种调用方式适用于方法b()执行时间不长的情况，因为b()方法执行时间一长或者直接阻塞的话，a()方法的余下代码是无法执行下去的，这样会造成整个流程的阻塞。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暮成雪的博客">
+<meta property="og:url" content="http://example.com/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/java%E5%9B%9E%E8%B0%83/index.html">
+<meta property="og:site_name" content="暮成雪的博客">
+<meta property="og:description" content="模块间调用在一个应用系统中，无论使用何种语言开发，必然存在模块之间的调用，调用的方式分为几种： （1）同步调用 同步调用是最基本并且最简单的一种调用方式，类A的方法a()调用类B的方法b()，一直等待b()方法执行完毕，a()方法继续往下走。这种调用方式适用于方法b()执行时间不长的情况，因为b()方法执行时间一长或者直接阻塞的话，a()方法的余下代码是无法执行下去的，这样会造成整个流程的阻塞。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg">
+<meta property="article:published_time" content="2021-12-18T14:42:25.651Z">
+<meta property="article:modified_time" content="2020-04-06T13:07:15.387Z">
+<meta property="article:author" content="MuChengxue">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg"><link rel="shortcut icon" href="/img/myFavicon.jpg"><link rel="canonical" href="http://example.com/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/java%E5%9B%9E%E8%B0%83/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: MuChengxue","link":"链接: ","source":"来源: 暮成雪的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '暮成雪的博客',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-04-06 13:07:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/myFavicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮成雪的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:25.651Z" title="发表于 2021-12-18 14:42:25">2021-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-04-06T13:07:15.387Z" title="更新于 2020-04-06 13:07:15">2020-04-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/java%E5%9B%9E%E8%B0%83/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/java%E5%9B%9E%E8%B0%83/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="模块间调用"><a href="#模块间调用" class="headerlink" title="模块间调用"></a><strong>模块间调用</strong></h1><p>在一个应用系统中，无论使用何种语言开发，必然存在模块之间的调用，调用的方式分为几种：</p>
+<h2 id="（1）同步调用"><a href="#（1）同步调用" class="headerlink" title="（1）同步调用"></a>（1）同步调用</h2><p><img src="https://images2015.cnblogs.com/blog/801753/201702/801753-20170221201001413-1766758208.png" alt="img"></p>
+<p>同步调用是最基本并且最简单的一种调用方式，类A的方法a()调用类B的方法b()，一直等待b()方法执行完毕，a()方法继续往下走。<strong>这种调用方式适用于方法b()执行时间不长的情况</strong>，因为b()方法执行时间一长或者直接阻塞的话，a()方法的余下代码是无法执行下去的，这样会造成整个流程的阻塞。</p>
+<h2 id="（2）异步调用"><a href="#（2）异步调用" class="headerlink" title="（2）异步调用"></a>（2）异步调用</h2><p><img src="https://images2015.cnblogs.com/blog/801753/201702/801753-20170221201512429-1532730453.png" alt="img"></p>
+<p>异步调用是为了解决同步调用可能出现阻塞，导致整个流程卡住而产生的一种调用方式。<strong>类A的方法方法a()通过新起线程的方式调用类B的方法b()，代码接着直接往下执行</strong>，这样无论方法b()执行时间多久，都不会阻塞住方法a()的执行。但是这种方式，由于方法a()不等待方法b()的执行完成，在方法a()需要方法b()执行结果的情况下（视具体业务而定，有些业务比如启异步线程发个微信通知、刷新一个缓存这种就没必要），必须通过一定的方式对方法b()的执行结果进行监听。在Java中，可以使用Future+Callable的方式做到这一点，具体做法可以参见我的这篇文章<a target="_blank" rel="noopener" href="http://www.cnblogs.com/xrq730/p/4872722.html">Java多线程21：多线程下其他组件之CyclicBarrier、Callable、Future和FutureTask</a>。</p>
+<h2 id="（3）回调"><a href="#（3）回调" class="headerlink" title="（3）回调"></a>（3）回调</h2><p> <img src="https://images2015.cnblogs.com/blog/801753/201702/801753-20170221205712070-824897248.png" alt="img"></p>
+<p>最后是回调，回调的思想是：</p>
+<ul>
+<li><strong>类A的a()方法调用类B的b()方法</strong></li>
+<li><strong>类B的b()方法执行完毕主动调用类A的callback()方法</strong></li>
+</ul>
+<p>这样一种调用方式组成了上图，也就是一种<strong>双向</strong>的调用方式。</p>
+<h1 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a><strong>代码示例</strong></h1><p>接下来看一下回调的代码示例，代码模拟的是这样一种场景：老师问学生问题，学生思考完毕回答老师。</p>
+<p>首先定义一个回调接口，只有一个方法tellAnswer(int answer)，即学生思考完毕告诉老师答案：</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 /**</span><br><span class="line">2  * 回调接口，原文出处http://www.cnblogs.com/xrq730/p/6424471.html</span><br><span class="line">3  */</span><br><span class="line">4 public interface Callback &#123;</span><br><span class="line">5 </span><br><span class="line">6     public void tellAnswer(int answer);</span><br><span class="line">7     </span><br><span class="line">8 &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>定义一个老师对象，实现Callback接口：</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 1 /**</span><br><span class="line"> 2  * 老师对象，原文出处http://www.cnblogs.com/xrq730/p/6424471.html</span><br><span class="line"> 3  */</span><br><span class="line"> 4 public class Teacher implements Callback &#123;</span><br><span class="line"> 5 </span><br><span class="line"> 6     private Student student;</span><br><span class="line"> 7     </span><br><span class="line"> 8     public Teacher(Student student) &#123;</span><br><span class="line"> 9         this.student = student;</span><br><span class="line">10     &#125;</span><br><span class="line">11     </span><br><span class="line">12     public void askQuestion() &#123;</span><br><span class="line">13         student.resolveQuestion(this);</span><br><span class="line">14     &#125;</span><br><span class="line">15     </span><br><span class="line">16     @Override</span><br><span class="line">17     public void tellAnswer(int answer) &#123;</span><br><span class="line">18         System.out.println(&quot;知道了，你的答案是&quot; + answer);</span><br><span class="line">19     &#125;</span><br><span class="line">20     </span><br><span class="line">21 &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>老师对象有两个public方法：</p>
+<p>（1）回调接口tellAnswer(int answer)，即学生回答完毕问题之后，老师要做的事情</p>
+<p>（2）问问题方法askQuestion()，即向学生问问题</p>
+<p>接着定义一个学生接口，学生当然是解决问题，但是接收一个Callback参数，这样学生就知道解决完毕问题向谁报告：</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 /**</span><br><span class="line">2  * 学生接口，原文出处http://www.cnblogs.com/xrq730/p/6424471.html</span><br><span class="line">3  */</span><br><span class="line">4 public interface Student &#123;</span><br><span class="line">5     </span><br><span class="line">6     public void resolveQuestion(Callback callback);</span><br><span class="line">7     </span><br><span class="line">8 &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>最后定义一个具体的学生叫Ricky：</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 1 /**</span><br><span class="line"> 2  * 一个名叫Ricky的同学解决老师提出的问题，原文出处http://www.cnblogs.com/xrq730/p/6424471.html</span><br><span class="line"> 3  */</span><br><span class="line"> 4 public class Ricky implements Student &#123;</span><br><span class="line"> 5 </span><br><span class="line"> 6     @Override</span><br><span class="line"> 7     public void resolveQuestion(Callback callback) &#123;</span><br><span class="line"> 8         // 模拟解决问题</span><br><span class="line"> 9         try &#123;</span><br><span class="line">10             Thread.sleep(3000);</span><br><span class="line">11         &#125; catch (InterruptedException e) &#123;</span><br><span class="line">12             </span><br><span class="line">13         &#125;</span><br><span class="line">14         </span><br><span class="line">15         // 回调，告诉老师作业写了多久</span><br><span class="line">16         callback.tellAnswer(3);</span><br><span class="line">17     &#125;</span><br><span class="line">18 </span><br><span class="line">19 &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>在解决完毕问题之后，第16行向老师报告答案。</p>
+<p>写一个测试类，比较简单：</p>
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> 1 /**</span><br><span class="line"> 2  * 回调测试，原文出处http://www.cnblogs.com/xrq730/p/6424471.html</span><br><span class="line"> 3  */</span><br><span class="line"> 4 public class CallbackTest &#123;</span><br><span class="line"> 5 </span><br><span class="line"> 6     @Test</span><br><span class="line"> 7     public void testCallback() &#123;</span><br><span class="line"> 8         Student student = new Ricky();</span><br><span class="line"> 9         Teacher teacher = new Teacher(student);</span><br><span class="line">10         </span><br><span class="line">11         teacher.askQuestion();</span><br><span class="line">12         </span><br><span class="line">13     &#125;</span><br><span class="line">14     </span><br><span class="line">15 &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="javascript:void(0);"><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></p>
+<p>代码运行结果就一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">知道了，你的答案是3</span><br></pre></td></tr></table></figure>
+
+<p>简单总结、分析一下这个例子就是：</p>
+<p>（1）老师调用学生接口的方法resolveQuestion，向学生提问</p>
+<p>（2）学生解决完毕问题之后调用老师的回调方法tellAnswer</p>
+<p>这样一套流程，构成了一种双向调用的关系。</p>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a><strong>代码分析</strong></h1><p>分析一下上面的代码，上面的代码我这里做了两层的抽象：</p>
+<p>（1）将老师进行抽象</p>
+<ul>
+<li>将老师进行抽象之后，对于学生来说，就不需要关心到底是哪位老师询问我问题，只要我根据询问的问题，得出答案，然后告诉提问的老师就可以了，即使老师换了一茬又一茬，对我学生而言都是没有任何影响的</li>
+</ul>
+<p>（2）将学生进行抽象</p>
+<ul>
+<li>将学生进行抽象之后，对于老师这边来说就非常灵活，因为老师未必对一个学生进行提问，可能同时对Ricky、Jack、Lucy三个学生进行提问，这样就可以将成员变量Student改为List<Student>，这样在提问的时候遍历Student列表进行提问，然后得到每个学生的回答即可</li>
+</ul>
+<p>这个例子是一个典型的体现接口作用的例子，之所以这么说是因为我想到有些朋友可能不太明白接口的好处，不太明白接口好处的朋友可以重点看一下这个例子，多多理解。</p>
+<p>总结起来，<strong>回调的核心就是回调方将本身即this传递给调用方</strong>，这样调用方就可以在调用完毕之后告诉回调方它想要知道的信息。回调是一种思想、是一种机制，至于具体如何实现，如何通过代码将回调实现得优雅、实现得可扩展性比较高，一看开发者的个人水平，二看开发者对业务的理解程度。</p>
+<h1 id="同步回调与异步回调"><a href="#同步回调与异步回调" class="headerlink" title="同步回调与异步回调"></a><strong>同步回调与异步回调</strong></h1><p>上面的例子，可能有人会提出这样的疑问：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">这个例子需要用什么回调啊，使用同步调用的方式，学生对象回答完毕问题之后直接把回答的答案返回给老师对象不就好了？</span><br></pre></td></tr></table></figure>
+
+<p>这个问题的提出没有任何问题，可以从两个角度去理解这个问题。</p>
+<p>首先，老师不仅仅想要得到学生的答案怎么办？可能这个老师是个更喜欢听学生解题思路的老师，在得到学生的答案之前，老师更想先知道学生姓名和学生的解题思路，当然有些人可以说，那我可以定义一个对象，里面加上学生的姓名和解题思路不就好了。这个说法在我看来有两个问题：</p>
+<p>（1）如果老师想要的数据越来越多，那么返回的对象得越来越大，而使用回调则可以进行数据分离，将一批数据放在回调方法中进行处理，至于哪些数据依具体业务而定，如果需要增加返回参数，直接在回调方法中增加即可</p>
+<p>（2）无法解决老师希望得到学生姓名、学生解题思路先于学生回答的答案的问题</p>
+<p>因此我认为简单的返回某个结果确实没有必要使用回调而可以直接使用同步调用，但是如果<strong>有多种数据需要处理且数据有主次之分</strong>，使用回调会是一种更加合适的选择，优先处理的数据放在回调方法中先处理掉。</p>
+<p>另外一个理解的角度则更加重要，就是标题说的同步回调和<strong>异步回调</strong>了。例子是一个同步回调的例子，意思是老师向Ricky问问题，Ricky给出答案，老师问下一个同学，得到答案之后继续问下一个同学，这是一种正常的场景，但是如果我把场景改一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">老师并不想One-By-One这样提问，而是同时向Ricky、Mike、Lucy、Bruce、Kate五位同学提问，让同学们自己思考，哪位同学思考好了就直接告诉老师答案即可。</span><br></pre></td></tr></table></figure>
+
+<p>这种场景相当于是说，同学思考完毕完毕问题要有一个办法告诉老师，有两个解决方案：</p>
+<p>（1）使用Future+Callable的方式，等待异步线程执行结果，这相当于就是同步调用的一种变种，因为其本质还是方法返回一个结果，即学生的回答</p>
+<p>（2）使用异步回调，同学回答完毕问题，调用回调接口方法告诉老师答案即可。由于老师对象被抽象成了Callback接口，因此这种做法的扩展性非常好，就像之前说的，即使老师换了换了一茬又一茬，对于同学来说，只关心的是调用Callback接口回传必要的信息即可</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xrq730/p/6424471.html">Java回调机制解读</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">MuChengxue</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/java%E5%9B%9E%E8%B0%83/">http://example.com/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/java%E5%9B%9E%E8%B0%83/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">暮成雪的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/Java%E5%9F%BA%E7%A1%80%E4%B9%8BObject%E7%B1%BB/"><img class="prev-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java基础之Object类</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/java8%E4%B9%8BStream/"><img class="next-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">java8之Stream</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/myFavicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">MuChengxue</div><div class="author-info__description">记录学习，记录生活</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/muchengxue"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">记录学习，记录生活</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E9%97%B4%E8%B0%83%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">模块间调用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%90%8C%E6%AD%A5%E8%B0%83%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">（1）同步调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E5%BC%82%E6%AD%A5%E8%B0%83%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">（2）异步调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E5%9B%9E%E8%B0%83"><span class="toc-number">1.3.</span> <span class="toc-text">（3）回调</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">代码分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E5%9B%9E%E8%B0%83%E4%B8%8E%E5%BC%82%E6%AD%A5%E5%9B%9E%E8%B0%83"><span class="toc-number">4.</span> <span class="toc-text">同步回调与异步回调</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.169Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="无题"><img src="https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.165Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Sentinel/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Sentinel/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.161Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Replication/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Replication/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.155Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="关键字"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关键字"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="关键字">关键字</a><time datetime="2021-12-18T14:44:09.151Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By MuChengxue</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+      appKey: 'Q5AgpWIhyjBqzKm5oObDrcz2',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://E5eH22JQ.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        "X-LC-Key": 'Q5AgpWIhyjBqzKm5oObDrcz2',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 2/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="627070825" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="true" data-text="^_^,^_^,^_^" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

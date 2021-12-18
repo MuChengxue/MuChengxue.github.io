@@ -1,0 +1,502 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>暮成雪的博客 | 暮成雪的博客</title><meta name="keywords" content="JAVA"><meta name="author" content="MuChengxue"><meta name="copyright" content="MuChengxue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Redis 持久化Redis 提供了不同级别的持久化方式:  RDB持久化方式能够在指定的时间间隔能对你的数据进行快照存储. AOF持久化方式记录每次对服务器写的操作,当服务器重启的时候会重新执行这些命令来恢复原始的数据,AOF命令以redis协议追加保存每次写的操作到文件末尾.Redis还能对AOF文件进行后台重写,使得AOF文件的体积不至于过大. 如果你只希望你的数据在服务器运行的时候存在,你">
+<meta property="og:type" content="article">
+<meta property="og:title" content="暮成雪的博客">
+<meta property="og:url" content="http://example.com/2021/12/18/Java/Redis/Redis%20%E6%8C%81%E4%B9%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="暮成雪的博客">
+<meta property="og:description" content="Redis 持久化Redis 提供了不同级别的持久化方式:  RDB持久化方式能够在指定的时间间隔能对你的数据进行快照存储. AOF持久化方式记录每次对服务器写的操作,当服务器重启的时候会重新执行这些命令来恢复原始的数据,AOF命令以redis协议追加保存每次写的操作到文件末尾.Redis还能对AOF文件进行后台重写,使得AOF文件的体积不至于过大. 如果你只希望你的数据在服务器运行的时候存在,你">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC">
+<meta property="article:published_time" content="2021-12-18T14:44:09.129Z">
+<meta property="article:modified_time" content="2020-04-18T07:36:06.906Z">
+<meta property="article:author" content="MuChengxue">
+<meta property="article:tag" content="JAVA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC"><link rel="shortcut icon" href="/img/myFavicon.jpg"><link rel="canonical" href="http://example.com/2021/12/18/Java/Redis/Redis%20%E6%8C%81%E4%B9%85%E5%8C%96/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: MuChengxue","link":"链接: ","source":"来源: 暮成雪的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '暮成雪的博客',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-04-18 07:36:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/myFavicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮成雪的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:44:09.129Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-04-18T07:36:06.906Z" title="更新于 2020-04-18 07:36:06">2020-04-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/18/Java/Redis/Redis%20%E6%8C%81%E4%B9%85%E5%8C%96/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/Redis/Redis%20%E6%8C%81%E4%B9%85%E5%8C%96/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Redis-持久化"><a href="#Redis-持久化" class="headerlink" title="Redis 持久化"></a>Redis 持久化</h1><p>Redis 提供了不同级别的持久化方式:</p>
+<ul>
+<li>RDB持久化方式能够在指定的时间间隔能对你的数据进行快照存储.</li>
+<li>AOF持久化方式记录每次对服务器写的操作,当服务器重启的时候会重新执行这些命令来恢复原始的数据,AOF命令以redis协议追加保存每次写的操作到文件末尾.Redis还能对AOF文件进行后台重写,使得AOF文件的体积不至于过大.</li>
+<li>如果你只希望你的数据在服务器运行的时候存在,你也可以不使用任何持久化方式.</li>
+<li>你也可以同时开启两种持久化方式, 在这种情况下, 当redis重启的时候会优先载入AOF文件来恢复原始的数据,因为在通常情况下AOF文件保存的数据集要比RDB文件保存的数据集要完整.</li>
+<li>最重要的事情是了解RDB和AOF持久化方式的不同,让我们以RDB持久化方式开始:</li>
+</ul>
+<h2 id="RDB的优点"><a href="#RDB的优点" class="headerlink" title="RDB的优点"></a><strong>RDB的优点</strong></h2><ul>
+<li><p>RDB是一个非常紧凑的文件,它保存了某个时间点得数据集,非常适用于数据集的备份,比如你可以在每个小时报保存一下过去24小时内的数据,同时每天保存过去30天的数据,这样即使出了问题你也可以根据需求恢复到不同版本的数据集.</p>
+</li>
+<li><p>RDB是一个紧凑的单一文件,很方便传送到另一个远端数据中心或者亚马逊的S3（可能加密），非常适用于灾难恢复.</p>
+</li>
+<li><p>RDB在保存RDB文件时父进程唯一需要做的就是fork出一个子进程,接下来的工作全部由子进程来做，父进程不需要再做其他IO操作，所以RDB持久化方式可以最大化redis的性能.</p>
+</li>
+<li><p>与AOF相比,在恢复大的数据集的时候，RDB方式会更快一些.</p>
+</li>
+<li><h2 id="RDB的缺点"><a href="#RDB的缺点" class="headerlink" title="RDB的缺点"></a><strong>RDB的缺点</strong></h2></li>
+<li><p>如果你希望在redis意外停止工作（例如电源中断）的情况下丢失的数据最少的话，那么RDB不适合你.虽然你可以配置不同的save时间点(例如每隔5分钟并且对数据集有100个写的操作),是Redis要完整的保存整个数据集是一个比较繁重的工作,你通常会每隔5分钟或者更久做一次完整的保存,万一在Redis意外宕机,你可能会丢失几分钟的数据.</p>
+</li>
+<li><p>RDB 需要经常fork子进程来保存数据集到硬盘上,当数据集比较大的时候,fork的过程是非常耗时的,可能会导致Redis在一些毫秒级内不能响应客户端的请求.如果数据集巨大并且CPU性能不是很好的情况下,这种情况会持续1秒,AOF也需要fork,但是你可以调节重写日志文件的频率来提高数据集的耐久度.</p>
+</li>
+<li><h2 id="AOF-优点"><a href="#AOF-优点" class="headerlink" title="AOF 优点"></a><strong>AOF 优点</strong></h2></li>
+<li><p>使用AOF 会让你的Redis更加耐久: 你可以使用不同的fsync策略：无fsync,每秒fsync,每次写的时候fsync.使用默认的每秒fsync策略,Redis的性能依然很好(fsync是由后台线程进行处理的,主线程会尽力处理客户端请求),一旦出现故障，你最多丢失1秒的数据.</p>
+</li>
+<li><p>AOF文件是一个只进行追加的日志文件,所以不需要写入seek,即使由于某些原因(磁盘空间已满，写的过程中宕机等等)未执行完整的写入命令,你也也可使用redis-check-aof工具修复这些问题.</p>
+</li>
+<li><p>Redis 可以在 AOF 文件体积变得过大时，自动地在后台对 AOF 进行重写： 重写后的新 AOF 文件包含了恢复当前数据集所需的最小命令集合。 整个重写操作是绝对安全的，因为 Redis 在创建新 AOF 文件的过程中，会继续将命令追加到现有的 AOF 文件里面，即使重写过程中发生停机，现有的 AOF 文件也不会丢失。 而一旦新 AOF 文件创建完毕，Redis 就会从旧 AOF 文件切换到新 AOF 文件，并开始对新 AOF 文件进行追加操作。</p>
+</li>
+<li><p>AOF 文件有序地保存了对数据库执行的所有写入操作， 这些写入操作以 Redis 协议的格式保存， 因此 AOF 文件的内容非常容易被人读懂， 对文件进行分析（parse）也很轻松。 导出（export） AOF 文件也非常简单： 举个例子， 如果你不小心执行了 FLUSHALL 命令， 但只要 AOF 文件未被重写， 那么只要停止服务器， 移除 AOF 文件末尾的 FLUSHALL 命令， 并重启 Redis ， 就可以将数据集恢复到 FLUSHALL 执行之前的状态。</p>
+</li>
+<li><h2 id="AOF-缺点"><a href="#AOF-缺点" class="headerlink" title="AOF 缺点"></a><strong>AOF 缺点</strong></h2></li>
+<li><p>对于相同的数据集来说，AOF 文件的体积通常要大于 RDB 文件的体积。</p>
+</li>
+<li><p>根据所使用的 fsync 策略，AOF 的速度可能会慢于 RDB 。 在一般情况下， 每秒 fsync 的性能依然非常高， 而关闭 fsync 可以让 AOF 的速度和 RDB 一样快， 即使在高负荷之下也是如此。 不过在处理巨大的写入载入时，RDB 可以提供更有保证的最大延迟时间（latency）。</p>
+</li>
+<li><h2 id="如何选择使用哪种持久化方式？"><a href="#如何选择使用哪种持久化方式？" class="headerlink" title="如何选择使用哪种持久化方式？"></a>如何选择使用哪种持久化方式？</h2></li>
+</ul>
+<p>一般来说， 如果想达到足以媲美 PostgreSQL 的数据安全性， 你应该同时使用两种持久化功能。</p>
+<p>如果你非常关心你的数据， 但仍然可以承受数分钟以内的数据丢失， 那么你可以只使用 RDB 持久化。</p>
+<p>有很多用户都只使用 AOF 持久化， 但我们并不推荐这种方式： 因为定时生成 RDB 快照（snapshot）非常便于进行数据库备份， 并且 RDB 恢复数据集的速度也要比 AOF 恢复的速度要快， 除此之外， 使用 RDB 还可以避免之前提到的 AOF 程序的 bug 。</p>
+<p>Note: 因为以上提到的种种原因， 未来我们可能会将 AOF 和 RDB 整合成单个持久化模型。 （这是一个长期计划。） 接下来的几个小节将介绍 RDB 和 AOF 的更多细节。</p>
+<h2 id="快照"><a href="#快照" class="headerlink" title="快照"></a><strong>快照</strong></h2><p>在默认情况下， Redis 将数据库快照保存在名字为 dump.rdb的二进制文件中。你可以对 Redis 进行设置， 让它在“ N 秒内数据集至少有 M 个改动”这一条件被满足时， 自动保存一次数据集。你也可以通过调用 SAVE或者 BGSAVE ， 手动让 Redis 进行数据集保存操作。</p>
+<p>比如说， 以下设置会让 Redis 在满足“ 60 秒内有至少有 1000 个键被改动”这一条件时， 自动保存一次数据集:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">save 60 1000</span><br></pre></td></tr></table></figure>
+
+<p>这种持久化方式被称为快照 snapshotting.</p>
+<h2 id="工作方式"><a href="#工作方式" class="headerlink" title="工作方式"></a>工作方式</h2><p>当 Redis 需要保存 dump.rdb 文件时， 服务器执行以下操作:</p>
+<ul>
+<li>Redis 调用forks. 同时拥有父进程和子进程。</li>
+<li>子进程将数据集写入到一个临时 RDB 文件中。</li>
+<li>当子进程完成对新 RDB 文件的写入时，Redis 用新 RDB 文件替换原来的 RDB 文件，并删除旧的 RDB 文件。</li>
+</ul>
+<p>这种工作方式使得 Redis 可以从写时复制（copy-on-write）机制中获益。</p>
+<h2 id="只追加操作的文件（Append-only-file，AOF）"><a href="#只追加操作的文件（Append-only-file，AOF）" class="headerlink" title="只追加操作的文件（Append-only file，AOF）"></a>只追加操作的文件（Append-only file，AOF）</h2><p>快照功能并不是非常耐久（dura ble）： 如果 Redis 因为某些原因而造成故障停机， 那么服务器将丢失最近写入、且仍未保存到快照中的那些数据。 从 1.1 版本开始， Redis 增加了一种完全耐久的持久化方式： AOF 持久化。</p>
+<p>你可以在配置文件中打开AOF方式:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">appendonly yes</span><br></pre></td></tr></table></figure>
+
+<p>从现在开始， 每当 Redis 执行一个改变数据集的命令时（比如 SET）， 这个命令就会被追加到 AOF 文件的末尾。这样的话， 当 Redis 重新启时， 程序就可以通过重新执行 AOF 文件中的命令来达到重建数据集的目的。</p>
+<h2 id="日志重写"><a href="#日志重写" class="headerlink" title="日志重写"></a>日志重写</h2><p>因为 AOF 的运作方式是不断地将命令追加到文件的末尾， 所以随着写入命令的不断增加， AOF 文件的体积也会变得越来越大。举个例子， 如果你对一个计数器调用了 100 次 INCR ， 那么仅仅是为了保存这个计数器的当前值， AOF 文件就需要使用 100 条记录（entry）。然而在实际上， 只使用一条 SET 命令已经足以保存计数器的当前值了， 其余 99 条记录实际上都是多余的。</p>
+<p>为了处理这种情况， Redis 支持一种有趣的特性： 可以在不打断服务客户端的情况下， 对 AOF 文件进行重建（rebuild）。执行 BGREWRITEAOF 命令， Redis 将生成一个新的 AOF 文件， 这个文件包含重建当前数据集所需的最少命令。Redis 2.2 需要自己手动执行 BGREWRITEAOF 命令； Redis 2.4 则可以自动触发 AOF 重写， 具体信息请查看 2.4 的示例配置文件。</p>
+<h2 id="AOF有多耐用"><a href="#AOF有多耐用" class="headerlink" title="AOF有多耐用?"></a>AOF有多耐用?</h2><p>你可以配置 Redis 多久才将数据 fsync 到磁盘一次。有三种方式：</p>
+<ul>
+<li>每次有新命令追加到 AOF 文件时就执行一次 fsync ：非常慢，也非常安全</li>
+<li>每秒 fsync 一次：足够快（和使用 RDB 持久化差不多），并且在故障时只会丢失 1 秒钟的数据。</li>
+<li>从不 fsync ：将数据交给操作系统来处理。更快，也更不安全的选择。</li>
+<li>推荐（并且也是默认）的措施为每秒 fsync 一次， 这种 fsync 策略可以兼顾速度和安全性。</li>
+</ul>
+<h2 id="如果AOF文件损坏了怎么办？"><a href="#如果AOF文件损坏了怎么办？" class="headerlink" title="如果AOF文件损坏了怎么办？"></a>如果AOF文件损坏了怎么办？</h2><p>服务器可能在程序正在对 AOF 文件进行写入时停机， 如果停机造成了 AOF 文件出错（corrupt）， 那么 Redis 在重启时会拒绝载入这个 AOF 文件， 从而确保数据的一致性不会被破坏。当发生这种情况时， 可以用以下方法来修复出错的 AOF 文件：</p>
+<ul>
+<li><p>为现有的 AOF 文件创建一个备份。</p>
+</li>
+<li><p>使用 Redis 附带的 redis-check-aof 程序，对原来的 AOF 文件进行修复:</p>
+<p>$ redis-check-aof –fix</p>
+</li>
+<li><p>（可选）使用 diff -u 对比修复后的 AOF 文件和原始 AOF 文件的备份，查看两个文件之间的不同之处。</p>
+</li>
+<li><p>重启 Redis 服务器，等待服务器载入修复后的 AOF 文件，并进行数据恢复。</p>
+</li>
+</ul>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>AOF 重写和 RDB 创建快照一样，都巧妙地利用了写时复制机制:</p>
+<ul>
+<li>Redis 执行 fork() ，现在同时拥有父进程和子进程。</li>
+<li>子进程开始将新 AOF 文件的内容写入到临时文件。</li>
+<li>对于所有新执行的写入命令，父进程一边将它们累积到一个内存缓存中，一边将这些改动追加到现有 AOF 文件的末尾,这样样即使在重写的中途发生停机，现有的 AOF 文件也还是安全的。</li>
+<li>当子进程完成重写工作时，它给父进程发送一个信号，父进程在接收到信号之后，将内存缓存中的所有数据追加到新 AOF 文件的末尾。</li>
+<li>搞定！现在 Redis 原子地用新文件替换旧文件，之后所有命令都会直接追加到新 AOF 文件的末尾。</li>
+</ul>
+<h2 id="怎样从RDB方式切换为AOF方式"><a href="#怎样从RDB方式切换为AOF方式" class="headerlink" title="怎样从RDB方式切换为AOF方式"></a>怎样从RDB方式切换为AOF方式</h2><p>在 Redis 2.2 或以上版本，可以在不重启的情况下，从 RDB 切换到 AOF ：</p>
+<ul>
+<li>为最新的 dump.rdb 文件创建一个备份。</li>
+<li>将备份放到一个安全的地方。</li>
+<li>执行以下两条命令:</li>
+<li>redis-cli config set appendonly yes</li>
+<li>redis-cli config set save “”</li>
+<li>确保写命令会被正确地追加到 AOF 文件的末尾。</li>
+<li>执行的第一条命令开启了 AOF 功能： Redis 会阻塞直到初始 AOF 文件创建完成为止， 之后 Redis 会继续处理命令请求， 并开始将写入命令追加到 AOF 文件末尾。</li>
+</ul>
+<p>执行的第二条命令用于关闭 RDB 功能。 这一步是可选的， 如果你愿意的话， 也可以同时使用 RDB 和 AOF 这两种持久化功能。</p>
+<p>重要:别忘了在 redis.conf 中打开 AOF 功能！ 否则的话， 服务器重启之后， 之前通过 CONFIG SET 设置的配置就会被遗忘， 程序会按原来的配置来启动服务器。</p>
+<h2 id="AOF和RDB之间的相互作用"><a href="#AOF和RDB之间的相互作用" class="headerlink" title="AOF和RDB之间的相互作用"></a>AOF和RDB之间的相互作用</h2><p>在版本号大于等于 2.4 的 Redis 中， BGSAVE 执行的过程中， 不可以执行 BGREWRITEAOF 。 反过来说， 在 BGREWRITEAOF 执行的过程中， 也不可以执行 BGSAVE。这可以防止两个 Redis 后台进程同时对磁盘进行大量的 I/O 操作。</p>
+<p>如果 BGSAVE 正在执行， 并且用户显示地调用 BGREWRITEAOF 命令， 那么服务器将向用户回复一个 OK 状态， 并告知用户， BGREWRITEAOF 已经被预定执行： 一旦 BGSAVE 执行完毕， BGREWRITEAOF 就会正式开始。 当 Redis 启动时， 如果 RDB 持久化和 AOF 持久化都被打开了， 那么程序会优先使用 AOF 文件来恢复数据集， 因为 AOF 文件所保存的数据通常是最完整的。</p>
+<h2 id="备份redis数据"><a href="#备份redis数据" class="headerlink" title="备份redis数据"></a>备份redis数据</h2><p>在阅读这个小节前， 请牢记下面这句话: 确保你的数据由完整的备份. 磁盘故障， 节点失效， 诸如此类的问题都可能让你的数据消失不见， 不进行备份是非常危险的。</p>
+<p>Redis 对于数据备份是非常友好的， 因为你可以在服务器运行的时候对 RDB 文件进行复制： RDB 文件一旦被创建， 就不会进行任何修改。 当服务器要创建一个新的 RDB 文件时， 它先将文件的内容保存在一个临时文件里面， 当临时文件写入完毕时， 程序才使用 rename(2) 原子地用临时文件替换原来的 RDB 文件。</p>
+<p>这也就是说， 无论何时， 复制 RDB 文件都是绝对安全的。</p>
+<ul>
+<li>创建一个定期任务（cron job）， 每小时将一个 RDB 文件备份到一个文件夹， 并且每天将一个 RDB 文件备份到另一个文件夹。</li>
+<li>确保快照的备份都带有相应的日期和时间信息， 每次执行定期任务脚本时， 使用 find 命令来删除过期的快照： 比如说， 你可以保留最近 48 小时内的每小时快照， 还可以保留最近一两个月的每日快照。</li>
+<li>至少每天一次， 将 RDB 备份到你的数据中心之外， 或者至少是备份到你运行 Redis 服务器的物理机器之外。</li>
+</ul>
+<h2 id="容灾备份"><a href="#容灾备份" class="headerlink" title="容灾备份"></a>容灾备份</h2><p>Redis 的容灾备份基本上就是对数据进行备份， 并将这些备份传送到多个不同的外部数据中心。容灾备份可以在 Redis 运行并产生快照的主数据中心发生严重的问题时， 仍然让数据处于安全状态。</p>
+<p>因为很多 Redis 用户都是创业者， 他们没有大把大把的钱可以浪费， 所以下面介绍的都是一些实用又便宜的容灾备份方法：</p>
+<ul>
+<li>Amazon S3 ，以及其他类似 S3 的服务，是一个构建灾难备份系统的好地方。 最简单的方法就是将你的每小时或者每日 RDB 备份加密并传送到 S3 。 对数据的加密可以通过 gpg -c 命令来完成（对称加密模式）。 记得把你的密码放到几个不同的、安全的地方去（比如你可以把密码复制给你组织里最重要的人物）。 同时使用多个储存服务来保存数据文件，可以提升数据的安全性。</li>
+<li>传送快照可以使用 SCP 来完成（SSH 的组件）。 以下是简单并且安全的传送方法： 买一个离你的数据中心非常远的 VPS ， 装上 SSH ， 创建一个无口令的 SSH 客户端 key ， 并将这个 key 添加到 VPS 的 authorized_keys 文件中， 这样就可以向这个 VPS 传送快照备份文件了。 为了达到最好的数据安全性，至少要从两个不同的提供商那里各购买一个 VPS 来进行数据容灾备份。</li>
+<li>需要注意的是， 这类容灾系统如果没有小心地进行处理的话， 是很容易失效的。最低限度下， 你应该在文件传送完毕之后， 检查所传送备份文件的体积和原始快照文件的体积是否相同。 如果你使用的是 VPS ， 那么还可以通过比对文件的 SHA1 校验和来确认文件是否传送完整。</li>
+</ul>
+<p>另外， 你还需要一个独立的警报系统， 让它在负责传送备份文件的传送器（transfer）失灵时通知你。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">MuChengxue</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/12/18/Java/Redis/Redis%20%E6%8C%81%E4%B9%85%E5%8C%96/">http://example.com/2021/12/18/Java/Redis/Redis%20%E6%8C%81%E4%B9%85%E5%8C%96/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">暮成雪的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/18/Java/Redis/Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B9%88%E5%BF%AB/"><img class="prev-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">关键字</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/18/Java/Redis/LRU/"><img class="next-cover" src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/myFavicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">MuChengxue</div><div class="author-info__description">记录学习，记录生活</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">79</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/muchengxue"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">记录学习，记录生活</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">Redis 持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RDB%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">RDB的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RDB%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">RDB的缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOF-%E4%BC%98%E7%82%B9"><span class="toc-number">1.3.</span> <span class="toc-text">AOF 优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOF-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.4.</span> <span class="toc-text">AOF 缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E4%BD%BF%E7%94%A8%E5%93%AA%E7%A7%8D%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">如何选择使用哪种持久化方式？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E7%85%A7"><span class="toc-number">1.6.</span> <span class="toc-text">快照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.7.</span> <span class="toc-text">工作方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AA%E8%BF%BD%E5%8A%A0%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%88Append-only-file%EF%BC%8CAOF%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">只追加操作的文件（Append-only file，AOF）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E9%87%8D%E5%86%99"><span class="toc-number">1.9.</span> <span class="toc-text">日志重写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOF%E6%9C%89%E5%A4%9A%E8%80%90%E7%94%A8"><span class="toc-number">1.10.</span> <span class="toc-text">AOF有多耐用?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E6%9E%9CAOF%E6%96%87%E4%BB%B6%E6%8D%9F%E5%9D%8F%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">1.11.</span> <span class="toc-text">如果AOF文件损坏了怎么办？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.12.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E6%A0%B7%E4%BB%8ERDB%E6%96%B9%E5%BC%8F%E5%88%87%E6%8D%A2%E4%B8%BAAOF%E6%96%B9%E5%BC%8F"><span class="toc-number">1.13.</span> <span class="toc-text">怎样从RDB方式切换为AOF方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AOF%E5%92%8CRDB%E4%B9%8B%E9%97%B4%E7%9A%84%E7%9B%B8%E4%BA%92%E4%BD%9C%E7%94%A8"><span class="toc-number">1.14.</span> <span class="toc-text">AOF和RDB之间的相互作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BDredis%E6%95%B0%E6%8D%AE"><span class="toc-number">1.15.</span> <span class="toc-text">备份redis数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E7%81%BE%E5%A4%87%E4%BB%BD"><span class="toc-number">1.16.</span> <span class="toc-text">容灾备份</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.169Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="无题"><img src="https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.165Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Sentinel/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Sentinel/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.161Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Replication/" title="无题"><img src="https://i.loli.net/2020/05/01/gkihqEjXxJ5UZ1C.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Replication/" title="无题">无题</a><time datetime="2021-12-18T14:44:09.155Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="关键字"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关键字"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/Redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" title="关键字">关键字</a><time datetime="2021-12-18T14:44:09.151Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/MuChengxue/picBed/master/747964.jpg?token=AGGYH3PWZT2BGLNDDZORD4LBXS5CC')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By MuChengxue</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+      appKey: 'Q5AgpWIhyjBqzKm5oObDrcz2',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://E5eH22JQ.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        "X-LC-Key": 'Q5AgpWIhyjBqzKm5oObDrcz2',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 2/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="627070825" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="true" data-text="^_^,^_^,^_^" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
