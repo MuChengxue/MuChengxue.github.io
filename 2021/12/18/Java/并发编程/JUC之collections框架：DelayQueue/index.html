@@ -1,0 +1,449 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JUC之collections框架：DelayQueue | 暮成雪的博客</title><meta name="keywords" content="collections框架,DelayQueue"><meta name="author" content="MuChengxue"><meta name="copyright" content="MuChengxue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、DelayQueue简介DelayQueue是JDK1.5时，随着J.U.C包一起引入的一种阻塞队列，它实现了BlockingQueue接口，底层基于已有的PriorityBlockingQueue实现： public class DelayQueue&lt;E extends Delayed&gt; extends AbstractQueue&lt;E&gt;    implements B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JUC之collections框架：DelayQueue">
+<meta property="og:url" content="http://muchengxue.github.io/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ADelayQueue/index.html">
+<meta property="og:site_name" content="暮成雪的博客">
+<meta property="og:description" content="一、DelayQueue简介DelayQueue是JDK1.5时，随着J.U.C包一起引入的一种阻塞队列，它实现了BlockingQueue接口，底层基于已有的PriorityBlockingQueue实现： public class DelayQueue&lt;E extends Delayed&gt; extends AbstractQueue&lt;E&gt;    implements B">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg">
+<meta property="article:published_time" content="2021-12-18T14:42:26.034Z">
+<meta property="article:modified_time" content="2022-01-03T10:11:07.847Z">
+<meta property="article:author" content="MuChengxue">
+<meta property="article:tag" content="collections框架">
+<meta property="article:tag" content="DelayQueue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg"><link rel="shortcut icon" href="/img/myFavicon.jpg"><link rel="canonical" href="http://muchengxue.github.io/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ADelayQueue/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: MuChengxue","link":"链接: ","source":"来源: 暮成雪的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JUC之collections框架：DelayQueue',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-03 10:11:07'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/myFavicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮成雪的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JUC之collections框架：DelayQueue</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:26.034Z" title="发表于 2021-12-18 14:42:26">2021-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-03T10:11:07.847Z" title="更新于 2022-01-03 10:11:07">2022-01-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JUC/">JUC</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JUC之collections框架：DelayQueue"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ADelayQueue/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ADelayQueue/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、DelayQueue简介"><a href="#一、DelayQueue简介" class="headerlink" title="一、DelayQueue简介"></a>一、DelayQueue简介</h1><p><code>DelayQueue</code>是JDK1.5时，随着J.U.C包一起引入的一种阻塞队列，它实现了<code>BlockingQueue</code>接口，底层基于已有的<strong>PriorityBlockingQueue</strong>实现：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DelayQueue</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Delayed</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractQueue</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">BlockingQueue</span>&lt;<span class="title">E</span>&gt; </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>DelayQueue</code>也是一种比较特殊的阻塞队列，从类声明也可以看出， <code>DelayQueue</code>中的所有元素必须实现<code>Delayed</code>接口：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 一种混合风格的接口，用来标记那些应该在给定延迟时间之后执行的对象。</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 此接口的实现必须定义一个 compareTo 方法，该方法提供与此接口的 getDelay 方法一致的排序。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Delayed</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">Delayed</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the remaining delay associated with this object, in the</span></span><br><span class="line"><span class="comment">     * given time unit.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * 返回与此对象相关的剩余有效时间，以给定的时间单位表示.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit the time unit</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the remaining delay; zero or negative values indicate</span></span><br><span class="line"><span class="comment">     * that the delay has already elapsed</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getDelay</span><span class="params">(TimeUnit unit)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，<code>Delayed</code>接口除了自身的<code>getDelay</code>方法外，还实现了<strong>Comparable</strong>接口。<code>getDelay</code>方法用于返回对象的剩余有效时间，实现<code>Comparable</code>接口则是为了能够比较两个对象，以便排序。</p>
+<p>也就是说，如果一个类实现了<code>Delayed</code>接口，当创建该类的对象并添加到<code>DelayQueue</code>中后，<strong>只有当该对象的getDalay方法返回的剩余时间≤0时才会出队</strong>。</p>
+<p>另外，由于<code>DelayQueue</code>内部委托了<code>PriorityBlockingQueue</code>对象来实现所有方法，所以能<strong>以堆的结构维护元素</strong>顺序，这样剩余时间最小的元素就在堆顶，<strong>每次出队其实就是删除剩余时间≤0的最小元素</strong>。</p>
+<p><code>DelayQueue</code>的特点简要概括如下：</p>
+<ol>
+<li><code>DelayQueue</code>是无界阻塞队列；</li>
+<li>队列中的元素必须实现<code>Delayed</code>接口，元素过期后才会从队列中取走；</li>
+</ol>
+<h1 id="二、DelayQueue示例"><a href="#二、DelayQueue示例" class="headerlink" title="二、DelayQueue示例"></a>二、DelayQueue示例</h1><p>为了便于理解DelayQueue的功能，我们先来看一个使用DelayQueue的示例。</p>
+<h2 id="队列元素"><a href="#队列元素" class="headerlink" title="队列元素"></a>队列元素</h2><p>第一节说了，队列元素必须实现<code>Delayed</code>接口，我们先来定义一个<strong>Data</strong>类，作为队列元素：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Data</span> <span class="keyword">implements</span> <span class="title">Delayed</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicLong atomic = <span class="keyword">new</span> AtomicLong(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> DateTimeFormatter formatter = 									 												DateTimeFormatter.ofPattern(<span class="string">&quot;HH:mm:ss-n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 数据的失效时间点</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> time;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 序号</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> seqno;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> deadline 数据失效时间点</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Data</span><span class="params">(<span class="keyword">long</span> deadline)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.time = deadline;</span><br><span class="line">        <span class="keyword">this</span>.seqno = atomic.getAndIncrement();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 返回剩余有效时间</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> unit 时间单位</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getDelay</span><span class="params">(TimeUnit unit)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unit.convert(<span class="keyword">this</span>.time - System.nanoTime(), TimeUnit.NANOSECONDS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 比较两个Delayed对象的大小, 比较顺序如下:</span></span><br><span class="line"><span class="comment">     * 1. 如果是对象本身, 返回0;</span></span><br><span class="line"><span class="comment">     * 2. 比较失效时间点, 先失效的返回-1,后失效的返回1;</span></span><br><span class="line"><span class="comment">     * 3. 比较元素序号, 序号小的返回-1, 否则返回1.</span></span><br><span class="line"><span class="comment">     * 4. 非Data类型元素, 比较剩余有效时间, 剩余有效时间小的返回-1,大的返回1,相同返回0</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Delayed other)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (other == <span class="keyword">this</span>)  <span class="comment">// compare zero if same object</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (other <span class="keyword">instanceof</span> Data) &#123;</span><br><span class="line">            Data x = (Data) other;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 优先比较失效时间</span></span><br><span class="line">            <span class="keyword">long</span> diff = <span class="keyword">this</span>.time - x.time;</span><br><span class="line">            <span class="keyword">if</span> (diff &lt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (diff &gt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.seqno &lt; x.seqno)    <span class="comment">// 剩余时间相同则比较序号</span></span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 一般不会执行到此处，除非元素不是Data类型</span></span><br><span class="line">        <span class="keyword">long</span> diff = <span class="keyword">this</span>.getDelay(TimeUnit.NANOSECONDS) - other.getDelay(TimeUnit.NANOSECONDS);</span><br><span class="line">        <span class="keyword">return</span> (diff &lt; <span class="number">0</span>) ? -<span class="number">1</span> : (diff &gt; <span class="number">0</span>) ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Data&#123;&quot;</span> +</span><br><span class="line">            <span class="string">&quot;time=&quot;</span> + time +</span><br><span class="line">            <span class="string">&quot;, seqno=&quot;</span> + seqno +</span><br><span class="line">            <span class="string">&quot;&#125;, isValid=&quot;</span> + isValid();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.getDelay(TimeUnit.NANOSECONDS) &gt; <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关于队列元素<strong>Data</strong>类，需要注意以下几点：</p>
+<ol>
+<li>每个元素的<code>time</code>字段保存失效时间点的纳秒形式（构造时指定，比如当前时间+60s）；</li>
+<li><code>seqno</code>字段表示元素序号，每个元素唯一，仅用于失效时间点一致的元素之间的比较。</li>
+<li><code>getDelay</code>方法返回元素的剩余有效时间，可以根据入参的<strong>TimeUnit</strong>选择时间的表示形式（秒、微妙、纳秒等），一般选择纳秒以提高精度；</li>
+<li><code>compareTo</code>方法用于比较两个元素的大小，以便在队列中排序。由于DelayQueue基于优先级队列实现，所以内部是“堆”的形式，我们定义的规则是先失效的元素将先出队，所以先失效元素应该在堆顶，即compareTo方法返回结果&lt;0的元素优先出队；</li>
+</ol>
+<hr>
+<h2 id="生产者"><a href="#生产者" class="headerlink" title="生产者"></a>生产者</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> DelayQueue&lt;Data&gt; queue;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(DelayQueue&lt;Data&gt; queue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">long</span> currentTime = System.nanoTime();</span><br><span class="line">            <span class="keyword">long</span> validTime = ThreadLocalRandom.current().nextLong(<span class="number">1000000000L</span>, <span class="number">7000000000L</span>);</span><br><span class="line">            Data data = <span class="keyword">new</span> Data(currentTime + validTime);</span><br><span class="line">            queue.put(data);</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: put &quot;</span> + data);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="消费者"><a href="#消费者" class="headerlink" title="消费者"></a><strong>消费者</strong></h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> DelayQueue&lt;Data&gt; queue;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(DelayQueue&lt;Data&gt; queue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.queue = queue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Data data = queue.take();</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot;: take &quot;</span> + data);</span><br><span class="line">                Thread.yield();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        DelayQueue&lt;Data&gt; queue = <span class="keyword">new</span> DelayQueue&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        Thread c1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Consumer(queue), <span class="string">&quot;consumer-1&quot;</span>);</span><br><span class="line">        Thread p1 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Producer(queue), <span class="string">&quot;producer-1&quot;</span>);</span><br><span class="line"></span><br><span class="line">        c1.start();</span><br><span class="line">        p1.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991041210303457, seqno=0&#125;, isValid=true</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991045725299669, seqno=1&#125;, isValid=true</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991043358141756, seqno=2&#125;, isValid=true</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991044234686966, seqno=3&#125;, isValid=true</span></span><br><span class="line"><span class="comment">consumer-1: take Data&#123;time=991041210303457, seqno=0&#125;, isValid=false</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991043430457340, seqno=4&#125;, isValid=true</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991046657531055, seqno=5&#125;, isValid=true</span></span><br><span class="line"><span class="comment">consumer-1: take Data&#123;time=991043358141756, seqno=2&#125;, isValid=false</span></span><br><span class="line"><span class="comment">consumer-1: take Data&#123;time=991043430457340, seqno=4&#125;, isValid=false</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991047360314101, seqno=6&#125;, isValid=true</span></span><br><span class="line"><span class="comment">consumer-1: take Data&#123;time=991044234686966, seqno=3&#125;, isValid=false</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991047026527649, seqno=7&#125;, isValid=true</span></span><br><span class="line"><span class="comment">consumer-1: take Data&#123;time=991045725299669, seqno=1&#125;, isValid=false</span></span><br><span class="line"><span class="comment">producer-1: put Data&#123;time=991051733954395, seqno=8&#125;, isValid=true</span></span><br><span class="line"><span class="comment">consumer-1: take Data&#123;time=991046657531055, seqno=5&#125;, isValid=false</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>上面示例中，我们创建了一个生产者，一个消费者，生产者不断得入队元素，每个元素都会有个截止有效期；消费者不断得从队列者获取元素。从输出可以看出，消费者每次获取到的元素都是有效期最小的，且都是已经失效了的。（因为<code>DelayQueue</code>每次出队只会删除有效期最小且已经过期的元素）</p>
+<h1 id="三、DelayQueue原理"><a href="#三、DelayQueue原理" class="headerlink" title="三、DelayQueue原理"></a>三、DelayQueue原理</h1><p>接下来看下Doug Lea是如何实现<code>DelayQueued</code>的。</p>
+<h2 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h2><p>可以看到，内部的<strong>PriorityQueue</strong>并非在构造时创建，而是对象创建时生成：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DelayQueue</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Delayed</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractQueue</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">BlockingQueue</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">transient</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> PriorityQueue&lt;E&gt; q = <span class="keyword">new</span> PriorityQueue&lt;E&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * leader线程是首个尝试出队元素（队列不为空）但被阻塞的线程.</span></span><br><span class="line"><span class="comment">     * 该线程会限时等待（队首元素的剩余有效时间），用于唤醒其它等待线程</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Thread leader = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 出队线程条件队列, 当有多个线程, 会在此条件队列上等待.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Condition available = lock.newCondition();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述比较特殊的是<code>leader</code>字段，<code>DelayQueue</code>每次只会出队一个过期的元素，如果队首元素没有过期，就会阻塞出队线程，让线程在<code>available</code>这个条件队列上无限等待。</p>
+<p>为了提升性能，<code>DelayQueue</code>并不会让所有出队线程都无限等待，而是用<code>leader</code>保存了第一个尝试出队的线程，该线程的等待时间是<strong>队首元素的剩余有效期</strong>。这样，<strong>一旦leader</strong>线程被唤醒（此时队首元素也失效了），就可以出队成功，然后唤醒一个其它在<code>available</code>条件队列上等待的线程。之后，会重复上一步，新唤醒的线程可能取代成为新的leader线程。这样，就避免了无效的等待，提升了性能。这其实是一种名为 <code>Leader-Follower pattern</code> 的多线程设计模式。</p>
+<p><code>DelayQueued</code>提供了两种构造器，都非常简单：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**  默认构造器.</span></span><br><span class="line"><span class="comment"> * Creates a new &#123;<span class="doctag">@code</span> DelayQueue&#125; that is initially empty.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">DelayQueue</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**  从已有集合构造队列.</span></span><br><span class="line"><span class="comment"> * Creates a &#123;<span class="doctag">@code</span> DelayQueue&#125; initially containing the elements of the</span></span><br><span class="line"><span class="comment"> * given collection of &#123;<span class="doctag">@link</span> Delayed&#125; instances.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> c the collection of elements to initially contain</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> NullPointerException if the specified collection or any</span></span><br><span class="line"><span class="comment"> *         of its elements are null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">DelayQueue</span><span class="params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.addAll(c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="入队-put"><a href="#入队-put" class="headerlink" title="入队 put"></a>入队 put</h2><p><strong>put</strong>方法没有什么特别，由于是无界队列，所以也不会阻塞线程。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 入队一个指定元素e.</span></span><br><span class="line"><span class="comment"> * 由于是无界队列, 所以该方法并不会阻塞线程.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    offer(e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        q.offer(e);             <span class="comment">// 调用PriorityQueue的offer方法</span></span><br><span class="line">        <span class="comment">// 如果入队元素在队首, 则唤醒一个出队线程。因为此时可能已有出队线程在空队列上等待了，如果不唤醒，会导致出队线程永远无法执行。</span></span><br><span class="line">        <span class="keyword">if</span> (q.peek() == e) &#123;    </span><br><span class="line">            leader = <span class="keyword">null</span>;</span><br><span class="line">            available.signal();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>需要注意的是当首次入队元素时，需要唤醒一个出队线程，因为此时可能已有出队线程在空队列上等待了，如果不唤醒，会导致出队线程永远无法执行。</p>
+</blockquote>
+<h2 id="出队-take"><a href="#出队-take" class="headerlink" title="出队 take"></a>出队 take</h2><p>整个<strong>take</strong>方法在一个自旋中完成，其实就分为两种情况：</p>
+<p><strong>1.队列为空</strong></p>
+<p>这种情况直接阻塞出队线程。（在available条件队列等待）</p>
+<p><strong>2.队列非空</strong></p>
+<p>队列非空时，还要看队首元素的状态（有效期），如果队首元素过期了，那直接出队就行了；如果队首元素未过期，就要看当前线程是否是第一个到达的出队线程（即判断<code>leader</code>是否为空），如果不是，就<strong>无限等待</strong>，如果是，则<strong>限时等待</strong>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 队首出队元素.</span></span><br><span class="line"><span class="comment"> * 如果队首元素（堆顶）未到期或队列为空, 则阻塞线程.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</span><br><span class="line">    lock.lockInterruptibly();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (; ; ) &#123;</span><br><span class="line">            E first = q.peek();     <span class="comment">// 读取队首元素</span></span><br><span class="line">            <span class="keyword">if</span> (first == <span class="keyword">null</span>)      <span class="comment">// CASE1: 队列为空, 直接阻塞</span></span><br><span class="line">                available.await();</span><br><span class="line">            <span class="keyword">else</span> &#123;                  <span class="comment">// CASE2: 队列非空</span></span><br><span class="line">                <span class="keyword">long</span> delay = first.getDelay(NANOSECONDS);</span><br><span class="line">                <span class="keyword">if</span> (delay &lt;= <span class="number">0</span>)    <span class="comment">// CASE2.0: 队首元素已过期</span></span><br><span class="line">                    <span class="keyword">return</span> q.poll();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 执行到此处说明队列非空, 且队首元素未过期</span></span><br><span class="line">                first = <span class="keyword">null</span>;</span><br><span class="line">                <span class="keyword">if</span> (leader != <span class="keyword">null</span>)  <span class="comment">// CASE2.1: 已存在leader线程</span></span><br><span class="line">                    available.await();  <span class="comment">// 无限期阻塞当前线程</span></span><br><span class="line">                <span class="keyword">else</span> &#123;              <span class="comment">// CASE2.2: 不存在leader线程</span></span><br><span class="line">                    Thread thisThread = Thread.currentThread();</span><br><span class="line">                    leader = thisThread; <span class="comment">// 将当前线程置为leader线程</span></span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        available.awaitNanos(delay); <span class="comment">// 阻塞当前线程（限时等待剩余有效时间）</span></span><br><span class="line">                    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (leader == thisThread)</span><br><span class="line">                            leader = <span class="keyword">null</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (leader == <span class="keyword">null</span> &amp;&amp; q.peek() != <span class="keyword">null</span>) <span class="comment">// 不存在leader线程, 则唤醒一个其它出队线程</span></span><br><span class="line">            available.signal();</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意，自旋结束后如果<code>leader == null &amp;&amp; q.peek() != null</code>，需要唤醒一个等待中的出队线程。<br><code>leader == null &amp;&amp; q.peek() != null</code>的含义就是——<strong>没有<code>leader</code>线程但队列中存在元素</strong>。我们之前说了，leader线程作用之一就是用来唤醒其它无限等待的线程，所以必须要有这个判断。</p>
+<h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1><p><strong>DelayQueue</strong>是阻塞队列中非常有用的一种队列，经常被用于缓存或定时任务等的设计。</p>
+<p><em>考虑一种使用场景：</em></p>
+<blockquote>
+<p>异步通知的重试，在很多系统中，当用户完成服务调用后，系统有时需要将结果异步通知到用户的某个URI。由于网络等原因，很多时候会通知失败，这个时候就需要一种重试机制。</p>
+</blockquote>
+<p>这时可以用<code>DelayQueue</code>保存通知失败的请求，失效时间可以根据已通知的次数来设定（比如：2s、5s、10s、20s），这样每次从队列中take获取的就是剩余时间最短的请求，如果已重复通知次数超过一定阈值，则可以把消息抛弃。</p>
+<p>后面 在J.U.C之executors 框架中，还会再次看到DelayQueue的身影。JUC线程池框架中的<code>ScheduledThreadPoolExecutor.DelayedWorkQueue</code>就是一种延时阻塞队列。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016388106">Java多线程进阶（三六）—— J.U.C之collections框架：DelayQueue</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">MuChengxue</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://muchengxue.github.io/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ADelayQueue/">http://muchengxue.github.io/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ADelayQueue/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://muchengxue.github.io" target="_blank">暮成雪的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/collections%E6%A1%86%E6%9E%B6/">collections框架</a><a class="post-meta__tags" href="/tags/DelayQueue/">DelayQueue</a></div><div class="post_share"><div class="social-share" data-image="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ALinkedBlockingQueue/"><img class="prev-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">JUC之collections框架：LinkedBlockingQueue</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9AConcurrentLinkedQueue/"><img class="next-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">JUC之collections框架：ConcurrentLinkedQueue</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9AArrayBlockingQueue/" title="JUC之collections框架：ArrayBlockingQueue"><img class="cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">JUC之collections框架：ArrayBlockingQueue</div></div></a></div><div><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9AConcurrentLinkedQueue/" title="JUC之collections框架：ConcurrentLinkedQueue"><img class="cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">JUC之collections框架：ConcurrentLinkedQueue</div></div></a></div><div><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9ALinkedBlockingQueue/" title="JUC之collections框架：LinkedBlockingQueue"><img class="cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">JUC之collections框架：LinkedBlockingQueue</div></div></a></div><div><a href="/2021/12/18/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8Bcollections%E6%A1%86%E6%9E%B6%EF%BC%9APriorityBlockingQueue/" title="JUC之collections框架：PriorityBlockingQueue"><img class="cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">JUC之collections框架：PriorityBlockingQueue</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/myFavicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">MuChengxue</div><div class="author-info__description">记录学习，记录生活</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/muchengxue"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">记录学习，记录生活</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81DelayQueue%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">一、DelayQueue简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81DelayQueue%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">二、DelayQueue示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%9F%E5%88%97%E5%85%83%E7%B4%A0"><span class="toc-number">2.1.</span> <span class="toc-text">队列元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85"><span class="toc-number">2.2.</span> <span class="toc-text">生产者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85"><span class="toc-number">2.3.</span> <span class="toc-text">消费者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">2.4.</span> <span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81DelayQueue%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">三、DelayQueue原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0"><span class="toc-number">3.1.</span> <span class="toc-text">构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%98%9F-put"><span class="toc-number">3.2.</span> <span class="toc-text">入队 put</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E9%98%9F-take"><span class="toc-number">3.3.</span> <span class="toc-text">出队 take</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">四、总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AQS的设计思路"/></a><div class="content"><a class="title" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路">AQS的设计思路</a><time datetime="2022-02-03T13:10:28.437Z" title="发表于 2022-02-03 13:10:28">2022-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="float的范围和精度"/></a><div class="content"><a class="title" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度">float的范围和精度</a><time datetime="2022-01-21T14:18:25.869Z" title="发表于 2022-01-21 14:18:25">2022-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随想1"/></a><div class="content"><a class="title" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1">随想1</a><time datetime="2021-12-18T16:15:22.363Z" title="发表于 2021-12-18 16:15:22">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis 吊打面试官"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官">Redis 吊打面试官</a><time datetime="2021-12-18T14:44:09.169Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis中的事务"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务">Redis中的事务</a><time datetime="2021-12-18T14:44:09.165Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By MuChengxue</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+      appKey: 'Q5AgpWIhyjBqzKm5oObDrcz2',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://E5eH22JQ.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        "X-LC-Key": 'Q5AgpWIhyjBqzKm5oObDrcz2',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 2/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="627070825" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="true" data-text="^_^,^_^,^_^" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

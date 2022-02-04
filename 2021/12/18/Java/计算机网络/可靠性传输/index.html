@@ -1,0 +1,493 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>可靠性传输的原理和实现 | 暮成雪的博客</title><meta name="keywords" content="可靠性传输"><meta name="author" content="MuChengxue"><meta name="copyright" content="MuChengxue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、停止等待协议理想的传输条件有以下两个特点：  （1）传输信道不发生差错 （2）不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据  TCP 连接是全双工的连接，也就是说在通信的时候，双方既是发送方，也是接收方。下面为了简化问题，只考虑一方发送，一方接受的情况。其中，A作为发送方，B作为接收方。 1 无差错的情况 A发送分组M1，发送完就暂停发送，等待B的确认。B收到M1就向A发送确">
+<meta property="og:type" content="article">
+<meta property="og:title" content="可靠性传输的原理和实现">
+<meta property="og:url" content="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/index.html">
+<meta property="og:site_name" content="暮成雪的博客">
+<meta property="og:description" content="一、停止等待协议理想的传输条件有以下两个特点：  （1）传输信道不发生差错 （2）不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据  TCP 连接是全双工的连接，也就是说在通信的时候，双方既是发送方，也是接收方。下面为了简化问题，只考虑一方发送，一方接受的情况。其中，A作为发送方，B作为接收方。 1 无差错的情况 A发送分组M1，发送完就暂停发送，等待B的确认。B收到M1就向A发送确">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg">
+<meta property="article:published_time" content="2021-12-18T14:42:43.751Z">
+<meta property="article:modified_time" content="2020-03-10T10:46:20.000Z">
+<meta property="article:author" content="MuChengxue">
+<meta property="article:tag" content="可靠性传输">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg"><link rel="shortcut icon" href="/img/myFavicon.jpg"><link rel="canonical" href="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: MuChengxue","link":"链接: ","source":"来源: 暮成雪的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '可靠性传输的原理和实现',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-03-10 10:46:20'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/myFavicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮成雪的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">可靠性传输的原理和实现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:43.751Z" title="发表于 2021-12-18 14:42:43">2021-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-10T10:46:20.000Z" title="更新于 2020-03-10 10:46:20">2020-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>20分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="可靠性传输的原理和实现"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、停止等待协议"><a href="#一、停止等待协议" class="headerlink" title="一、停止等待协议"></a>一、停止等待协议</h1><p>理想的传输条件有以下两个特点：</p>
+<blockquote>
+<p>（1）传输信道不发生差错</p>
+<p>（2）不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据</p>
+</blockquote>
+<p>TCP 连接是<strong>全双工</strong>的连接，也就是说在通信的时候，双方既是发送方，也是接收方。下面为了简化问题，只考虑一方发送，一方接受的情况。其中，<strong>A作为发送方，B作为接收方</strong>。</p>
+<h2 id="1-无差错的情况"><a href="#1-无差错的情况" class="headerlink" title="1 无差错的情况"></a><strong>1 无差错的情况</strong></h2><p> A发送分组M1，发送完就暂停发送，等待B的确认。B收到M1就向A发送确认。A在收到了对M1的确认后，就再发送下一个分组M2，如此往复。如下图所示：</p>
+<p><img src="http://static.oschina.net/uploads/space/2014/0828/210548_wB7l_1469576.png" alt="img"></p>
+<h2 id="2-出现差错"><a href="#2-出现差错" class="headerlink" title="2 出现差错"></a><strong>2 出现差错</strong></h2><p> 如果A发送的过程中出现差错，B在接收M1时检测出了差错，就丢弃M1，其他什么都不做（也不会通知A收到有差错的分组）。又或者A传送的过程中分组丢失了，以上这两种情况下，B不会发送任何信息。</p>
+<p> 既然说它是可靠传输协议，那自然有它可靠的方法，<strong>如果发生以上的情况，A只要超过了一段时间仍然没有收到确认，就认为刚才发送的分组丢失了，所以它会重传刚刚的发送过的分组，也就是所谓的超时重传。</strong></p>
+<p> 超时重传的原理也很简单：发送方发送完一个分组后，就会设置一个<strong>超时计时器</strong>，如果超时计时器到期之前没有收到接收方发来的确认信息，则会重发刚发送过的分组；如果收到确认信息，则撤销该超时计时器。</p>
+<p><img src="http://static.oschina.net/uploads/space/2014/0828/210708_FIdK_1469576.png" alt="img"></p>
+<p>这里应该注意的是：</p>
+<p>（1）既然发送方发送的分组可能丢失或者有差错，可能需要重传，那么<strong>它必须暂时保留已发送的分组副本</strong>，只有收到确认后，才清除这个副本。</p>
+<p>（2）分组和确认分组信息都应该有各自的<strong>编号</strong>，用来标示每一个分组和确认信息。（这样才知道需要发送哪个分组，收到了哪个分组的确认信息）</p>
+<p>（3）<strong>超时计时器设置的时间应该略长于分组传送往返时间</strong></p>
+<h2 id="3-确认丢失和确认延迟"><a href="#3-确认丢失和确认延迟" class="headerlink" title="3 确认丢失和确认延迟"></a><strong>3 确认丢失和确认延迟</strong></h2><p> 没有正常进行通信，除了发送方出现问题外，接收方同时也可能存在问题。例如，如果A发送了M1分组，到达B，B发送了M1确认信息，但由于网络原因，该确认信息丢失。那么这个时候，A在超时重传时间内，没有收到B的确认信息，而且它并不知道是自己的分组有差错、丢失，还是B发生的确认丢失了。因此，A会在超时重传过后，重传M1分组。</p>
+<p>接收方B会采取这两个行动：</p>
+<p>（1）B会丢弃M1分组，不向上层交付。（B之前已经收到过M1分组了）</p>
+<p>（2）向A发送确认（因为A重发了，肯定重传时间内没有收到确认信息）</p>
+<p><img src="http://static.oschina.net/uploads/space/2014/0828/210836_X9ia_1469576.png" alt="img"></p>
+<p>还有可能是另一种情况，就是B发送了确认，没有丢失，但是延迟了。也就是说，B发送的确认在A超时计时器过期后才到达。 这种情况下，<strong>A收到确认信息后会丢弃，然后重传刚才的分组，B收到后，丢弃重复的分组，并重传确认信息。</strong></p>
+<p>通常A最终总是可以收到对所有发出的分组的确认。如果A不断重传分组但总是收不到确认说明通信线路太差不适合进行通信。<strong><em>使用上述的重传和确认机制，我们可以在不可靠的传输网络上实现可靠的通信。</em>像上述这种可靠传输协议常称为自动重传请求ARQ (Automatic Repeat reQuest)，ARQ 表明重传的请求是自动进行的。接收方不需要请求发送方重传某个出错的分组 。</strong></p>
+<h2 id="4-信道利用率"><a href="#4-信道利用率" class="headerlink" title="4 信道利用率"></a><strong>4 信道利用率</strong></h2><p><strong>这种停止等待协议</strong>的优点是简单，但<strong>缺点是信道利用率太低</strong>，传输效率不高。 从下图可以看出，假设A发送分组需要的时间为TD，B发送确认分组时间为TA，往返时间为RTT，那么完整的发送一个分组，需要耗费的时间为：TD+RTT+TA。过了这个时间后，第二个分组才开始发送。当RTT远大于分组发送时间TD时，信道的利用率就会非常低。</p>
+<p> <img src="https://s1.51cto.com/attachment/201307/092028129.png" alt="clipboard.png"> </p>
+<p>为了提高传输效率，发送方可以不使用低效率的停止等待协议，而采用流水线传输。流水线传输就是发送方可以连续发送多个分组，不必每发完一个分组就停下来等待对方确认。<em><strong>当使用流水线传输时，就要使用下面介绍的连续ARQ协议和滑动窗口协议。</strong></em></p>
+<p><img src="http://static.oschina.net/uploads/space/2014/0828/212142_4RTX_1469576.png" alt="img"></p>
+<h1 id="二、连续-ARQ-协议"><a href="#二、连续-ARQ-协议" class="headerlink" title="二、连续 ARQ 协议"></a>二、连续 ARQ 协议</h1><p>下图表示发送方维持的发送窗口，<em><strong>他的意义是：位于发送窗口内的5个分组都可以连续发送出去，而不需 要等待对方的确认。</strong></em>这样信道利用率就提高了。</p>
+<p><em><strong>发送窗口是5</strong></em> </p>
+<p><img src="http://static.oschina.net/uploads/space/2014/0829/133646_3LGX_1469576.png" alt="133646_3LGX_1469576.png"></p>
+<p><img src="http://static.oschina.net/uploads/space/2014/0829/140541_7TnN_1469576.png" alt="img"></p>
+<p>连续ARQ协议规定，<strong>发送方</strong>每接收到一个确认，就把发送窗口向前滑动一个分组的位置。<strong>下图b表示发送方收到了第一个分组的确认，于是把发送窗口向前移动一个分组的位置。如果原来已经发送了前5个分组，那么现在就可以发送窗口内的第六个分组。</strong></p>
+<p><strong>接收方</strong>一般都采用<strong>累积确认</strong>的方式。这就是说接收方<strong>不必</strong>对收到的分组<strong>逐个</strong>发送确认，而是可以在几个分组后，<strong>对按序到达的最后一个分组发送确认</strong>，这样就表示：到这个分组为止的所有分组都已经正确接收到了。累积确认有的优点是：容易实现，即使确认丢失也不必重传。缺点是：不能向发送方反映出接收方已经正确收到的所有分组的信息。</p>
+<p>如果发送方发送了前 5 个分组，而中间的第 3 个分组丢失了。这时接收方只能对前两个分组发出确认。发送方无法知道后面三个分组的下落，而只好把后面的三个分组都再重传一次。 这就叫做 <strong>Go-back-N（回退 N）</strong>，表示需要再退回来重传已发送过的 N 个分组。<strong>可见当通信线路质量不好时，连续 ARQ 协议会带来负面的影响。</strong> </p>
+<h1 id="三、滑动窗口协议"><a href="#三、滑动窗口协议" class="headerlink" title="三、滑动窗口协议"></a>三、滑动窗口协议</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><p>TCP建立连接的初始，B会告诉A自己的接收窗口大小，比如为‘20’： 字节31-50为发送窗口。假定A收到了B发送来的确认报文段，其中窗口是20字节，确认号是31（B期望收到的下一个序号是31， 30 之前的数据已经收到了）。<br><img src="http://blog.chinaunix.net/attachment/201402/17/26275986_1392626885IL2q.png" alt="img"><br>   A发送11个字节后，发送窗口位置不变，B接收到了乱序的数据分组：<br><img src="http://blog.chinaunix.net/attachment/201402/17/26275986_1392627107R2FQ.png" alt="img"></p>
+<p>P3-P1=A的发送窗口；</p>
+<p>P2-P1=A的已发送但未收到确认的字节数；</p>
+<p>P3-P2=A的允许发送但当前尚未发送的字节数（可用窗口或有效窗口）；</p>
+<p><strong>注意：</strong>B只能对按序收到的数据中的最高序号给出确认，因此B发送的确认报文中的确认好仍然是31，而不能是32或者33.</p>
+<p>只有当A成功发送了数据，即发送的数据得到了B的确认之后，才会移动滑动窗口离开已发送的数据；同时B则确认<strong>连续的数据分组，对于乱序的分组则先接收下来，避免网络重复传递</strong>：<br><img src="http://blog.chinaunix.net/attachment/201402/17/26275986_13926272726XTE.png" alt="img"></p>
+<hr>
+<p><strong>图5-18中的数据需要重传。</strong></p>
+<h2 id="2-超时重传时间的选择"><a href="#2-超时重传时间的选择" class="headerlink" title="2 超时重传时间的选择"></a>2 超时重传时间的选择</h2><p>上一篇文章里介绍过TCP采用<strong>停止等待协议</strong>，即在收到接收方的确认信息后才继续发送下面的数据。<br>那么如果（在一段时间内）发送方没有收到确认信息，我们便可以认为数据在传输的过程中出了差错，没有顺利传送到接收方。这种情况下，就需要一个“<strong>超时重传</strong>”的机制了</p>
+<p>TCP 每发送一个报文段，就对这个报文段<strong>设置一次计时器</strong>。只要计时器设置的重传时间到但还没有收到确认，就要重传这一报文段。<strong>那么如何确定重传时间呢？这是TCP最复杂的问题之一。</strong></p>
+<ul>
+<li>如果把超时重传时间设置得太短，就会引起很多报文段的不必要的重传，使网络负荷增大。</li>
+<li>但若把超时重传时间设置得过长，则又使网络的空闲时间增大，降低了传输效率。</li>
+</ul>
+<p><strong>为了得到较为合理的重传时间，TCP 采用了一种自适应算法。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://img2018.cnblogs.com/blog/1547682/201812/1547682-20181208102822257-616603703.png"><img src="https://img2018.cnblogs.com/blog/1547682/201812/1547682-20181208102822257-616603703.png" alt="超时重传RTO算法"></a></p>
+<p>按照RFC 6298的推荐α取0.125，β取0.25</p>
+<p>发送一个报文段，设定的重传时间到了，还没有收到确认。于是重传报文段，经过一段时间后：收到了确认报文段。现在的问题是：<strong>如何判定此报文段是对先发送的报文段的确认，还是对后来重传的报文段的确认</strong>？？？由于重传的报文段和原来的报文段完全一样，所以源主机在接受到确认后，无法做出正确的判断，而正确的判断对确定加权平均RTTs的值关系很大。</p>
+<blockquote>
+<p>1，若收到的是对重传报文段的确认，但却被源主机当作是对原来报文段的确认，则计算出的RTTs和超时重传时间RTO就会偏大。若后面再发送的报文段又是经过重传后才收到的确认报文段，则RTO这个时间会越来越长。直接影响效率</p>
+<p>2，若收到的是对原来的报文段的确认，但被当作是对重传报文段的确认，则由此计算出的RTTs和RTO都会偏小，这样就会导致过多的重传，使的RTO越来越小</p>
+</blockquote>
+<p>测量往返时间时，由于有的报文经过重传后，无法判断收到的确认报文是<strong>重传报文的确认报文</strong>还是<strong>原报文的确认报文</strong>，<strong>Karn提出了一个算法</strong>：<u><em>在计算加权平均RTTS时，只要报文段重传了，就不采用其往返时间样本，这样得出的加权平均RTTS和RTO就比较准确。</em></u></p>
+<p>情况：报文段的时延突然增大了很多，因此在原来得出的重传时间内，不会受到确认报文段，于是就重传。但根据上述算法，不考虑重传的报文段的往返时间样本，这时超时重传时间就无法更新。因此要对其算法更正：</p>
+<ul>
+<li><strong>在计算平均往返时间 RTT 时，只要报文段重传了，就不采用其往返时间样本。</strong></li>
+<li><strong>报文段每重传一次，就把 RTO 增大一些，以弥补重传时间的无法更新。典型的做法是取新的重传时间为旧的重传时间的2倍。比较合理</strong></li>
+</ul>
+<h1 id="四、滑动窗口实现流量控制"><a href="#四、滑动窗口实现流量控制" class="headerlink" title="四、滑动窗口实现流量控制"></a>四、滑动窗口实现流量控制</h1><h2 id="1-利用滑动窗口实现流量控制"><a href="#1-利用滑动窗口实现流量控制" class="headerlink" title="1 利用滑动窗口实现流量控制"></a>1 利用滑动窗口实现流量控制</h2><p>如果发送方把数据发送得过快，接收方可能会来不及接收，这就会造成数据的丢失。所谓<strong>流量控制</strong>就是<strong>让发送方的发送速率不要太快，要让接收方来得及接收。</strong>利用滑动窗口机制可以很方便地在TCP连接上实现对发送方的流量控制。</p>
+<p>设A向B发送数据。在连接建立时，B告诉了A：“我的接收窗口是 <strong>rwnd = 400</strong> ”(这里的 rwnd 表示 receiver window) 。因此，发送方的发送窗口不能超过接收方给出的接收窗口的数值。请注意，TCP的窗口单位是<strong>字节</strong>，不是报文段。TCP连接建立时的窗口协商过程在图中没有显示出来。再设每一个报文段为100字节长，而数据报文段序号的初始值设为1。大写ACK表示首部中的确认位ACK，小写ack表示确认字段的值ack。</p>
+<p><img src="https://img-blog.csdn.net/20140509220855687?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveWVjaGFvZGVjaHVudGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+<p> 从图中可以看出，B进行了三次流量控制。第一次把窗口减少到 rwnd = 300 ，第二次又减到了 rwnd = 100 ，最后减到 rwnd = 0 ，即不允许发送方再发送数据了。这种使发送方暂停发送的状态将持续到主机B重新发出一个新的窗口值为止。B向A发送的三个报文段都设置了 ACK = 1 ，只有在ACK=1时确认号字段才有意义。</p>
+<p> **TCP为每一个连接设有一个持续计时器(persistence timer)**。<u><em>只要TCP连接的一方收到对方的零窗口通知，就启动持续计时器。若持续计时器设置的时间到期，就发送一个零窗口控测报文段（携1字节的数据）</em></u>，那么收到这个报文段的一方就重新设置持续计时器。</p>
+<h2 id="2-必须考虑传输速率"><a href="#2-必须考虑传输速率" class="headerlink" title="2 必须考虑传输速率"></a>2 必须考虑传输速率</h2><p>可以用不同的机制来控制TCP报文段的发送时机。如： &lt;1&gt;. TCP维持一个变量，它等于最大报文段长度MSS。只要缓存中存放的数据达到MSS字节时，就组装成一个TCP报文段发送出去。&lt;2&gt;. 由发送方的应用进程指明要求发送报文段，即TCP支持的推送( push )操作。&lt;3&gt;. 发送方的一个计时器期限到了，这时就把已有的缓存数据装入报文段(但长度不能超过MSS)发送出去。</p>
+<p><strong>Nagle算法：</strong>若发送应用进程把要发送的数据逐个字节地送到TCP的发送缓存，则发送方就把第一个数据字节先发送出去，把后面到达的数据字节都缓存起来。当发送方接收对第一个数据字符的确认后，再把发送缓存中的所有数据组装成一个报文段再发送出去，同时继续对随后到达的数据进行缓存。只有在收到对前一个报文段的确认后才继续发送下一个报文段。当数据到达较快而网络速率较慢时，用这样的方法可明显地减少所用的网络带宽。Nagle算法还规定：当到达的数据已达到 发送窗口大小的一半或已达到报文段的最大长度时，就立即发送一个报文段。</p>
+<p>另，<strong>糊涂窗口综合证：</strong>TCP接收方的缓存已满，而交互式的应用进程一次只从接收缓存中读取1字节（这样就使接收缓存空间仅腾出1字节），然后向发送方发送确认，并把窗口设置为1个字节（但发送的数据报为40字节的的话）。接收，发送方又发来1个字节的数据（发送方的IP数据报是41字节）。接收方发回确认，仍然将窗口设置为1个字节。这样，网络的效率很低。要解决这个问题，可让接收方等待一段时间，使得或者接收缓存已有足够空间容纳一个最长的报文段，或者等到接收方缓存已有一半空闲的空间。只要出现这两种情况，接收方就发回确认报文，并向发送方通知当前的窗口大小。此外，发送方也不要发送太小的报文段，而是把数据报积累成足够大的报文段，或达到接收方缓存的空间的一半大小。</p>
+<h1 id="五、TCP的拥塞控制"><a href="#五、TCP的拥塞控制" class="headerlink" title="五、TCP的拥塞控制"></a><strong>五、TCP的拥塞控制</strong></h1><h2 id="1-拥塞："><a href="#1-拥塞：" class="headerlink" title="1 拥塞："></a>1 拥塞：</h2><p>即对资源的需求超过了可用的资源。若网络中许多资源同时供应不足，网络的性能就要明显变坏，整个网络的吞吐量随之负荷的增大而下降。</p>
+<h2 id="2-流量控制和拥塞控制区别："><a href="#2-流量控制和拥塞控制区别：" class="headerlink" title="2 流量控制和拥塞控制区别："></a>2 流量控制和拥塞控制区别：</h2><p><strong>拥塞控制</strong>：<strong>防止过多的数据注入到网络中，这样可以使网络中的路由器或链路不致过载。</strong>拥塞控制所要做的都有一个<strong>前提：网络能够承受现有的网络负荷。</strong>拥塞控制是一个<strong>全局性的过程</strong>，涉及到所有的主机、路由器，以及与降低网络传输性能有关的所有因素。</p>
+<p><strong>流量控制</strong>：指点对点通信量的控制，是端到端正的问题。流量控制所要做的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
+<p><strong>拥塞控制代价：</strong>需要获得网络内部流量分布的信息。在实施拥塞控制之前，还需要在结点之间交换信息和各种命令，以便选择控制的策略和实施控制。这样就产生了额外的开销。拥塞控制还需要将一些资源分配给各个用户单独使用，使得网络资源不能更好地实现共享。</p>
+<h2 id="3-几种拥塞控制方法"><a href="#3-几种拥塞控制方法" class="headerlink" title="3 几种拥塞控制方法"></a>3 几种拥塞控制方法</h2><p>慢开始( slow-start )、拥塞避免( congestion avoidance )、快重传( fast retransmit )和快恢复( fast recovery )。</p>
+<h3 id="1-慢开始和拥塞避免"><a href="#1-慢开始和拥塞避免" class="headerlink" title="1 慢开始和拥塞避免"></a>1 慢开始和拥塞避免</h3><p>发送方维持一个拥塞窗口 cwnd ( congestion window )的状态变量。拥塞窗口的大小取决于网络的拥塞程度，并且动态地在变化。发送方让自己的发送窗口等于拥塞。</p>
+<p>发送方控制拥塞窗口的原则是：只要网络没有出现拥塞，拥塞窗口就再增大一些，以便把更多的分组发送出去。但只要网络出现拥塞，拥塞窗口就减小一些，以减少注入到网络中的分组数。</p>
+<p>慢开始算法：当主机开始发送数据时，如果立即所大量数据字节注入到网络，那么就有可能引起网络拥塞，因为现在并不清楚网络的负荷情况。因此，较好的方法是先探测一下，即由小到大逐渐增大发送窗口，也就是说，由小到大逐渐增大拥塞窗口数值。通常在刚刚开始发送报文段时，先把拥塞窗口 cwnd 设置为一个最大报文段MSS的数值。而在每收到一个对新的报文段的确认后，把拥塞窗口增加至多一个MSS的数值。用这样的方法<strong>逐步增大发送方的拥塞窗口 cwnd ，可以使分组注入到网络的速率更加合理</strong>。</p>
+<p><img src="https://img-blog.csdn.net/20140509220932437?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveWVjaGFvZGVjaHVudGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+<p>每经过一个传输轮次，拥塞窗口 cwnd 就加倍。一个传输轮次所经历的时间其实就是往返时间RTT。不过“传输轮次”更加强调：把拥塞窗口cwnd所允许发送的报文段都连续发送出去，并收到了对已发送的最后一个字节的确认。</p>
+<p>另，慢开始的“慢”并不是指cwnd的增长速率慢，而是指在TCP开始发送报文段时先设置cwnd=1，使得发送方在开始时只发送一个报文段（目的是试探一下网络的拥塞情况），然后再逐渐增大cwnd。</p>
+<p>  为了防止拥塞窗口cwnd增长过大引起网络拥塞，还需要设置一个慢开始门限ssthresh状态变量（如何设置ssthresh）。慢开始门限ssthresh的用法如下：</p>
+<p>  当 cwnd &lt; ssthresh 时，使用上述的慢开始算法。</p>
+<p>  当 cwnd &gt; ssthresh 时，停止使用慢开始算法而改用拥塞避免算法。</p>
+<p>  当 cwnd = ssthresh 时，既可使用慢开始算法，也可使用拥塞控制避免算法。</p>
+<p><strong>拥塞避免算法：</strong>让拥塞窗口cwnd缓慢地增大，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1，而不是加倍。这样拥塞窗口cwnd按线性规律缓慢增长，比慢开始算法的拥塞窗口增长速率缓慢得多。</p>
+<p>无论在慢开始阶段还是在拥塞避免阶段，<strong>只要发送方判断网络出现拥塞</strong>（其根据就是没有收到确认），就要把慢开始门限<strong>ssthresh设置为出现拥塞时的发送方窗口值的一半（但不能小于2）</strong>。然<strong>后把拥塞窗口cwnd重新设置为1，执行慢开始算法。</strong>这样做的目的就是要迅速减少主机发送到网络中的分组数，使得发生拥塞的路由器有足够时间把队列中积压的分组处理完毕。</p>
+<p>如下图，用具体数值说明了上述拥塞控制的过程。现在发送窗口的大小和拥塞窗口一样大。</p>
+<p><img src="https://img-blog.csdn.net/20140509221015859?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveWVjaGFvZGVjaHVudGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+<p>&lt;1&gt;. 当TCP连接进行初始化时，把拥塞窗口cwnd置为1。前面已说过，为了便于理解，图中的窗口单位不使用字节而使用报文段的个数。慢开始门限的初始值设置为16个报文段，即 cwnd = 16 。</p>
+<p>&lt;2&gt;. 在执行慢开始算法时，拥塞窗口 cwnd 的初始值为1。以后发送方每收到一个对新报文段的确认ACK，就把拥塞窗口值另1，然后开始下一轮的传输（图中横坐标为传输轮次）。因此拥塞窗口cwnd随着传输轮次按<strong>指数规律</strong>增长。当拥塞窗口cwnd增长到慢开始门限值ssthresh时（即当cwnd=16时），就改为执行拥塞控制算法，拥塞窗口按<strong>线性规律</strong>增长。</p>
+<p>&lt;3&gt;. 假定拥塞窗口的数值增长到24时，网络出现超时（这很可能就是网络发生拥塞了）。<strong>更新后的ssthresh值变为12（即变为出现超时时的拥塞窗口数值24的一半），拥塞窗口再重新设置为1，并执行慢开始算法</strong>。当cwnd=ssthresh=12时改为执行拥塞避免算法，拥塞窗口按线性规律增长，每经过一个往返时间增加一个MSS的大小。</p>
+<p>强调：“拥塞避免”并非指完全能够避免了拥塞。利用以上的措施要完全避免网络拥塞还是不可能的。“拥塞避免”是说在拥塞避免阶段将拥塞窗口控制为按线性规律增长，<strong>使网络比较不容易出现拥塞。</strong></p>
+<h3 id="2-快重传和快恢复"><a href="#2-快重传和快恢复" class="headerlink" title="2 快重传和快恢复"></a>2 快重传和快恢复</h3><p>如果发送方设置的超时计时器时限已到但还没有收到确认，那么很可能是网络出现了拥塞，致使报文段在网络中的某处被丢弃。这时，TCP马上把拥塞窗口 cwnd 减小到1，并执行慢开始算法，同时把慢开始门限值ssthresh减半。<strong>这是不使用快重传的情况。</strong></p>
+<p><strong>快重传算法</strong><em><u>首先要求接收方每收到一个失序的报文段后就立即发出重复确认（为的是使发送方及早知道有报文段没有到达对方）而不要等到自己发送数据时才进行捎带确认。</em></u></p>
+<p><img src="https://img-blog.csdn.net/20140509221032109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveWVjaGFvZGVjaHVudGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"></p>
+<p>接收方收到了M1和M2后都分别发出了确认。现在假定接收方没有收到M3但接着收到了M4。显然，接收方不能确认M4，因为<strong>M4是收到的失序报文段</strong>。<u>根据可靠传输原理，接收方可以什么都不做，也可以在适当时机发送一次对M2的确认</u>。但<u>按照快重传算法的规定，接收方应及时发送对M2的重复确认</u>，这样做可以让发送方及早知道报文段M3没有到达接收方。发送方接着发送了M5和M6。接收方收到这两个报文后，也还要再次发出对M2的重复确认。这样，发送方共收到了接收方的四个对M2的确认，其中后三个都是重复确认。<strong>快重传算法还规定，发送方只要一连收到三个重复确认就应当立即重传对方尚未收到的报文段M3，而不必继续等待M3设置的重传计时器到期。</strong>由于发送方尽早重传未被确认的报文段，因此采用快重传后可以使整个网络吞吐量提高约20%。</p>
+<p><strong>与快重传配合使用的还有快恢复算法</strong>，其过程有以下两个要点：</p>
+<p>  &lt;1&gt;. <strong>当发送方连续收到三个重复确认</strong>，就执行“乘法减小”算法，把慢开始门限ssthresh减半。这是为了预防网络发生拥塞。请注意：接下去不执行慢开始算法。</p>
+<p>  &lt;2&gt;. 由于发送方现在认为网络很可能没有发生拥塞，因此与慢开始不同之处是现在不执行慢开始算法（即拥塞窗口cwnd现在不设置为1），而是把cwnd值设置为慢开始门限ssthresh减半后的数值，然后开始执行拥塞避免算法（“加法增大”），使拥塞窗口缓慢地线性增大。</p>
+<p>  下图给出了快重传和快恢复的示意图，并标明了<strong>“TCP Reno版本”</strong>。</p>
+<p>  区别：新的 TCP Reno 版本在快重传之后采用快恢复算法而不是采用慢开始算法。</p>
+<p><img src="https://img-blog.csdn.net/20140509221048265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveWVjaGFvZGVjaHVudGlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="img"> </p>
+<p><u>也有的快重传实现是把开始时的拥塞窗口cwnd值再增大一点，即等于 ssthresh + 3 X MSS</u> 。这样做的理由是：既然发送方收到三个重复的确认，就表明有三个分组已经离开了网络。这三个分组不再消耗网络 的资源而是停留在接收方的缓存中。可见现在网络中并不是堆积了分组而是减少了三个分组。因此可以适当把拥塞窗口扩大了些。</p>
+<p>在采用快恢复算法时，慢开始算法只是在TCP连接建立时和网络出现超时时才使用。采用这样的拥塞控制方法使得TCP的性能有明显的改进。</p>
+<p>接收方根据自己的接收能力设定了接收窗口rwnd，并把这个窗口值写入TCP首部中的窗口字段，传送给发送方。因此，接收窗口又称为<strong>通知窗口</strong>。因此，从接收方对发送方的流量控制的角度考虑，发送方的发送窗口一定不能超过对方给出的接收窗口rwnd 。</p>
+<p>发送方窗口的上限值 = Min [ rwnd, cwnd ]</p>
+<p>当rwnd &lt; cwnd 时，是接收方的接收能力限制发送方窗口的最大值。</p>
+<p>当cwnd &lt; rwnd 时，则是网络的拥塞限制发送方窗口的最大值。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">MuChengxue</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/">http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://muchengxue.github.io" target="_blank">暮成雪的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%BC%A0%E8%BE%93/">可靠性传输</a></div><div class="post_share"><div class="social-share" data-image="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%BB%BC%E8%BF%B0/"><img class="prev-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机网络体系结构综述</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BB%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9C%B0%E5%9D%80%E6%A0%8F%E8%BE%93%E5%85%A5url%E5%88%B0%E6%98%BE%E7%A4%BA%E9%A1%B5%E9%9D%A2%E7%9A%84%E6%AD%A5%E9%AA%A4(%E4%BB%A5HTTP%E4%B8%BA%E4%BE%8B)/"><img class="next-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从浏览器地址栏输入url到显示页面的步骤(以HTTP为例)</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/myFavicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">MuChengxue</div><div class="author-info__description">记录学习，记录生活</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/muchengxue"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">记录学习，记录生活</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%81%9C%E6%AD%A2%E7%AD%89%E5%BE%85%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">一、停止等待协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%97%A0%E5%B7%AE%E9%94%99%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">1.1.</span> <span class="toc-text">1 无差错的情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%87%BA%E7%8E%B0%E5%B7%AE%E9%94%99"><span class="toc-number">1.2.</span> <span class="toc-text">2 出现差错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%A1%AE%E8%AE%A4%E4%B8%A2%E5%A4%B1%E5%92%8C%E7%A1%AE%E8%AE%A4%E5%BB%B6%E8%BF%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3 确认丢失和确认延迟</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BF%A1%E9%81%93%E5%88%A9%E7%94%A8%E7%8E%87"><span class="toc-number">1.4.</span> <span class="toc-text">4 信道利用率</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%BF%9E%E7%BB%AD-ARQ-%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.</span> <span class="toc-text">二、连续 ARQ 协议</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE"><span class="toc-number">3.</span> <span class="toc-text">三、滑动窗口协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="toc-number">3.1.</span> <span class="toc-text">1 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%B6%85%E6%97%B6%E9%87%8D%E4%BC%A0%E6%97%B6%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">3.2.</span> <span class="toc-text">2 超时重传时间的选择</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%AE%9E%E7%8E%B0%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">四、滑动窗口实现流量控制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%88%A9%E7%94%A8%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%AE%9E%E7%8E%B0%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">4.1.</span> <span class="toc-text">1 利用滑动窗口实现流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BF%85%E9%A1%BB%E8%80%83%E8%99%91%E4%BC%A0%E8%BE%93%E9%80%9F%E7%8E%87"><span class="toc-number">4.2.</span> <span class="toc-text">2 必须考虑传输速率</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81TCP%E7%9A%84%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="toc-number">5.</span> <span class="toc-text">五、TCP的拥塞控制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%8B%A5%E5%A1%9E%EF%BC%9A"><span class="toc-number">5.1.</span> <span class="toc-text">1 拥塞：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E5%92%8C%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-number">5.2.</span> <span class="toc-text">2 流量控制和拥塞控制区别：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%87%A0%E7%A7%8D%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95"><span class="toc-number">5.3.</span> <span class="toc-text">3 几种拥塞控制方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%85%A2%E5%BC%80%E5%A7%8B%E5%92%8C%E6%8B%A5%E5%A1%9E%E9%81%BF%E5%85%8D"><span class="toc-number">5.3.1.</span> <span class="toc-text">1 慢开始和拥塞避免</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BF%AB%E9%87%8D%E4%BC%A0%E5%92%8C%E5%BF%AB%E6%81%A2%E5%A4%8D"><span class="toc-number">5.3.2.</span> <span class="toc-text">2 快重传和快恢复</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AQS的设计思路"/></a><div class="content"><a class="title" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路">AQS的设计思路</a><time datetime="2022-02-03T13:10:28.437Z" title="发表于 2022-02-03 13:10:28">2022-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="float的范围和精度"/></a><div class="content"><a class="title" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度">float的范围和精度</a><time datetime="2022-01-21T14:18:25.869Z" title="发表于 2022-01-21 14:18:25">2022-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随想1"/></a><div class="content"><a class="title" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1">随想1</a><time datetime="2021-12-18T16:15:22.363Z" title="发表于 2021-12-18 16:15:22">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis 吊打面试官"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官">Redis 吊打面试官</a><time datetime="2021-12-18T14:44:09.169Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis中的事务"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务">Redis中的事务</a><time datetime="2021-12-18T14:44:09.165Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By MuChengxue</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+      appKey: 'Q5AgpWIhyjBqzKm5oObDrcz2',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://E5eH22JQ.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        "X-LC-Key": 'Q5AgpWIhyjBqzKm5oObDrcz2',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 2/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="627070825" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="true" data-text="^_^,^_^,^_^" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,1019 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设计模式（1） | 暮成雪的博客</title><meta name="keywords" content="设计模式"><meta name="author" content="MuChengxue"><meta name="copyright" content="MuChengxue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、概述设计模式的目的编写软件过程中，程序员面临着来自 耦合性，内聚性以及可维护性，可扩展性，重 用性，灵活性 等多方面的挑战，设计模式是为了让程序**(软件)**，具有更好  代码重用性 (即：相同功能的代码，不用多次编写)  可读性 (即：编程规范性, 便于其他程序员的阅读和理解)  可扩展性 (即：当需要增加新的功能时，非常的方便，称为可维护)  可靠性 (即：当我们增加新的功能后，对原来的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式（1）">
+<meta property="og:url" content="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="暮成雪的博客">
+<meta property="og:description" content="一、概述设计模式的目的编写软件过程中，程序员面临着来自 耦合性，内聚性以及可维护性，可扩展性，重 用性，灵活性 等多方面的挑战，设计模式是为了让程序**(软件)**，具有更好  代码重用性 (即：相同功能的代码，不用多次编写)  可读性 (即：编程规范性, 便于其他程序员的阅读和理解)  可扩展性 (即：当需要增加新的功能时，非常的方便，称为可维护)  可靠性 (即：当我们增加新的功能后，对原来的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg">
+<meta property="article:published_time" content="2021-12-18T14:42:02.532Z">
+<meta property="article:modified_time" content="2022-01-03T10:20:22.645Z">
+<meta property="article:author" content="MuChengxue">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg"><link rel="shortcut icon" href="/img/myFavicon.jpg"><link rel="canonical" href="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: MuChengxue","link":"链接: ","source":"来源: 暮成雪的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '设计模式（1）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-03 10:20:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/myFavicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮成雪的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">设计模式（1）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:02.532Z" title="发表于 2021-12-18 14:42:02">2021-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-03T10:20:22.645Z" title="更新于 2022-01-03 10:20:22">2022-01-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JavaSE%E9%83%A8%E5%88%86/">JavaSE部分</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">12.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>50分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="设计模式（1）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><h2 id="设计模式的目的"><a href="#设计模式的目的" class="headerlink" title="设计模式的目的"></a><strong>设计模式的目的</strong></h2><p>编写软件过程中，程序员面临着来自 耦合性，内聚性以及可维护性，可扩展性，重</p>
+<p>用性，灵活性 等多方面的挑战，设计模式是为了让<strong>程序</strong>**(<strong><strong>软件</strong></strong>)**，具有更好</p>
+<ol>
+<li><p>代码重用性 (即：相同功能的代码，不用多次编写)</p>
+</li>
+<li><p>可读性 (即：编程规范性, 便于其他程序员的阅读和理解)</p>
+</li>
+<li><p>可扩展性 (即：当需要增加新的功能时，非常的方便，称为可维护)</p>
+</li>
+<li><p>可靠性 (即：当我们增加新的功能后，对原来的功能没有影响)</p>
+</li>
+<li><p>使程序呈现<strong>高内聚</strong>，<strong>低耦合</strong>的特性</p>
+</li>
+</ol>
+<p><strong>分享金句</strong>： </p>
+<p>设计模式包含了面向对象的精髓，“懂了设计模式，你就懂了面向对象分析和设计</p>
+<p>（OOA/D）的精要”</p>
+<p>Scott Mayers 在其巨著《Effective C++》就曾经说过：C++老手和 C++新手的区别就是</p>
+<p>前者手背上有很多<strong>伤疤</strong></p>
+<h2 id="设计模式七大原则"><a href="#设计模式七大原则" class="headerlink" title="设计模式七大原则"></a><strong>设计模式七大原则</strong></h2><p>设计模式原则，其实就是程序员在编程时，应当遵守的原则，也是各种设计模</p>
+<p>式的基础(即：<strong>设计模式为什么这样设计的依据</strong>) </p>
+<p><strong>设计模式常用的七大原则有</strong>:</p>
+<ol>
+<li><p>单一职责原则</p>
+</li>
+<li><p>接口隔离原则</p>
+</li>
+<li><p>依赖倒转(倒置)原则</p>
+</li>
+<li><p>里氏替换原则</p>
+</li>
+<li><p>开闭原则</p>
+</li>
+<li><p>迪米特法则</p>
+</li>
+</ol>
+<p><strong>7)</strong> <strong>合成复用原则</strong></p>
+<h3 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a><strong>单一职责原则</strong></h3><p><strong>单一职责原则注意事项和细节</strong></p>
+<ol>
+<li><p>降低类的复杂度，一个类只负责<strong>一项</strong>职责。</p>
+</li>
+<li><p>提高类的可读性，可维护性</p>
+</li>
+<li><p>降低变更引起的风险</p>
+</li>
+<li><p>通常情况下，<strong>我们应当遵守单一职责原则</strong>，<u>只有逻辑足够简单，才可以在代码级违</u></p>
+</li>
+</ol>
+<p><u>反单一职责原则；只有类中方法数量足够少，可以在方法级别保持单一职责原则</u></p>
+<h3 id="接口隔离原则-Interface-Segregation-Principle"><a href="#接口隔离原则-Interface-Segregation-Principle" class="headerlink" title="接口隔离原则(Interface Segregation Principle)"></a><strong>接口隔离原则</strong>(Interface Segregation Principle)</h3><p><strong>基本介绍</strong></p>
+<ol>
+<li><p>客户端不应该依赖它不需要的接口，即一个类对另一个<strong>类的依赖应该建立在最小的接口上</strong></p>
+</li>
+<li><p>类A通过接口Interface1依赖类B，类C通过接口Interface1依赖类D，如果接口Interface1对于类A和类C来说不是最小接口，那么类B和类D必须去实现他们不需要的方法。</p>
+</li>
+<li><p>按隔离原则应当这样处理：将接口Interface1拆分为独立的几个接口，类A和类C分别与他们需要的接口建立依赖关系。也就是采用接口隔离原则</p>
+</li>
+</ol>
+<p><strong>应传统方法的问题和使用接口隔离原则改进</strong></p>
+<ol>
+<li><p>类A通过接口Interface1依赖类B，类C通过接口Interface1依赖类D，如果接口Interface1对于类A和类C来说不是最小接口，那么类B和类D必须去实现他们不需要的方法</p>
+</li>
+<li><p>将接口Interface1拆分为独立的几个接口，类A和类C分别与他们需要的接口建立依赖关系。也就是采用接口隔离原则</p>
+</li>
+<li><p>接口Interface1中出现的方法，根据实际情况拆分为三个接口</p>
+</li>
+</ol>
+<p><img src="D:\学习资料\面试题总结\设计模式\1.png"></p>
+<p><img src="D:\学习资料\面试题总结\设计模式\2.png" alt="2"></p>
+<h3 id="依赖倒转原则"><a href="#依赖倒转原则" class="headerlink" title="依赖倒转原则"></a><strong>依赖倒转原则</strong></h3><p><strong>基本介绍</strong></p>
+<p>依赖倒转原则(<strong>Dependence Inversion Principle</strong>)是指：</p>
+<ol>
+<li><p>高层模块不应该依赖低层模块，二者都应该<strong>依赖其抽象</strong></p>
+</li>
+<li><p><strong>抽象不应该依赖细节，细节应该依赖抽象</strong></p>
+</li>
+<li><p>依赖倒转(倒置)的中心思想是<strong>面向接口编程</strong></p>
+</li>
+<li><p>依赖倒转原则是基于这样的设计理念：相对于细节的多变性，抽象的东西要稳定的多。以抽象为基础搭建的架构比以细节为基础的架构要稳定的多。在java中，<strong>抽象指的是接口或抽象类，细节就是具体的实现类</strong></p>
+</li>
+<li><p>使用接口或抽象类的目的是<strong>制定好规范</strong>，而不涉及任何具体的操作，把展现细节的任务交给他们的实现类去完成</p>
+</li>
+</ol>
+<p><strong>依赖关系传递的三种方式和应用案例</strong></p>
+<ol>
+<li><p>接口传递</p>
+</li>
+<li><p>构造方法传递</p>
+</li>
+<li><p>setter方式传递</p>
+</li>
+</ol>
+<p><strong>依赖倒转原则的注意事项和细节</strong></p>
+<ol>
+<li><p><strong>低层模块尽量都要有抽象类或接口</strong>，或者两者都有，程序稳定性更好. </p>
+</li>
+<li><p><strong>变量的声明类型尽量是抽象类或接口,</strong> 这样我们的变量引用和实际对象间，就存在一个缓冲层，利于程序扩展和优化</p>
+</li>
+<li><p>继承时遵循<strong>里氏替换</strong>原则</p>
+</li>
+</ol>
+<h3 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a><strong>里氏替换原则</strong></h3><p><strong>OO</strong>中的继承性的思考和说明</p>
+<ol>
+<li><p><strong>继承</strong>包含这样一层含义：父<u>类中凡是已经实现好的方法，实际上是在设定规范和契</u><u>约，虽然它不强制要求所有的子类必须遵循这些契约，但是如果子类对这些已经实</u><u>现的方法任意修改，就会对整个继承体系造成破坏</u>。</p>
+</li>
+<li><p>继承在给程序设计带来便利的同时，也带来了弊端。比如使用继承会给程序带来<strong>侵****入性</strong>，程序的<strong>可移植性降低</strong>，<strong>增加对象间的耦合性</strong>，如果一个类被其他的类所继承，则当这个类需要修改时，必须考虑到所有的子类，并且父类修改后，所有涉及到子类的功能都有可能产生故障**</p>
+</li>
+</ol>
+<p>**3) 问题提出：在编程中，如何正确的使用继承? =&gt; <strong>里氏替换原则</strong></p>
+<p><strong>里氏替换原则</strong></p>
+<p><strong>基本介绍</strong></p>
+<ol>
+<li><p>里氏替换原则(<strong>Liskov Substitution Principle</strong>)在1988年，由麻省理工学院的以为姓里的女士提出的。</p>
+</li>
+<li><p>如果对每个类型为T1的对象o1，都有类型为T2的对象o2，使得以T1定义的所有程序P在所有的对象o1都代换成o2时，程序P的行为没有发生变化，那么类型T2是类型T1的子类型。换句话说，<strong>所有引用基类的地方必须能透明地使用其子类的对象</strong>。</p>
+</li>
+<li><p>在使用继承时，遵循里氏替换原则，在子类中<strong>尽量</strong>不要重写父类的方法</p>
+</li>
+<li><p>里氏替换原则告诉我们，继承实际上让两个类耦合性增强了，<strong>在适当的情况下，可以通过聚合，组合，依赖 来解决问题。</strong></p>
+</li>
+</ol>
+<p><strong>解决方法</strong>：原来的父类和子类都继承一个<strong>更通俗的基类</strong>，原有的继承关系去掉，采用依赖，聚合，组合等关系代替.</p>
+<img src="D:\学习资料\面试题总结\设计模式\3.png" style="zoom: 50%;" />
+
+<h3 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a><strong>开闭原则</strong></h3><p><strong>基本介绍</strong></p>
+<ol>
+<li><p>开闭原则（Open Closed Principle）是编程中最基础、最重要的设计原则</p>
+</li>
+<li><p>一个软件实体如类，模块和函数应该<strong>对扩展开放(对提供方)，对修改关闭(对使用</strong></p>
+</li>
+</ol>
+<p><strong>方)<strong>。</strong>用抽象构建框架，用实现扩展细节。</strong></p>
+<ol start="3">
+<li>当软件需要变化时，尽量<strong>通过扩展</strong>软件实体的行为来实现变化，而<strong>不是通过修改</strong>已</li>
+</ol>
+<p>有的代码来实现变化。</p>
+<ol start="4">
+<li>编程中遵循其它原则，以及使用设计模式的目的就是遵循<strong>开闭原则</strong>。</li>
+</ol>
+<h3 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a><strong>迪米特法则</strong></h3><p><strong>基本介绍</strong></p>
+<ol>
+<li><p>一个对象应该对其他对象保持最少的了解</p>
+</li>
+<li><p>类与类关系越密切，耦合度越大</p>
+</li>
+<li><p>迪米特法则(<strong>Demeter Principle</strong>)又叫<strong>最少知道原则</strong>，即一个类对自己依赖的类知道的越少越好。也就是说，对于被依赖的类不管多么复杂，都尽量将逻辑封装在类的内部。对外除了提供的public 方法，不对外泄露任何信息</p>
+</li>
+<li><p>迪米特法则还有个更简单的定义：<strong>只与直接的朋友通信</strong></p>
+</li>
+</ol>
+<p><strong>5)</strong> <strong>直接的朋友</strong>：每个对象都会与其他对象有耦合关系，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。耦合的方式很多，依赖，关联，组合，聚合等。其中，我们称<strong>出现在成员变量，方法参数，方法返回值中的类为直接的朋友</strong>，而<strong>出现在局部变量中的类不是直接的朋友</strong>。也就是说，<strong>陌生的类最好不要以局部变量的形式出现在类的内部。</strong></p>
+<p><strong>迪米特法则注意事项和细节</strong></p>
+<ol>
+<li><p>迪米特法则的核心是<strong>降低类之间的耦合</strong></p>
+</li>
+<li><p>但是注意：由于每个类都减少了不必要的依赖，因此迪米特法则<strong>只是要求降低</strong>类间(对象间)耦合关系， <u>并不是要求完全没有依赖关系</u></p>
+</li>
+</ol>
+<h2 id="设计原则核心思想"><a href="#设计原则核心思想" class="headerlink" title="设计原则核心思想"></a><strong>设计原则核心思想</strong></h2><ol>
+<li><p>找出应用中可能需要变化之处，把它们独立出来，不要和那些不需要变化的代码混在一起。</p>
+</li>
+<li><p>针对接口编程，而不是针对实现编程。</p>
+</li>
+<li><p>为了交互对象之间的松耦合设计而努力</p>
+</li>
+</ol>
+<h1 id="二、设计模式介绍"><a href="#二、设计模式介绍" class="headerlink" title="二、设计模式介绍"></a><strong>二、设计模式介绍</strong></h1><ol>
+<li><p>设计模式是程序员在面对同类软件工程设计问题所总结出来的有用的经验，模式不是代码，而是某类问题的通用解决方案，设计模式（Design pattern）代表了<strong>最佳的实践</strong>。这些解决方案是众多软件开发人员经过相当长的一段时间的试验和错误总结出来的。</p>
+</li>
+<li><p>设计模式的本质提高 软件的维护性，通用性和扩展性，并降低软件的复杂度。</p>
+</li>
+<li><p>&lt;&lt;设计模式&gt;&gt; 是经典的书，作者是 Erich Gamma、Richard Helm、Ralph Johnson 和 John Vlissides Design（俗称 “四人组 GOF”）</p>
+</li>
+<li><p>设计模式并不局限于某种语言，java，php，c++ 都有设计模式.</p>
+</li>
+</ol>
+<h1 id="三、设计模式类型"><a href="#三、设计模式类型" class="headerlink" title="三、设计模式类型"></a><strong>三、设计模式类型</strong></h1><p><strong>设计模式分为三种类型，共23种</strong></p>
+<p><strong>1)</strong> <strong>创建型模式</strong>：<strong>单例模式</strong>、<strong>抽象工厂模式</strong>、原型模式、建造者模式、<strong>工厂模式</strong>。</p>
+<p><strong>2)</strong> <strong>结构型模式</strong>：<strong>适配器模式</strong>、桥接模式、装饰模式、组合模式、外观模式、享</p>
+<p>元模式、<strong>代理模式</strong>。</p>
+<p><strong>3)</strong> <strong>行为型模式</strong>：<strong>模版方法模式</strong>、命令模式、访问者模式、迭代器模式、观察者</p>
+<p>模式、中介者模式、备忘录模式、解释器模式（Interpreter模式）、状态模</p>
+<p>式、策略模式、**职责链模式(责任链模式)**。 </p>
+<h1 id="四、单例设计模式"><a href="#四、单例设计模式" class="headerlink" title="四、单例设计模式"></a>四、单例设计模式</h1><p>单例模式有八种方式：</p>
+<p><strong>1) 饿汉式(静态常量)</strong></p>
+<p><strong>2) 饿汉式（静态代码块）</strong></p>
+<ol start="3">
+<li><p>懒汉式(线程不安全)</p>
+</li>
+<li><p>懒汉式(线程安全，同步方法)</p>
+</li>
+<li><p>懒汉式(线程安全，同步代码块)</p>
+</li>
+</ol>
+<p><strong>6) 双重检查</strong></p>
+<p><strong>7) 静态内部类</strong></p>
+<p><strong>8) 枚举</strong></p>
+<h2 id="饿汉式（掌握，静态常量）"><a href="#饿汉式（掌握，静态常量）" class="headerlink" title="饿汉式（掌握，静态常量）"></a><strong>饿汉式（掌握，静态常量）</strong></h2><p><strong>饿汉式（静态常量）应用实例</strong></p>
+<p><strong>步骤如下</strong>：</p>
+<ol>
+<li><p>构造器私有化 (防止 new )</p>
+</li>
+<li><p>类的内部创建对象</p>
+</li>
+<li><p>向外暴露一个静态的公共方法。getInstance</p>
+</li>
+<li><p>代码实现</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//饿汉式(静态变量)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//1. 构造器私有化, 外部不能new</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//2.本类内部创建对象实例。在类加载的时候就创建了</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">   <span class="comment">//3. 向外暴露提供一个公有的静态方法，返回实例对象</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优缺点说明</strong>：</p>
+<ol>
+<li><p><strong>优点</strong>：这种写法比较简单，就是在<strong>类装载的时候就完成实例化</strong>。<strong>避免了线程同步问题</strong>。</p>
+</li>
+<li><p><strong>缺点</strong>：在类装载的时候就完成实例化，<strong>没有达到Lazy Loading</strong>的效果。如果从始至终从未使用过这个实例，则会<strong>造成内存的浪费</strong></p>
+</li>
+<li><p>这种方式基于classloder机制避免了多线程的同步问题，不过，instance在类装载时就实例化，在单例模式中大多数都是调用getInstance方法， 但是<strong>导致类装载的原因有很多种</strong>，因此不能确定有其他的方式（或者其他的静态方法）导致类装载，这时候初始化instance就<strong>没有达到lazy loading的效果</strong></p>
+</li>
+<li><p><strong>结论</strong>：这种单例模式<strong>可用</strong>，<strong>可能</strong>造成内存浪费</p>
+</li>
+</ol>
+<h2 id="饿汉式（静态代码块）"><a href="#饿汉式（静态代码块）" class="headerlink" title="饿汉式（静态代码块）"></a><strong>饿汉式（静态代码块）</strong></h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//饿汉式(静态代码块)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//1. 构造器私有化, 外部能new</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//2.本类内部创建对象实例</span></span><br><span class="line">   <span class="keyword">private</span>  <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">static</span> &#123; <span class="comment">// 在静态代码块中，创建单例对象</span></span><br><span class="line">      instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//3. 提供一个公有的静态方法，返回实例对象</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优缺点说明</strong>：</p>
+<ol>
+<li><p>这种方式和上面的方式其实类似，只不过将类实例化的过程放在了静态代码块中，也是在类装载的时候，就执行静态代码块中的代码，初始化类的实例。优缺点和上面是一样的。</p>
+</li>
+<li><p>结论：这种单例模式可用，但是可能造成内存浪费</p>
+</li>
+</ol>
+<h2 id="懒汉式-线程不安全"><a href="#懒汉式-线程不安全" class="headerlink" title="懒汉式(线程不安全)"></a><strong>懒汉式</strong>(线程不安全)</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//提供一个静态的公有方法，当使用到该方法时，才去创建 instance</span></span><br><span class="line">    <span class="comment">//即懒汉式</span></span><br><span class="line">   <span class="comment">//这种方式是最基本的实现方式，这种实现最大的问题就是不支持多线程。</span></span><br><span class="line">   <span class="comment">// 因为没有加锁 synchronized，所以严格意义上它并不算单例模式。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优缺点说明</strong>：</p>
+<ol>
+<li><p>起到了Lazy Loading的效果，但是<strong>只能在单线程下</strong>使用。</p>
+</li>
+<li><p>如果在多线程下，一个线程进入了**if (singleton == null)**判断语句块，还未来得及往下执行，另一个线程也通过了这个判断语句，这时便会产生多个实例。所以在多线程环境下不可使用这种方式</p>
+</li>
+<li><p>结论：<strong>在实际开发中，不要使用这种方式.</strong></p>
+</li>
+</ol>
+<h2 id="懒汉式-掌握，同步方法"><a href="#懒汉式-掌握，同步方法" class="headerlink" title="懒汉式(掌握，同步方法)"></a><strong>懒汉式</strong>(掌握，同步方法)</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 懒汉式(线程安全，同步方法)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//提供一个静态的公有方法，加入同步处理synchronized，解决线程安全问题</span></span><br><span class="line">   <span class="comment">//即懒汉式</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">         instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优缺点说明</strong>：</p>
+<ol>
+<li><p>解决了线程不安全问题</p>
+</li>
+<li><p><strong>效率太低</strong>了，每个线程在想获得类的实例时候，执行getInstance()方法<strong>都要进行 同步</strong>。而<u>其实这个方法只执行一次实例化代码就够了，后面的想获得该类实例，  直接return就行了。方法进行同步效率太低</u></p>
+</li>
+<li><p>结论：在实际开发中，不推荐使用这种方式</p>
+</li>
+</ol>
+<h2 id="懒汉式-线程不安全，同步代码块"><a href="#懒汉式-线程不安全，同步代码块" class="headerlink" title="懒汉式(线程不安全，同步代码块)"></a><strong>懒汉式</strong>(线程不安全，同步代码块)</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 懒汉式</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;<span class="comment">//只要同时进来if判断，就会创建多个实例（排队创建）</span></span><br><span class="line">         <span class="keyword">synchronized</span>(Singleton.class)&#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> instance;<span class="comment">//可能会得到初始化不完整的实例</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优缺点说明</strong>：</p>
+<ol>
+<li>这种方式，本意是想对第四种实现方式的改进，因为前面同步方法效率太低，改为同步产生实例化的的代码块</li>
+</ol>
+<p><strong>2)</strong> <strong>但是这种同步并不能起到线程同步的作用</strong>。跟第3种实现方式遇到的情形一致，假如一个线程进入了if (singleton == null)判断语句块，还未来得及往下执行，另一个线程也通过了这个判断语句，这时便会产生多个实例</p>
+<ol start="3">
+<li>结论：在<strong>实际开发中，不能使用这种方</strong>式</li>
+</ol>
+<h2 id="双重检验锁（重点）"><a href="#双重检验锁（重点）" class="headerlink" title="双重检验锁（重点）"></a><strong>双重检验锁（重点）</strong></h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 双重校验锁(DCL 即 double-checked locking)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//提供一个静态的公有方法，加入双重检查代码，解决线程安全问题, 同时解决懒加载问题</span></span><br><span class="line">   <span class="comment">//同时保证了效率, 推荐使用</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">         <span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">            <span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">               instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优缺点说明</strong>：</p>
+<ol>
+<li><p>Double-Check概念是多线程开发中常使用到的，如代码中所示，利用volatile禁止<code>instance = new Singleton();</code>时的三个<strong>指令重排序</strong>，进行了两次if (singleton == null)检查，这样就可以保证线程安全同时提高效率。</p>
+</li>
+<li><p>这样，实例化代码只用执行一次，后面再次访问时，判断if (singleton == null)，直接return实例化对象，也避免的反复进行方法同步.</p>
+</li>
+<li><p>线程安全；<strong>延迟加载；效率较高</strong></p>
+</li>
+<li><p>结论：在实际开发中，推荐使用这种单例设计模式</p>
+</li>
+</ol>
+<h2 id="静态内部类（重点）"><a href="#静态内部类（重点）" class="headerlink" title="静态内部类（重点）"></a><strong>静态内部类（重点）</strong></h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 静态内部类完成， 推荐使用</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">   <span class="comment">//构造器私有化</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//写一个静态内部类,该类中有一个静态属性 Singleton</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonInstance</span> </span>&#123;</span><br><span class="line">      <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//提供一个静态的公有方法，直接返回SingletonInstance.INSTANCE</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> SingletonInstance.INSTANCE;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>优缺点说明</strong>：</p>
+<ol>
+<li><p>这种方式采用了<strong>类装载的机制</strong>来<strong>保证初始化实例时只有一个线程</strong>。</p>
+</li>
+<li><p><strong>静态内部类在Singleton类被装载时并不会立即实例化</strong>，而是在需要实例化时，调用getInstance方法，才会装载SingletonInstance类，从而完成Singleton的实例化。</p>
+</li>
+<li><p>类的静态属性只会在第一次加载类的时候初始化，所以在这里，<strong>JVM帮助我们保证了线程的安全性</strong>，在类进行初始化时，别的线程是无法进入的。</p>
+</li>
+<li><p>优点：避免了<strong>线程不安全</strong>，利用静态内部类特点实现延迟加载，效率高</p>
+</li>
+<li><p>结论：推荐使用.</p>
+</li>
+</ol>
+<h2 id="枚举（掌握）"><a href="#枚举（掌握）" class="headerlink" title="枚举（掌握）"></a><strong>枚举（掌握）</strong></h2><p><strong>优缺点说明</strong>：</p>
+<ol>
+<li><p>这借助JDK1.5中添加的枚举来实现单例模式。不仅能避免多线程同步问题，而且还能<strong>防止反序列化</strong>重新创建新的对象。</p>
+</li>
+<li><p>这种方式是Effective Java作者Josh Bloch 提倡的方式</p>
+</li>
+<li><p>结论：推荐使用</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton02</span> </span>&#123;</span><br><span class="line">   <span class="comment">//私有化构造函数</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton02</span><span class="params">()</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//定义一个枚举类</span></span><br><span class="line">   <span class="class"><span class="keyword">enum</span> <span class="title">SingletonEnum</span></span>&#123;</span><br><span class="line">      <span class="comment">//创建一个枚举对象，该对象天生为单例</span></span><br><span class="line">      INSTANCE;</span><br><span class="line">      <span class="keyword">private</span> Singleton02 singleton;</span><br><span class="line">      <span class="comment">//私有化枚举的构造函数</span></span><br><span class="line">      <span class="function"><span class="keyword">private</span> <span class="title">SingletonEnum</span><span class="params">()</span></span>&#123;</span><br><span class="line">         singleton=<span class="keyword">new</span> Singleton02();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> Singleton02 <span class="title">getInstnce</span><span class="params">()</span></span>&#123;</span><br><span class="line">         <span class="keyword">return</span> singleton;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//对外暴露一个获取User对象的静态方法</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton02 <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> SingletonEnum.INSTANCE.getInstnce();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="spring-IOC中的单例"><a href="#spring-IOC中的单例" class="headerlink" title="spring IOC中的单例"></a>spring IOC中的单例</h2><p>当我们试图从Spring容器中取得某个类的实例时，默认情况下，Spring会才用单例模式进行创建。那么Spring对单例的底层实现，到底是饿汉式单例还是懒汉式单例呢？都不是。<strong>Spring框架对单例的支持是采用单例注册表的方式进行实现的</strong>，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Return the (raw) singleton object registered under the given name.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Checks already instantiated singletons and also allows for an early</span></span><br><span class="line"><span class="comment"> * reference to a currently created singleton (resolving a circular reference).</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> beanName the name of the bean to look for</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> allowEarlyReference whether early references should be created or not</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the registered singleton object, or &#123;<span class="doctag">@code</span> null&#125; if none found</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Nullable</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">getSingleton</span><span class="params">(String beanName, <span class="keyword">boolean</span> allowEarlyReference)</span> </span>&#123;</span><br><span class="line">	Object singletonObject = <span class="keyword">this</span>.singletonObjects.get(beanName);</span><br><span class="line">	<span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; isSingletonCurrentlyInCreation(beanName)) &#123;</span><br><span class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">			singletonObject = <span class="keyword">this</span>.earlySingletonObjects.get(beanName);</span><br><span class="line">			<span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; allowEarlyReference) &#123;</span><br><span class="line">				ObjectFactory&lt;?&gt; singletonFactory = <span class="keyword">this</span>.singletonFactories.get(beanName);</span><br><span class="line">				<span class="keyword">if</span> (singletonFactory != <span class="keyword">null</span>) &#123;</span><br><span class="line">					singletonObject = singletonFactory.getObject();</span><br><span class="line">					<span class="keyword">this</span>.earlySingletonObjects.put(beanName, singletonObject);</span><br><span class="line">					<span class="keyword">this</span>.singletonFactories.remove(beanName);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> singletonObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里涉及到三个单例容器：<code>singletonObjects</code>, <code>earlySingletonObjects</code>, <code>singletonFactories</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** Cache of singleton objects: bean name to bean instance. */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; singletonObjects = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;(<span class="number">256</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Cache of singleton factories: bean name to ObjectFactory. */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, ObjectFactory&lt;?&gt;&gt; singletonFactories = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Cache of early singleton objects: bean name to bean instance. */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String, Object&gt; earlySingletonObjects = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
+
+<p>通过分析源码： 单例的获取顺利是<code>singletonObjects</code> ——》<code>earlySingletonObjects</code> ——》<code>singletonFactories</code> 这样的三级层次。<strong>三级缓存</strong></p>
+<p>我们发现，在<code>singletonObjects</code> 中获取<code>bean</code>的时候，没有使用<code>synchronized</code>关键字，而在<code>singletonFactories</code> 和<code>earlySingletonObjects</code> 中的操作都是在<code>synchronized</code>代码块中完成的，正好和他们各自的数据类型对应，<code>singletonObjects</code> 使用的使用<code>ConcurrentHashMap</code>线程安全，而<code>singletonFactories</code> 和<code>earlySingletonObjects</code> 使用的是<code>HashMap</code>，线程不安全。</p>
+<p>从字面意思来说：<code>singletonObjects</code>指单例对象的cache，<code>singletonFactories</code>指单例对象工厂的cache，<code>earlySingletonObjects</code>指提前曝光的单例对象的cache。以上三个cache构成了三级缓存，Spring就用这三级缓存巧妙的解决了循环依赖问题。</p>
+<p>另外,源码中这三个容器的初始容积也做了配置，分别是256,16,16，也是值得分析和借鉴的。</p>
+<p><strong>单例的注册</strong>：<br><code>DefaultSingletonBeanRegistry</code>类中:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerSingleton</span><span class="params">(String beanName, Object singletonObject)</span> <span class="keyword">throws</span> IllegalStateException </span>&#123;</span><br><span class="line">    Assert.notNull(beanName, <span class="string">&quot;Bean name must not be null&quot;</span>);</span><br><span class="line">    Assert.notNull(singletonObject, <span class="string">&quot;Singleton object must not be null&quot;</span>);</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">        Object oldObject = <span class="keyword">this</span>.singletonObjects.get(beanName);</span><br><span class="line">        <span class="keyword">if</span> (oldObject != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">&quot;Could not register object [&quot;</span> + singletonObject +</span><br><span class="line">                                            <span class="string">&quot;] under bean name &#x27;&quot;</span> + beanName + <span class="string">&quot;&#x27;: there is already object [&quot;</span> + oldObject + <span class="string">&quot;] bound&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        addSingleton(beanName, singletonObject);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Add the given singleton object to the singleton cache of this factory.</span></span><br><span class="line"><span class="comment">	 * &lt;p&gt;To be called for eager registration of singletons.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> beanName the name of the bean</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> singletonObject the singleton object</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">addSingleton</span><span class="params">(String beanName, Object singletonObject)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">        <span class="keyword">this</span>.singletonObjects.put(beanName, singletonObject);</span><br><span class="line">        <span class="keyword">this</span>.singletonFactories.remove(beanName);</span><br><span class="line">        <span class="keyword">this</span>.earlySingletonObjects.remove(beanName);</span><br><span class="line">        <span class="keyword">this</span>.registeredSingletons.add(beanName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>向一级缓存中加入单例对象，同时，移除二级缓存，三级缓存中的单例对象。并向注册登记表<code>registeredSingletons</code>中，记录单例的名称<code>beanName</code>。由于容器对象都是map对象，所以能自动保存通一个<code>beanName</code>保存的对象唯一。</p>
+<h2 id="java-lang-Runtime"><a href="#java-lang-Runtime" class="headerlink" title="java.lang.Runtime"></a>java.lang.Runtime</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Runtime</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Runtime currentRuntime = <span class="keyword">new</span> Runtime();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the runtime object associated with the current Java application.</span></span><br><span class="line"><span class="comment">     * Most of the methods of class &lt;code&gt;Runtime&lt;/code&gt; are instance</span></span><br><span class="line"><span class="comment">     * methods and must be invoked with respect to the current runtime object.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  the &lt;code&gt;Runtime&lt;/code&gt; object associated with the current</span></span><br><span class="line"><span class="comment">     *          Java application.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Runtime <span class="title">getRuntime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> currentRuntime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Don&#x27;t let anyone else instantiate this class */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Runtime</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是标准的单例模式，饿汉式。</p>
+<h2 id="单例模式注意事项和细节说明"><a href="#单例模式注意事项和细节说明" class="headerlink" title="单例模式注意事项和细节说明"></a>单例模式注意事项和细节说明</h2><ol>
+<li><p>单例模式保证了 系统内存中该类只存在一个对象，<strong>节省了系统资源</strong>，对于一些需要频繁创建销毁的对象，使用单例模式可以提高系统性能</p>
+</li>
+<li><p>当想实例化一个单例类的时候，必须要记住使用相应的获取对象的方法，而<strong>不是使用new</strong></p>
+</li>
+<li><p>单例模式使用的场景：需要频繁的进行创建和销毁的对象、创建对象时耗时过多或耗费资源过多(即：重量级对象)，但又经常用到的对象、工具类对象、频繁访问数据库或文件的对象(比如数据源、session工厂等)</p>
+</li>
+</ol>
+<h2 id="spring-DefaultAdvisorAdapterRegistry"><a href="#spring-DefaultAdvisorAdapterRegistry" class="headerlink" title="spring#DefaultAdvisorAdapterRegistry"></a>spring#DefaultAdvisorAdapterRegistry</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Singleton to publish a shared DefaultAdvisorAdapterRegistry instance.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Rod Johnson</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Juergen Hoeller</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Phillip Webb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> DefaultAdvisorAdapterRegistry</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">GlobalAdvisorAdapterRegistry</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">GlobalAdvisorAdapterRegistry</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** 单例模式的典型实现：私有化构造方法，静态变量保持一个唯一实例，暴露唯一公有的静态方法</span></span><br><span class="line"><span class="comment">    * Keep track of a single instance so we can return it to classes that request it.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AdvisorAdapterRegistry instance = <span class="keyword">new</span> DefaultAdvisorAdapterRegistry();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Return the singleton &#123;<span class="doctag">@link</span> DefaultAdvisorAdapterRegistry&#125; instance.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AdvisorAdapterRegistry <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * Reset the singleton &#123;<span class="doctag">@link</span> DefaultAdvisorAdapterRegistry&#125;, removing any</span></span><br><span class="line"><span class="comment">    * &#123;<span class="doctag">@link</span> AdvisorAdapterRegistry#registerAdvisorAdapter(AdvisorAdapter) registered&#125;</span></span><br><span class="line"><span class="comment">    * adapters.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reset</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        instance = <span class="keyword">new</span> DefaultAdvisorAdapterRegistry();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Default implementation of the &#123;<span class="doctag">@link</span> AdvisorAdapterRegistry&#125; interface.</span></span><br><span class="line"><span class="comment"> * Supports &#123;<span class="doctag">@link</span> org.aopalliance.intercept.MethodInterceptor&#125;,</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> org.springframework.aop.MethodBeforeAdvice&#125;,</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> org.springframework.aop.AfterReturningAdvice&#125;,</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> org.springframework.aop.ThrowsAdvice&#125;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Rod Johnson</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Rob Harrop</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Juergen Hoeller</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SuppressWarnings(&quot;serial&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultAdvisorAdapterRegistry</span> <span class="keyword">implements</span> <span class="title">AdvisorAdapterRegistry</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;AdvisorAdapter&gt; adapters = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Create a new DefaultAdvisorAdapterRegistry, registering well-known adapters.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DefaultAdvisorAdapterRegistry</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        registerAdvisorAdapter(<span class="keyword">new</span> MethodBeforeAdviceAdapter());</span><br><span class="line">        registerAdvisorAdapter(<span class="keyword">new</span> AfterReturningAdviceAdapter());</span><br><span class="line">        registerAdvisorAdapter(<span class="keyword">new</span> ThrowsAdviceAdapter());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Advisor <span class="title">wrap</span><span class="params">(Object adviceObject)</span> <span class="keyword">throws</span> UnknownAdviceTypeException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (adviceObject <span class="keyword">instanceof</span> Advisor) &#123;</span><br><span class="line">            <span class="keyword">return</span> (Advisor) adviceObject;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!(adviceObject <span class="keyword">instanceof</span> Advice)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnknownAdviceTypeException(adviceObject);</span><br><span class="line">        &#125;</span><br><span class="line">        Advice advice = (Advice) adviceObject;</span><br><span class="line">        <span class="keyword">if</span> (advice <span class="keyword">instanceof</span> MethodInterceptor) &#123;</span><br><span class="line">            <span class="comment">// So well-known it doesn&#x27;t even need an adapter.</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> DefaultPointcutAdvisor(advice);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (AdvisorAdapter adapter : <span class="keyword">this</span>.adapters) &#123;</span><br><span class="line">            <span class="comment">// Check that it is supported.</span></span><br><span class="line">            <span class="keyword">if</span> (adapter.supportsAdvice(advice)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> DefaultPointcutAdvisor(advice);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnknownAdviceTypeException(advice);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> MethodInterceptor[] getInterceptors(Advisor advisor) <span class="keyword">throws</span> UnknownAdviceTypeException &#123;</span><br><span class="line">        List&lt;MethodInterceptor&gt; interceptors = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line">        Advice advice = advisor.getAdvice();</span><br><span class="line">        <span class="keyword">if</span> (advice <span class="keyword">instanceof</span> MethodInterceptor) &#123;</span><br><span class="line">            interceptors.add((MethodInterceptor) advice);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (AdvisorAdapter adapter : <span class="keyword">this</span>.adapters) &#123;</span><br><span class="line">            <span class="keyword">if</span> (adapter.supportsAdvice(advice)) &#123;</span><br><span class="line">                interceptors.add(adapter.getInterceptor(advisor));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (interceptors.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnknownAdviceTypeException(advisor.getAdvice());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> interceptors.toArray(<span class="keyword">new</span> MethodInterceptor[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerAdvisorAdapter</span><span class="params">(AdvisorAdapter adapter)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.adapters.add(adapter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>单例模式的典型实现：私有化构造方法，静态变量保持一个唯一实例，暴露唯一公有的静态方法。</p>
+<h1 id="五、工厂模式"><a href="#五、工厂模式" class="headerlink" title="五、工厂模式"></a>五、工厂模式</h1><p>下面例子中鼠标，键盘，耳麦为产品，惠普，戴尔为工厂。</p>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>简单工厂模式不是 23 种里的一种，简而言之，就是有一个专门生产某个产品的类。</p>
+<p>比如下图中的鼠标工厂，专业生产鼠标，给参数 0，生产戴尔鼠标，给参数 1，生产惠普鼠标。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2018/07/1530601914-2143-DP-SimpleFactory.png" alt="img"></p>
+<h2 id="工厂方法"><a href="#工厂方法" class="headerlink" title="工厂方法"></a>工厂方法</h2><p>工厂模式也就是鼠标工厂是个父类，有生产鼠标这个接口。</p>
+<p>戴尔鼠标工厂，惠普鼠标工厂继承它，可以分别生产戴尔鼠标，惠普鼠标。</p>
+<p>生产哪种鼠标不再由参数决定，而是创建鼠标工厂时，由戴尔鼠标工厂创建。</p>
+<p>后续直接调用**鼠标工厂.生产鼠标()**即可</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2018/07/1530601917-1999-DP-Factory.png" alt="img"></p>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><p>抽象工厂模式也就是不仅生产鼠标，同时生产键盘。</p>
+<p>也就是 PC 厂商是个父类，有生产鼠标，生产键盘两个接口。</p>
+<p>戴尔工厂，惠普工厂继承它，可以分别生产戴尔鼠标+戴尔键盘，和惠普鼠标+惠普键盘。</p>
+<p>创建工厂时，由戴尔工厂创建。</p>
+<p>后续**工厂.生产鼠标()<strong>则生产戴尔鼠标，</strong>工厂.生产键盘()**则生产戴尔键盘。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2018/07/1530601916-7298-DP-AbstractFactory.png" alt="img"></p>
+<blockquote>
+<p>在抽象工厂模式中，假设我们需要增加一个工厂</p>
+</blockquote>
+<p>假设我们增加华硕工厂，则我们需要增加华硕工厂，和戴尔工厂一样，继承 PC 厂商。</p>
+<p>之后创建华硕鼠标，继承鼠标类。创建华硕键盘，继承键盘类即可。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2018/07/1530601980-8080-P-AbstractFactory-AddFactory.png" alt="img"></p>
+<blockquote>
+<p>在抽象工厂模式中，假设我们需要增加一个产品</p>
+</blockquote>
+<p>假设我们增加耳麦这个产品，则首先我们需要增加耳麦这个父类，再加上戴尔耳麦，惠普耳麦这两个子类。</p>
+<p>之后在PC厂商这个父类中，增加生产耳麦的接口。最后在戴尔工厂，惠普工厂这两个类中，分别实现生产戴尔耳麦，惠普耳麦的功能。 以上。</p>
+<p><img src="https://www.runoob.com/wp-content/uploads/2018/07/1530601917-7462-P-AbstractFactory-AddProduct.png" alt="img"></p>
+<h2 id="一句话概括工厂模式"><a href="#一句话概括工厂模式" class="headerlink" title="一句话概括工厂模式"></a><strong>一句话概括工厂模式</strong></h2><ul>
+<li> <strong>简单工厂</strong>：一个工厂类，一个产品抽象类。</li>
+<li> <strong>工厂方法</strong>：多个工厂类，一个产品抽象类。</li>
+<li> <strong>抽象工厂</strong>：多个工厂类，多个产品抽象类。</li>
+</ul>
+<p><strong>生活中的工厂模式</strong></p>
+<ul>
+<li> 简单工厂类：一个麦当劳店，可以生产多种汉堡。</li>
+<li> 工厂方法类：一个麦当劳店，可以生产多种汉堡。一个肯德基店，也可以生产多种汉堡。</li>
+<li> 抽象工厂类：百胜餐饮集团下有肯德基和百事公司，肯德基生产汉堡，百事公司生成百事可乐。</li>
+</ul>
+<h2 id="java-util-Calendar"><a href="#java-util-Calendar" class="headerlink" title="java.util.Calendar"></a>java.util.Calendar</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//java.util.Calendar#createCalendar</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Calendar <span class="title">createCalendar</span><span class="params">(TimeZone zone,</span></span></span><br><span class="line"><span class="params"><span class="function">                                       Locale aLocale)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    CalendarProvider provider =</span><br><span class="line">        LocaleProviderAdapter.getAdapter(CalendarProvider.class, aLocale)</span><br><span class="line">        .getCalendarProvider();</span><br><span class="line">    <span class="keyword">if</span> (provider != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//也可以看下这里</span></span><br><span class="line">            <span class="keyword">return</span> provider.getInstance(zone, aLocale);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException iae) &#123;</span><br><span class="line">            <span class="comment">// fall back to the default instantiation</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Calendar cal = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//工厂模式：根据不同的情况创建（new）不同的实例</span></span><br><span class="line">    <span class="keyword">if</span> (aLocale.hasExtensions()) &#123;</span><br><span class="line">        String caltype = aLocale.getUnicodeLocaleType(<span class="string">&quot;ca&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (caltype != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (caltype) &#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;buddhist&quot;</span>:</span><br><span class="line">                    cal = <span class="keyword">new</span> BuddhistCalendar(zone, aLocale);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;japanese&quot;</span>:</span><br><span class="line">                    cal = <span class="keyword">new</span> JapaneseImperialCalendar(zone, aLocale);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&quot;gregory&quot;</span>:</span><br><span class="line">                    cal = <span class="keyword">new</span> GregorianCalendar(zone, aLocale);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (cal == <span class="keyword">null</span>) &#123;...&#125;</span><br><span class="line">    <span class="keyword">return</span> cal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//sun.util.locale.provider.CalendarProviderImpl#getInstance</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Calendar <span class="title">getInstance</span><span class="params">(TimeZone var1, Locale var2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">new</span> Builder()).setLocale(var2).setTimeZone(var1).setInstant(System.currentTimeMillis()).build();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//java.util.Calendar.Builder#build</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Calendar <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="comment">//工厂模式：根据不同的情况创建（new）不同的实例</span></span><br><span class="line">    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;gregory&quot;</span>:</span><br><span class="line">            cal = <span class="keyword">new</span> GregorianCalendar(zone, locale, <span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;iso8601&quot;</span>:</span><br><span class="line">            GregorianCalendar gcal = <span class="keyword">new</span> GregorianCalendar(zone, locale, <span class="keyword">true</span>);</span><br><span class="line">            <span class="comment">// make gcal a proleptic Gregorian</span></span><br><span class="line">            gcal.setGregorianChange(<span class="keyword">new</span> Date(Long.MIN_VALUE));</span><br><span class="line">            <span class="comment">// and week definition to be compatible with ISO 8601</span></span><br><span class="line">            setWeekDefinition(MONDAY, <span class="number">4</span>);</span><br><span class="line">            cal = gcal;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;buddhist&quot;</span>:</span><br><span class="line">            cal = <span class="keyword">new</span> BuddhistCalendar(zone, locale);</span><br><span class="line">            cal.clear();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;japanese&quot;</span>:</span><br><span class="line">            cal = <span class="keyword">new</span> JapaneseImperialCalendar(zone, locale, <span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;unknown calendar type: &quot;</span> + type);</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">if</span> (fields != <span class="keyword">null</span>) &#123;...&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li>工厂模式的意义</li>
+</ol>
+<p>将实例化对象的代码提取出来，放到一个类中统一管理和维护，达到和主项目的依赖关系的解耦。从而提高项目的扩展和维护性。</p>
+<ol start="2">
+<li><p>三种工厂模式 (<strong>简单工厂模式、工厂方法模式、抽象工厂模式</strong>)</p>
+</li>
+<li><p>设计模式的<strong>依赖抽象</strong>原则</p>
+</li>
+</ol>
+<ul>
+<li><p> 创建对象实例时，不要直接 new 类, 而是把这个new 类的动作放在一个工厂的方法中，并返回。有的书上说，变量不要直接持有具体类的引用。</p>
+</li>
+<li><p>不要让类继承具体类，而是继承抽象类或者是实现interface(接口) </p>
+</li>
+<li><p>不要覆盖基类中已经实现的方法</p>
+</li>
+</ul>
+<h1 id="六、适配器模式"><a href="#六、适配器模式" class="headerlink" title="六、适配器模式"></a>六、适配器模式</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><ol>
+<li><p>适配器模式(Adapter Pattern)将某个类的接口转换成客户端期望的另一个接口表示，主的目的是<strong>兼容性</strong>，让原本因接口不匹配不能一起工作的两个类可以协同工作。其别名为<strong>包装器(Wrapper)</strong></p>
+</li>
+<li><p>适配器模式属于结构型模式</p>
+</li>
+<li><p>主要分为三类：类适配器模式、<strong>对象适配器模式</strong>、接口适配器模式</p>
+</li>
+</ol>
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><ol>
+<li><p>适配器模式：将一个类的接口转换成另一种接口，让<strong>原本接口不兼容的类可以兼 容</strong></p>
+</li>
+<li><p>从用户的角度看不到被适配者，是<strong>解耦</strong>的</p>
+</li>
+<li><p>用户调用适配器转化出来的目标接口方法，适配器再调用被适配者的相关接口方法</p>
+</li>
+<li><p>用户收到反馈结果，感觉只是和目标接口交互，如图 </p>
+</li>
+</ol>
+<h2 id="类适配器模式注意事项和细节"><a href="#类适配器模式注意事项和细节" class="headerlink" title="类适配器模式注意事项和细节"></a><strong>类适配器模式注意事项和细节</strong></h2><ol>
+<li><p>Java是<strong>单继承机制</strong>，所以类适配器需要继承src类这一点算是一个缺点, 因为这要求dst必须是接口，有一定局限性;</p>
+</li>
+<li><p>src类的方法在Adapter中都会暴露出来，也增加了使用的成本。</p>
+</li>
+<li><p>由于其继承了src类，所以它可以根据需求重写src类的方法，使得Adapter的灵活性增强了。</p>
+</li>
+<li><p><strong>推荐使用对象适配器模式</strong></p>
+</li>
+</ol>
+<h2 id="DispatcherServlet-HandlerAdapter"><a href="#DispatcherServlet-HandlerAdapter" class="headerlink" title="DispatcherServlet#HandlerAdapter"></a>DispatcherServlet#HandlerAdapter</h2><p>适配器常用的两个方法<code>boolean **supports**(Object handler);</code>和<code>odelAndView **handle**(HttpServletRequest request, HttpServletResponse response, Object handler)</code></p>
+<p>根据 <code>Handler</code> 来找到支持它的 <code>HandlerAdapter</code>，通过 <code>HandlerAdapter</code> 执行这个 Handler ，得到 <code>ModelAndView</code> 对象。</p>
+<p>通过<code>Handler</code>获取<code>HandlerAdpater</code>,<code>HandlerAdpater</code>作为适配器，真正做东西的还是<code>Handler</code>，<code>HandelAdpater</code>做了很多的预处理，不过它的接口很简单。在使用<code>@RequestMapping</code>注解标注<code>handler</code>方法的时候，获取到的是<code>HandlerAdapter</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HandlerAdapter</span> </span>&#123;</span><br><span class="line">   <span class="comment">// 判断当前的HandlerAdpater是否支持handler的实例，也就是当前的adapter能否使用传过来的Handler</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Object handler)</span></span>;</span><br><span class="line">    <span class="comment">// 使用传过来的handler来处理请求</span></span><br><span class="line">    <span class="function">ModelAndView <span class="title">handle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//和Servlet的getLastModified功能基本一致</span></span><br><span class="line">    <span class="function"><span class="keyword">long</span> <span class="title">getLastModified</span><span class="params">(HttpServletRequest request, Object handler)</span></span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>DispatcherServlet</code>中<code>getHandlerAdapter</code>的实现，则是遍历<code>HandlerAdpaters</code>，然后返回第一个支持handler的<code>Adpater</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Return the HandlerAdapter for this handler object.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> handler the handler object to find an adapter for</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> ServletException if no HandlerAdapter can be found for the handler. This is a fatal error.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> HandlerAdapter <span class="title">getHandlerAdapter</span><span class="params">(Object handler)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (<span class="keyword">this</span>.handlerAdapters != <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="comment">/** List of HandlerAdapters used by this servlet. */</span></span><br><span class="line">	  <span class="comment">// private List&lt;HandlerAdapter&gt; handlerAdapters;</span></span><br><span class="line">      <span class="keyword">for</span> (HandlerAdapter adapter : <span class="keyword">this</span>.handlerAdapters) &#123;</span><br><span class="line">         <span class="keyword">if</span> (adapter.supports(handler)) &#123;</span><br><span class="line">            <span class="keyword">return</span> adapter;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(<span class="string">&quot;No adapter for handler [&quot;</span> + handler +</span><br><span class="line">         <span class="string">&quot;]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="D:\学习资料\面试题总结\SpringMVC\9001d455c8d8a04fb596a95fe86f1d71_webp.webp"></p>
+<h2 id="spring-AOP-XXXAdviceAdapter"><a href="#spring-AOP-XXXAdviceAdapter" class="headerlink" title="spring AOP#XXXAdviceAdapter"></a>spring AOP#XXXAdviceAdapter</h2><p>从<code>MethodBeforeAdviceAdapter</code>、<code>AfterReturningAdviceAdapter</code>、<code>ThrowsAdviceAdapter</code>这几个通知器的名字上可以看到，他们完全和advice一一对应</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Interface allowing extension to the Spring AOP framework to allow</span></span><br><span class="line"><span class="comment"> * handling of new Advisors and Advice types.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Implementing objects can create AOP Alliance Interceptors from</span></span><br><span class="line"><span class="comment"> * custom advice types, enabling these advice types to be used</span></span><br><span class="line"><span class="comment"> * in the Spring AOP framework, which uses interception under the covers.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;There is no need for most Spring users to implement this interface;</span></span><br><span class="line"><span class="comment"> * do so only if you need to introduce more Advisor or Advice types to Spring.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Rod Johnson</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AdvisorAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Does this adapter understand this advice object? Is it valid to</span></span><br><span class="line"><span class="comment">	 * invoke the &#123;<span class="doctag">@code</span> getInterceptors&#125; method with an Advisor that</span></span><br><span class="line"><span class="comment">	 * contains this advice as an argument?</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> advice an Advice such as a BeforeAdvice</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> whether this adapter understands the given advice object</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@see</span> #getInterceptor(org.springframework.aop.Advisor)</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@see</span> org.springframework.aop.BeforeAdvice</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">supportsAdvice</span><span class="params">(Advice advice)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Return an AOP Alliance MethodInterceptor exposing the behavior of</span></span><br><span class="line"><span class="comment">	 * the given advice to an interception-based AOP framework.</span></span><br><span class="line"><span class="comment">	 * &lt;p&gt;Don&#x27;t worry about any Pointcut contained in the Advisor;</span></span><br><span class="line"><span class="comment">	 * the AOP framework will take care of checking the pointcut.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> advisor the Advisor. The supportsAdvice() method must have</span></span><br><span class="line"><span class="comment">	 * returned true on this object</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> an AOP Alliance interceptor for this Advisor. There&#x27;s</span></span><br><span class="line"><span class="comment">	 * no need to cache instances for efficiency, as the AOP framework</span></span><br><span class="line"><span class="comment">	 * caches advice chains.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    <span class="function">MethodInterceptor <span class="title">getInterceptor</span><span class="params">(Advisor advisor)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Adapter to enable &#123;<span class="doctag">@link</span> org.springframework.aop.MethodBeforeAdvice&#125;</span></span><br><span class="line"><span class="comment"> * to be used in the Spring AOP framework.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Rod Johnson</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Juergen Hoeller</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SuppressWarnings(&quot;serial&quot;)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MethodBeforeAdviceAdapter</span> <span class="keyword">implements</span> <span class="title">AdvisorAdapter</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supportsAdvice</span><span class="params">(Advice advice)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (advice <span class="keyword">instanceof</span> MethodBeforeAdvice);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MethodInterceptor <span class="title">getInterceptor</span><span class="params">(Advisor advisor)</span> </span>&#123;</span><br><span class="line">        MethodBeforeAdvice advice = (MethodBeforeAdvice) advisor.getAdvice();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MethodBeforeAdviceInterceptor(advice);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Interceptor to wrap am &#123;<span class="doctag">@link</span> org.springframework.aop.MethodBeforeAdvice&#125;.</span></span><br><span class="line"><span class="comment"> * Used internally by the AOP framework; application developers should not need</span></span><br><span class="line"><span class="comment"> * to use this class directly.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Rod Johnson</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> AfterReturningAdviceInterceptor</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> ThrowsAdviceInterceptor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SuppressWarnings(&quot;serial&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodBeforeAdviceInterceptor</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span>, <span class="title">BeforeAdvice</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> MethodBeforeAdvice advice;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Create a new MethodBeforeAdviceInterceptor for the given advice.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> advice the MethodBeforeAdvice to wrap</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MethodBeforeAdviceInterceptor</span><span class="params">(MethodBeforeAdvice advice)</span> </span>&#123;</span><br><span class="line">        Assert.notNull(advice, <span class="string">&quot;Advice must not be null&quot;</span>);</span><br><span class="line">        <span class="keyword">this</span>.advice = advice;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(MethodInvocation mi)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.advice.before(mi.getMethod(), mi.getArguments(), mi.getThis());</span><br><span class="line">        <span class="keyword">return</span> mi.proceed();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="七、代理模式"><a href="#七、代理模式" class="headerlink" title="七、代理模式"></a>七、代理模式</h1><h2 id="代理模式的基本介绍"><a href="#代理模式的基本介绍" class="headerlink" title="代理模式的基本介绍"></a><strong>代理模式的基本介绍</strong></h2><ol>
+<li><p>代理模式：为一个对象<strong>提供一个替身</strong>，以控制对这个对象的访问。即通过代理对象访问目标对象.这样做的<strong>好处是</strong>:可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能。</p>
+</li>
+<li><p>被代理的对象可以是<strong>远程对象</strong>、<strong>创建开销大的对</strong>象或<strong>需要安全控制的对象</strong></p>
+</li>
+<li><p>代理模式有不同的形式, 主要有三种 <strong>静态代理</strong>、<strong>动态代理</strong> (<strong>JDK代理、接口代理</strong>)和 <strong>Cglib</strong>代理(可以在内存动态的创建对象，而不需要实现接口， 他是属于动态代理的范畴)。</p>
+</li>
+</ol>
+<h2 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a><strong>静态代理</strong></h2><p><strong>静态代码模式的基本介绍</strong></p>
+<p>静态代理在使用时,需要定义接口或者父类,被代理对象(即目标对象)与代理对象一起实现相同的接口或者是继承相同父类 </p>
+<p><strong>静态代理优缺点</strong></p>
+<ol>
+<li><p>优点：在不修改目标对象的功能前提下, 能通过代理对象对目标功能扩展</p>
+</li>
+<li><p>缺点：<strong>因为代理对象需要与目标对象实现一样的接口,所以会有很多代理类</strong></p>
+</li>
+<li><p>一旦接口增加方法,目标对象与代理对象都要维护</p>
+</li>
+</ol>
+<h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a><strong>动态代理</strong></h2><p><strong>动态代理模式的基本介绍</strong></p>
+<ol>
+<li><p><strong>代理对象,不需要实现接口，但是目标对象要实现接口，否则不能用动态代理</strong></p>
+</li>
+<li><p>代理对象的生成，是利用JDK的API，<strong>动态</strong>的在<strong>内存中</strong>构建代理对象</p>
+</li>
+<li><p>动态代理也叫做：JDK代理、接口代理</p>
+</li>
+</ol>
+<p><strong>JDK</strong>中生成代理对象的API</p>
+<ol>
+<li><p>代理类所在包:java.lang.reflect.<strong>Proxy</strong></p>
+</li>
+<li><p>JDK实现代理只需要使用<code>newProxyInstance</code>方法,但是该方法需要接收三个参数,完</p>
+</li>
+</ol>
+<p>整的写法是: </p>
+<p>static Object <strong>newProxyInstance</strong>(ClassLoader loader, Class&lt;?&gt;[] </p>
+<p>interfaces,InvocationHandler h )</p>
+<h2 id="Cglib代理"><a href="#Cglib代理" class="headerlink" title="Cglib代理"></a><strong>Cglib</strong>代理</h2><p><strong>Cglib代理模式的基本介绍</strong></p>
+<ol>
+<li><p><strong>静态代理和JDK代理模式都要求目标对象是实现一个接口</strong>,但是有时候目标对象只是一个单独的对象,并没有实现任何的接口,这个时候可使用目标对象子类来实现 代理-这就是Cglib代理</p>
+</li>
+<li><p>Cglib代理也叫作子类代理,它是在内存中构建一个子类对象从而实现对目标对象功能扩展, 有些书也将<strong>Cglib</strong>代理归属到动态代理。</p>
+</li>
+<li><p>Cglib是一个强大的高性能的代码生成包,它可以在运行期扩展java类与实现java接 口.它广泛的被许多AOP的框架使用,例如Spring AOP，实现方法拦截</p>
+</li>
+<li><p>在AOP编程中如何选择代理模式：</p>
+</li>
+</ol>
+<ul>
+<li>目标对象需要实现接口，用JDK代理</li>
+<li>目标对象不需要实现接口，用Cglib代理</li>
+</ul>
+<ol start="5">
+<li>Cglib包的底层是通过使用<strong>字节码处理框架ASM</strong>来转换字节码并生成新的类</li>
+</ol>
+<p><strong>注意事项：</strong></p>
+<ol>
+<li><p>在内存中动态构建子类，注意代理的类不能为final，否则报错java.lang.IllegalArgumentException: </p>
+</li>
+<li><p>目标对象的方法如果为final/static,那么就不会被拦截,即不会执行目标对象额外的业务方法.</p>
+</li>
+</ol>
+<h2 id="spring-IOC-createBeanInstance-instantiateBean"><a href="#spring-IOC-createBeanInstance-instantiateBean" class="headerlink" title="spring IOC#createBeanInstance#instantiateBean"></a>spring IOC#createBeanInstance#instantiateBean</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Instantiate the given bean using its default constructor.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> beanName the name of the bean</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> mbd the bean definition for the bean</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> a BeanWrapper for the new instance</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//最常见的实例化过程instantiateBean</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> BeanWrapper <span class="title">instantiateBean</span><span class="params">(<span class="keyword">final</span> String beanName, <span class="keyword">final</span> RootBeanDefinition mbd)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Object beanInstance;</span><br><span class="line">        <span class="keyword">final</span> BeanFactory parent = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">if</span> (System.getSecurityManager() != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//使用默认的实例化策略对Bean进行实例化，默认的实例化策略是CglibSubclassingInstantiationStrategy，也就是使用cglib来对Bean进行实例化</span></span><br><span class="line">            beanInstance = AccessController.doPrivileged((PrivilegedAction&lt;Object&gt;) () -&gt;</span><br><span class="line">                                                         getInstantiationStrategy().instantiate(mbd, beanName, parent),</span><br><span class="line">                                                         getAccessControlContext());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            beanInstance = getInstantiationStrategy().instantiate(mbd, beanName, parent);</span><br><span class="line">        &#125;</span><br><span class="line">        BeanWrapper bw = <span class="keyword">new</span> BeanWrapperImpl(beanInstance);</span><br><span class="line">        initBeanWrapper(bw);</span><br><span class="line">        <span class="keyword">return</span> bw;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(</span><br><span class="line">            mbd.getResourceDescription(), beanName, <span class="string">&quot;Instantiation of bean failed&quot;</span>, ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//org.springframework.beans.factory.support.SimpleInstantiationStrategy#instantiate( )</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">instantiate</span><span class="params">(RootBeanDefinition bd, <span class="meta">@Nullable</span> String beanName, BeanFactory owner)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Don&#x27;t override the class with CGLIB if no overrides.</span></span><br><span class="line">    <span class="keyword">if</span> (!bd.hasMethodOverrides()) &#123;</span><br><span class="line">        Constructor&lt;?&gt; constructorToUse;</span><br><span class="line">        <span class="keyword">synchronized</span> (bd.constructorArgumentLock) &#123;</span><br><span class="line">            <span class="comment">//取得指定的构造器或者生成对象的工厂方法对bean进行实例化</span></span><br><span class="line">            constructorToUse = (Constructor&lt;?&gt;) bd.resolvedConstructorOrFactoryMethod;</span><br><span class="line">            <span class="keyword">if</span> (constructorToUse == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">final</span> Class&lt;?&gt; clazz = bd.getBeanClass();</span><br><span class="line">                <span class="keyword">if</span> (clazz.isInterface()) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(clazz, <span class="string">&quot;Specified class is an interface&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (System.getSecurityManager() != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        constructorToUse = AccessController.doPrivileged(</span><br><span class="line">                            (PrivilegedExceptionAction&lt;Constructor&lt;?&gt;&gt;) clazz::getDeclaredConstructor);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">//反射获取构造方法</span></span><br><span class="line">                        constructorToUse = clazz.getDeclaredConstructor();</span><br><span class="line">                    &#125;</span><br><span class="line">                    bd.resolvedConstructorOrFactoryMethod = constructorToUse;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(clazz, <span class="string">&quot;No default constructor found&quot;</span>, ex);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//JVm反射创建实例</span></span><br><span class="line">        <span class="keyword">return</span> BeanUtils.instantiateClass(constructorToUse);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//CGLIB创建代理实例</span></span><br><span class="line">        <span class="comment">// Must generate CGLIB subclass.</span></span><br><span class="line">        <span class="keyword">return</span> instantiateWithMethodInjection(bd, beanName, owner);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="jdk动态代理创建代理对象"><a href="#jdk动态代理创建代理对象" class="headerlink" title="jdk动态代理创建代理对象"></a>jdk动态代理创建代理对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//org.springframework.beans.BeanUtils#instantiateClass(java.lang.reflect.Constructor&lt;T&gt;, java.lang.Object...)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">instantiateClass</span><span class="params">(Constructor&lt;T&gt; ctor, Object... args)</span> <span class="keyword">throws</span> BeanInstantiationException </span>&#123;</span><br><span class="line">   Assert.notNull(ctor, <span class="string">&quot;Constructor must not be null&quot;</span>);</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">      ReflectionUtils.makeAccessible(ctor);</span><br><span class="line">      <span class="keyword">if</span> (KotlinDetector.isKotlinReflectPresent() &amp;&amp; KotlinDetector.isKotlinType(ctor.getDeclaringClass())) &#123;</span><br><span class="line">         <span class="keyword">return</span> KotlinDelegate.instantiateClass(ctor, args);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">         Class&lt;?&gt;[] parameterTypes = ctor.getParameterTypes();</span><br><span class="line">         Assert.isTrue(args.length &lt;= parameterTypes.length, <span class="string">&quot;Can&#x27;t specify more arguments than constructor parameters&quot;</span>);</span><br><span class="line">         Object[] argsWithDefaultValues = <span class="keyword">new</span> Object[args.length];</span><br><span class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; args.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (args[i] == <span class="keyword">null</span>) &#123;</span><br><span class="line">               Class&lt;?&gt; parameterType = parameterTypes[i];</span><br><span class="line">               argsWithDefaultValues[i] = (parameterType.isPrimitive() ? DEFAULT_TYPE_VALUES.get(parameterType) : <span class="keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">               argsWithDefaultValues[i] = args[i];</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">return</span> ctor.newInstance(argsWithDefaultValues);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (InstantiationException ex) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(ctor, <span class="string">&quot;Is it an abstract class?&quot;</span>, ex);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (IllegalAccessException ex) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(ctor, <span class="string">&quot;Is the constructor accessible?&quot;</span>, ex);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (IllegalArgumentException ex) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(ctor, <span class="string">&quot;Illegal arguments for constructor&quot;</span>, ex);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (InvocationTargetException ex) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(ctor, <span class="string">&quot;Constructor threw exception&quot;</span>, ex.getTargetException());</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="Cglib创建代理对象"><a href="#Cglib创建代理对象" class="headerlink" title="Cglib创建代理对象"></a>Cglib创建代理对象</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//org.springframework.beans.factory.support.CglibSubclassingInstantiationStrategy.CglibSubclassCreator#instantiate</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">instantiate</span><span class="params">(<span class="meta">@Nullable</span> Constructor&lt;?&gt; ctor, Object... args)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//创建enhancer</span></span><br><span class="line">    Class&lt;?&gt; subclass = createEnhancedSubclass(<span class="keyword">this</span>.beanDefinition);</span><br><span class="line">    Object instance;</span><br><span class="line">    <span class="keyword">if</span> (ctor == <span class="keyword">null</span>) &#123;</span><br><span class="line">        instance = BeanUtils.instantiateClass(subclass);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//利用构造参数 创建实例 newInstance</span></span><br><span class="line">            Constructor&lt;?&gt; enhancedSubclassConstructor = subclass.getConstructor(ctor.getParameterTypes());</span><br><span class="line">            instance = enhancedSubclassConstructor.newInstance(args);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(<span class="keyword">this</span>.beanDefinition.getBeanClass(),</span><br><span class="line">                                                 <span class="string">&quot;Failed to invoke constructor for CGLIB enhanced subclass [&quot;</span> + subclass.getName() + <span class="string">&quot;]&quot;</span>, ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// SPR-10785: set callbacks directly on the instance instead of in the</span></span><br><span class="line">    <span class="comment">// enhanced class (via the Enhancer) in order to avoid memory leaks.</span></span><br><span class="line">    Factory factory = (Factory) instance;</span><br><span class="line">    factory.setCallbacks(<span class="keyword">new</span> Callback[] &#123;NoOp.INSTANCE,</span><br><span class="line">                                         <span class="keyword">new</span> LookupOverrideMethodInterceptor(<span class="keyword">this</span>.beanDefinition, <span class="keyword">this</span>.owner),</span><br><span class="line">                                         <span class="keyword">new</span> ReplaceOverrideMethodInterceptor(<span class="keyword">this</span>.beanDefinition, <span class="keyword">this</span>.owner)&#125;);</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**  org.springframework.beans.factory.support.CglibSubclassingInstantiationStrategy.CglibSubclassCreator#createEnhancedSubclass</span></span><br><span class="line"><span class="comment">		 * Create an enhanced subclass of the bean class for the provided bean</span></span><br><span class="line"><span class="comment">		 * definition, using CGLIB.</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line"><span class="keyword">private</span> Class&lt;?&gt; createEnhancedSubclass(RootBeanDefinition beanDefinition) &#123;</span><br><span class="line">    Enhancer enhancer = <span class="keyword">new</span> Enhancer();</span><br><span class="line">    enhancer.setSuperclass(beanDefinition.getBeanClass());</span><br><span class="line">    enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.owner <span class="keyword">instanceof</span> ConfigurableBeanFactory) &#123;</span><br><span class="line">        ClassLoader cl = ((ConfigurableBeanFactory) <span class="keyword">this</span>.owner).getBeanClassLoader();</span><br><span class="line">        enhancer.setStrategy(<span class="keyword">new</span> ClassLoaderAwareGeneratorStrategy(cl));</span><br><span class="line">    &#125;</span><br><span class="line">    enhancer.setCallbackFilter(<span class="keyword">new</span> MethodOverrideCallbackFilter(beanDefinition));</span><br><span class="line">    enhancer.setCallbackTypes(CALLBACK_TYPES);</span><br><span class="line">    <span class="keyword">return</span> enhancer.createClass();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ProxyFactoryBean生成AopProxy代理对象"><a href="#ProxyFactoryBean生成AopProxy代理对象" class="headerlink" title="ProxyFactoryBean生成AopProxy代理对象"></a>ProxyFactoryBean生成AopProxy代理对象</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Return the singleton instance of this class&#x27;s proxy object,</span></span><br><span class="line"><span class="comment"> * lazily creating it if it hasn&#x27;t been created already.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the shared singleton proxy</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> Object <span class="title">getSingletonInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (<span class="keyword">this</span>.singletonInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.targetSource = freshTargetSource();</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.autodetectInterfaces &amp;&amp; getProxiedInterfaces().length == <span class="number">0</span> &amp;&amp; !isProxyTargetClass()) &#123;</span><br><span class="line">         <span class="comment">// Rely on AOP infrastructure to tell us what interfaces to proxy.</span></span><br><span class="line">         Class&lt;?&gt; targetClass = getTargetClass();</span><br><span class="line">         <span class="keyword">if</span> (targetClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> FactoryBeanNotInitializedException(<span class="string">&quot;Cannot determine target class for proxy&quot;</span>);</span><br><span class="line">         &#125;</span><br><span class="line">         setInterfaces(ClassUtils.getAllInterfacesForClass(targetClass, <span class="keyword">this</span>.proxyClassLoader));</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// Initialize the shared singleton instance.</span></span><br><span class="line">      <span class="keyword">super</span>.setFrozen(<span class="keyword">this</span>.freezeProxy);</span><br><span class="line">       <span class="comment">//先获取AOPproxy，cglib还是jdk；然后利用获得的AOPproxy执行getProxy</span></span><br><span class="line">      <span class="keyword">this</span>.singletonInstance = getProxy(createAopProxy());</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">this</span>.singletonInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>先获取AOPproxy，</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Subclasses should call this to get a new AOP proxy. They should &lt;b&gt;not&lt;/b&gt;</span></span><br><span class="line"><span class="comment"> * create an AOP proxy with &#123;<span class="doctag">@code</span> this&#125; as an argument.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">synchronized</span> AopProxy <span class="title">createAopProxy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.active) &#123;</span><br><span class="line">        activate();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> getAopProxyFactory().createAopProxy(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AopProxy <span class="title">createAopProxy</span><span class="params">(AdvisedSupport config)</span> <span class="keyword">throws</span> AopConfigException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) &#123;</span><br><span class="line">        Class&lt;?&gt; targetClass = config.getTargetClass();</span><br><span class="line">        <span class="keyword">if</span> (targetClass == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AopConfigException(<span class="string">&quot;TargetSource cannot determine target class: &quot;</span> +</span><br><span class="line">                                         <span class="string">&quot;Either an interface or a target is required for proxy creation.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//接口类用jdk动态代理</span></span><br><span class="line">        <span class="keyword">if</span> (targetClass.isInterface() || Proxy.isProxyClass(targetClass)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> JdkDynamicAopProxy(config);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//不是接口类用cglib</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ObjenesisCglibAopProxy(config);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//jdk动态代理</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> JdkDynamicAopProxy(config);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>然后利用获得的AOPproxy执行getProxy</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Return the proxy object to expose.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;The default implementation uses a &#123;<span class="doctag">@code</span> getProxy&#125; call with</span></span><br><span class="line"><span class="comment"> * the factory&#x27;s bean class loader. Can be overridden to specify a</span></span><br><span class="line"><span class="comment"> * custom class loader.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> aopProxy the prepared AopProxy instance to get the proxy from</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> the proxy object to expose</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> AopProxy#getProxy(ClassLoader)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">getProxy</span><span class="params">(AopProxy aopProxy)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// 利用获得的AOPproxy执行getProxy**</span></span><br><span class="line">   <span class="keyword">return</span> aopProxy.getProxy(<span class="keyword">this</span>.proxyClassLoader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>org.springframework.aop.framework.CglibAopProxy#getProxy(java.lang.ClassLoader)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">(<span class="meta">@Nullable</span> ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (logger.isTraceEnabled()) &#123;</span><br><span class="line">      logger.trace(<span class="string">&quot;Creating CGLIB proxy: &quot;</span> + <span class="keyword">this</span>.advised.getTargetSource());</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">      Class&lt;?&gt; rootClass = <span class="keyword">this</span>.advised.getTargetClass();</span><br><span class="line">      Assert.state(rootClass != <span class="keyword">null</span>, <span class="string">&quot;Target class must be available for creating a CGLIB proxy&quot;</span>);</span><br><span class="line"></span><br><span class="line">      Class&lt;?&gt; proxySuperClass = rootClass;</span><br><span class="line">      <span class="keyword">if</span> (rootClass.getName().contains(ClassUtils.CGLIB_CLASS_SEPARATOR)) &#123;</span><br><span class="line">         proxySuperClass = rootClass.getSuperclass();</span><br><span class="line">         Class&lt;?&gt;[] additionalInterfaces = rootClass.getInterfaces();</span><br><span class="line">         <span class="keyword">for</span> (Class&lt;?&gt; additionalInterface : additionalInterfaces) &#123;</span><br><span class="line">            <span class="keyword">this</span>.advised.addInterface(additionalInterface);</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Validate the class, writing log messages as necessary.</span></span><br><span class="line">      validateClassIfNecessary(proxySuperClass, classLoader);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Configure CGLIB Enhancer...</span></span><br><span class="line">      Enhancer enhancer = createEnhancer();</span><br><span class="line">      <span class="keyword">if</span> (classLoader != <span class="keyword">null</span>) &#123;</span><br><span class="line">         enhancer.setClassLoader(classLoader);</span><br><span class="line">         <span class="keyword">if</span> (classLoader <span class="keyword">instanceof</span> SmartClassLoader &amp;&amp;</span><br><span class="line">               ((SmartClassLoader) classLoader).isClassReloadable(proxySuperClass)) &#123;</span><br><span class="line">            enhancer.setUseCache(<span class="keyword">false</span>);</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      enhancer.setSuperclass(proxySuperClass);</span><br><span class="line">      enhancer.setInterfaces(AopProxyUtils.completeProxiedInterfaces(<span class="keyword">this</span>.advised));</span><br><span class="line">      enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);</span><br><span class="line">      enhancer.setStrategy(<span class="keyword">new</span> ClassLoaderAwareGeneratorStrategy(classLoader));</span><br><span class="line"></span><br><span class="line">      Callback[] callbacks = getCallbacks(rootClass);</span><br><span class="line">      Class&lt;?&gt;[] types = <span class="keyword">new</span> Class&lt;?&gt;[callbacks.length];</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> x = <span class="number">0</span>; x &lt; types.length; x++) &#123;</span><br><span class="line">         types[x] = callbacks[x].getClass();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// fixedInterceptorMap only populated at this point, after getCallbacks call above</span></span><br><span class="line">      enhancer.setCallbackFilter(<span class="keyword">new</span> ProxyCallbackFilter(</span><br><span class="line">            <span class="keyword">this</span>.advised.getConfigurationOnlyCopy(), <span class="keyword">this</span>.fixedInterceptorMap, <span class="keyword">this</span>.fixedInterceptorOffset));</span><br><span class="line">      enhancer.setCallbackTypes(types);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Generate the proxy class and create a proxy instance.</span></span><br><span class="line">      <span class="keyword">return</span> createProxyClassAndInstance(enhancer, callbacks);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (CodeGenerationException | IllegalArgumentException ex) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> AopConfigException(<span class="string">&quot;Could not generate CGLIB subclass of &quot;</span> + <span class="keyword">this</span>.advised.getTargetClass() +</span><br><span class="line">            <span class="string">&quot;: Common causes of this problem include using a final class or a non-visible class&quot;</span>,</span><br><span class="line">            ex);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">      <span class="comment">// TargetSource.getTarget() failed</span></span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> AopConfigException(<span class="string">&quot;Unexpected AOP exception&quot;</span>, ex);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>org.springframework.aop.framework.JdkDynamicAopProxy#getProxy(java.lang.ClassLoader)</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">(<span class="meta">@Nullable</span> ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span> (logger.isTraceEnabled()) &#123;</span><br><span class="line">      logger.trace(<span class="string">&quot;Creating JDK dynamic proxy: &quot;</span> + <span class="keyword">this</span>.advised.getTargetSource());</span><br><span class="line">   &#125;</span><br><span class="line">   Class&lt;?&gt;[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(<span class="keyword">this</span>.advised, <span class="keyword">true</span>);</span><br><span class="line">   findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);</span><br><span class="line">   <span class="keyword">return</span> Proxy.newProxyInstance(classLoader, proxiedInterfaces, <span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="八、模板模式"><a href="#八、模板模式" class="headerlink" title="八、模板模式"></a>八、模板模式</h1><h2 id="基本介绍-1"><a href="#基本介绍-1" class="headerlink" title="基本介绍"></a><strong>基本介绍</strong></h2><ol>
+<li><p>模板方法模式（Template Method Pattern），又叫模板模式(Template Pattern)，在一个抽象类公开定义了执行它的方法的模板。它的子类可以按需要重写方法实现，但调用将以抽象类中定义的方式进行。</p>
+</li>
+<li><p>简单说，<strong>模板方法模式</strong> 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，使得子类可以不改变一个算法的结构，就可以重定义该算法的某些特定步骤</p>
+</li>
+<li><p>这种类型的设计模式属于行为型模式。</p>
+</li>
+<li><p>在模板方法模式的父类中，我们可以定义一个方法，它默认不做任何事，子类可以视情况要不要覆盖它，该方法称为“钩子”。</p>
+</li>
+</ol>
+<h2 id="模板方法模式的注意事项和细节"><a href="#模板方法模式的注意事项和细节" class="headerlink" title="模板方法模式的注意事项和细节"></a><strong>模板方法模式的注意事项和细节</strong></h2><ol>
+<li>基本思想是：<strong>算法只存在于一个地方，也就是在父类中，容易修改。</strong>需要修改算法时，只要修改父类的模板方法或者已经实现的某些步骤，子类就会继承这些修改</li>
+</ol>
+<p><strong>2)</strong> <strong>实现了最大化代码复用。</strong>父类的模板方法和已实现的某些步骤会被子类继承而直接使用。</p>
+<p><strong>3)</strong> <strong>既统一了算法，也提供了很大的灵活性。</strong>父类的模板方法确保了算法的结构保持不变，同时由子类提供部分步骤的实现。</p>
+<ol start="4">
+<li><p>该模式的不足之处：每一个不同的实现都需要一个子类实现，导致类的个数增加，使得系统更加庞大</p>
+</li>
+<li><p>一般模板方法都加上final关键字， 防止子类重写模板方法.</p>
+</li>
+<li><p>模板方法模式使用场景：<strong>当要完成在某个过程，该过程要执行一系列步骤 ，这一系列的步骤基本相同，但其个别步骤在实现时 可能不同</strong>，通常考虑用模板方法模式来处理</p>
+</li>
+</ol>
+<h2 id="JUC之AQS的模板方法"><a href="#JUC之AQS的模板方法" class="headerlink" title="JUC之AQS的模板方法"></a>JUC之AQS的模板方法</h2><p>AbstractQueuedSynchronizer抽象类（以下简称AQS）是整个<code>java.util.concurrent</code>包的核心。在JDK1.5时，<a target="_blank" rel="noopener" href="http://gee.cs.oswego.edu/dl/papers/aqs.pdf">Doug Lea</a>引入了J.U.C包，该包中的大多数同步器都是基于AQS来构建的。AQS框架提供了一套通用的机制来管理同步状态（synchronization state）、阻塞/唤醒线程、管理【同步队列】。</p>
+<p>由于并发的存在，需要考虑的情况非常多，因此能否以一种相对简单的方法来完成这两个目标就非常重要，因为对于用户（AQS框架的使用者来说），很多时候并不关心内部复杂的细节。而AQS其实就是利用模板方法模式来实现这一点，AQS中大多数方法都是<strong>final或是private</strong>的，也就是说<strong>Doug Lea并不希望用户直接使用这些方法</strong>，而是只<strong>重写</strong>部分模板规定的方法。</p>
+<p>AQS通过暴露以下API来让让用户自己解决上面提到的“<strong>如何定义资源是否可以被访问</strong>”的问题：</p>
+<table>
+<thead>
+<tr>
+<th>钩子方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tryAcquire</td>
+<td>排它获取（资源数），一般是1</td>
+</tr>
+<tr>
+<td>tryRelease</td>
+<td>排它释放（资源数），一般是1</td>
+</tr>
+<tr>
+<td>tryAcquireShared</td>
+<td>共享获取（资源数）</td>
+</tr>
+<tr>
+<td>tryReleaseShared</td>
+<td>共享获取（资源数）</td>
+</tr>
+<tr>
+<td>isHeldExclusively</td>
+<td>是否排它状态</td>
+</tr>
+</tbody></table>
+<p><strong>另一方面，同步器给同步组件所提供的模板方法又会重新调用被子类所重写的方法</strong>。 在实现同步组件时AQS提供的<strong>模板方法</strong>如下图：</p>
+<p><img src="D:\学习资料\面试题总结\设计模式\AQS模板方法.png"></p>
+<p>自定义的同步组件通过<code>AQS</code>提供的模板方法实现自己的同步语义。</p>
+<h2 id="spring-IOC之refresh"><a href="#spring-IOC之refresh" class="headerlink" title="spring IOC之refresh"></a>spring IOC之refresh</h2><p>最熟悉<code>AnnotationConfigApplicationContext</code>，其父类<code>AbstractApplicationContext</code>为一个抽象类。先看下<code>AnnotationConfigApplicationContext</code>的构造方法。其中的<code>refresh()</code> 会调用父类的模板方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//构造方法，传入配置类</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">AnnotationConfigApplicationContext</span><span class="params">(Class&lt;?&gt;... componentClasses)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">this</span>();</span><br><span class="line">   register(componentClasses);</span><br><span class="line">   refresh();<span class="comment">//这里会调用父类的模板方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先看一下接口<code>ConfigurableApplicationContext</code>，其中的refresh方法是个模板方法，由抽象类<code>AbstractApplicationContext</code>实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ConfigurableApplicationContext</span> <span class="keyword">extends</span> <span class="title">ApplicationContext</span>, <span class="title">Lifecycle</span>, <span class="title">Closeable</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Load or refresh the persistent representation of the configuration,</span></span><br><span class="line"><span class="comment">	 * which might an XML file, properties file, or relational database schema.</span></span><br><span class="line"><span class="comment">	 * &lt;p&gt;As this is a startup method, it should destroy already created singletons</span></span><br><span class="line"><span class="comment">	 * if it fails, to avoid dangling resources. In other words, after invocation</span></span><br><span class="line"><span class="comment">	 * of that method, either all or no singletons at all should be instantiated.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> BeansException if the bean factory could not be initialized</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> IllegalStateException if already initialized and multiple refresh</span></span><br><span class="line"><span class="comment">	 * attempts are not supported</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>AbstractApplicationContext</code>的模板方法，其中个别的默认方法可能为空的或者抛异常，都需要子类实现。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractApplicationContext</span> <span class="keyword">extends</span> <span class="title">DefaultResourceLoader</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">ConfigurableApplicationContext</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.startupShutdownMonitor) &#123;</span><br><span class="line">            <span class="comment">// Prepare this context for refreshing.</span></span><br><span class="line">            prepareRefresh();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Tell the subclass to refresh the internal bean factory.</span></span><br><span class="line">            <span class="comment">//还包含了两个方法，默认都是抛异常IllegalStateException。</span></span><br><span class="line">            <span class="comment">//这两个方法都要有子类实现</span></span><br><span class="line">            ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Prepare the bean factory for use in this context.</span></span><br><span class="line">            prepareBeanFactory(beanFactory);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// Allows post-processing of the bean factory in context subclasses.</span></span><br><span class="line">                postProcessBeanFactory(beanFactory);<span class="comment">//默认为空，钩子方法</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// Invoke factory processors registered as beans in the context.</span></span><br><span class="line">                invokeBeanFactoryPostProcessors(beanFactory);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Register bean processors that intercept bean creation.</span></span><br><span class="line">                registerBeanPostProcessors(beanFactory);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Initialize message source for this context.</span></span><br><span class="line">                initMessageSource();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Initialize event multicaster for this context.</span></span><br><span class="line">                initApplicationEventMulticaster();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Initialize other special beans in specific context subclasses.</span></span><br><span class="line">                onRefresh();<span class="comment">//默认为空，钩子方法</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// Check for listener beans and register them.</span></span><br><span class="line">                registerListeners();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Instantiate all remaining (non-lazy-init) singletons.</span></span><br><span class="line">                finishBeanFactoryInitialization(beanFactory);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Last step: publish corresponding event.</span></span><br><span class="line">                finishRefresh();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">catch</span> (BeansException ex) &#123;</span><br><span class="line">                <span class="keyword">if</span> (logger.isWarnEnabled()) &#123;</span><br><span class="line">                    logger.warn(<span class="string">&quot;Exception encountered during context initialization - &quot;</span> +</span><br><span class="line">                                <span class="string">&quot;cancelling refresh attempt: &quot;</span> + ex);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Destroy already created singletons to avoid dangling resources.</span></span><br><span class="line">                destroyBeans();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Reset &#x27;active&#x27; flag.</span></span><br><span class="line">                cancelRefresh(ex);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Propagate exception to caller.</span></span><br><span class="line">                <span class="keyword">throw</span> ex;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="comment">// Reset common introspection caches in Spring&#x27;s core, since we</span></span><br><span class="line">                <span class="comment">// might not ever need metadata for singleton beans anymore...</span></span><br><span class="line">                resetCommonCaches();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericApplicationContext</span> <span class="keyword">extends</span> <span class="title">AbstractApplicationContext</span> <span class="keyword">implements</span> <span class="title">BeanDefinitionRegistry</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">refreshBeanFactory</span><span class="params">()</span> <span class="keyword">throws</span> IllegalStateException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>.refreshed.compareAndSet(<span class="keyword">false</span>, <span class="keyword">true</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                <span class="string">&quot;GenericApplicationContext does not support multiple refresh attempts: just call &#x27;refresh&#x27; once&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.beanFactory.setSerializationId(getId());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> ConfigurableListableBeanFactory <span class="title">getBeanFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.beanFactory;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此模板方法<code>refresh</code>就可以正常执行了。</p>
+<p>与<code>GenericApplicationContext</code>类似的还有<code>AbstractRefreshableApplicationContext</code>类，实现了<code>refreshBeanFactory()</code>和<code>getBeanFactory()</code>方法</p>
+<p><img src="D:\学习资料\面试题总结\设计模式\template.png"></p>
+<h1 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a>解释器模式</h1><h1 id="职责链模式"><a href="#职责链模式" class="headerlink" title="职责链模式"></a>职责链模式</h1><h2 id="职责链模式（Chain-Of-Responsibility）"><a href="#职责链模式（Chain-Of-Responsibility）" class="headerlink" title="职责链模式（Chain Of Responsibility）"></a>职责链模式（Chain Of Responsibility）</h2><p>使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止</p>
+<h2 id="职责链模式的注意事项和细节"><a href="#职责链模式的注意事项和细节" class="headerlink" title="职责链模式的注意事项和细节"></a><strong>职责链模式的注意事项和细节</strong></h2><ol>
+<li><p>将请求和处理分开，实现解耦，提高系统的灵活性</p>
+</li>
+<li><p>简化了对象，使对象不需要知道链的结构</p>
+</li>
+<li><p>性能会受到影响，特别是在链比较长的时候，因此需控制链中最大节点数量，一般通过在Handler中设置一个最大节点数量，在setNext()方法中判断是否已经超过阀值，超过则不允许该链建立，避免出现超长链无意识地破坏系统性能</p>
+</li>
+<li><p>调试不方便。采用了类似递归的方式，调试时逻辑可能比较复杂</p>
+</li>
+<li><p>最佳应用场景：有多个对象可以处理同一个请求时，比如：多级请求、请假/加薪等审批流程、Java Web中Tomcat对Encoding的处理、拦截器</p>
+</li>
+</ol>
+<h2 id="spring-MVC"><a href="#spring-MVC" class="headerlink" title="spring MVC"></a>spring MVC</h2><p><img src="D:\学习资料\面试题总结\SpringMVC\image-20200416042233162.png" alt="image-20200416042233162"></p>
+<p>在处理SpringMvc请求时，使用到职责链模式还使用到适配器模式</p>
+<p>- <code>HandlerExecutionChain</code> 主要负责的是请求拦截器的执行和请求处理,但是他本身不处理请求，只是将请求分配给链上注册处理器执行，这是职责链实现方式,减少职责链本身与处理逻辑之间的耦合,规范了处理流程</p>
+<p>- <code>HandlerExecutionChain</code> 维护了 <code>HandlerInterceptor</code> 的集合和<code>Handler</code>， 可以向其中注册相应的拦截器</p>
+<p>（1）调用<code>mappedHandler.applyPreHandle(processedRequest, response)</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!mappedHandler.applyPreHandle(processedRequest, response)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Apply preHandle methods of registered interceptors.</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> &#123;<span class="doctag">@code</span> true&#125; if the execution chain should proceed with the</span></span><br><span class="line"><span class="comment">	 * next interceptor or the handler itself. Else, DispatcherServlet assumes</span></span><br><span class="line"><span class="comment">	 * that this interceptor has already dealt with the response itself.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">applyPreHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    HandlerInterceptor[] interceptors = getInterceptors();</span><br><span class="line">    <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; interceptors.length; i++) &#123;</span><br><span class="line">            HandlerInterceptor interceptor = interceptors[i];</span><br><span class="line">            <span class="keyword">if</span> (!interceptor.preHandle(request, response, <span class="keyword">this</span>.handler)) &#123;</span><br><span class="line">                triggerAfterCompletion(request, response, <span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.interceptorIndex = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（2）调用<code>mappedHandler.applyPostHandle(processedRequest, response, mv);</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Apply postHandle methods of registered interceptors.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">applyPostHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, <span class="meta">@Nullable</span> ModelAndView mv)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">   HandlerInterceptor[] interceptors = getInterceptors();</span><br><span class="line">   <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = interceptors.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">         HandlerInterceptor interceptor = interceptors[i];</span><br><span class="line">         interceptor.postHandle(request, response, <span class="keyword">this</span>.handler, mv);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）调用<code>mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Apply afterConcurrentHandlerStarted callback on mapped AsyncHandlerInterceptors.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">applyAfterConcurrentHandlingStarted</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">   HandlerInterceptor[] interceptors = getInterceptors();</span><br><span class="line">   <span class="keyword">if</span> (!ObjectUtils.isEmpty(interceptors)) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = interceptors.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">         <span class="keyword">if</span> (interceptors[i] <span class="keyword">instanceof</span> AsyncHandlerInterceptor) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">               AsyncHandlerInterceptor asyncInterceptor = (AsyncHandlerInterceptor) interceptors[i];</span><br><span class="line">               asyncInterceptor.afterConcurrentHandlingStarted(request, response, <span class="keyword">this</span>.handler);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">               logger.error(<span class="string">&quot;Interceptor [&quot;</span> + interceptors[i] + <span class="string">&quot;] failed in afterConcurrentHandlingStarted&quot;</span>, ex);</span><br><span class="line">            &#125;</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/design-pattern/factory-pattern.html">工厂模式</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/design-pattern/abstract-factory-pattern.html">抽象工厂模式</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/design-pattern/design-pattern-tutorial.html">菜鸟 教程-设计模式</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">MuChengxue</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/">http://muchengxue.github.io/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://muchengxue.github.io" target="_blank">暮成雪的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></div><div class="post_share"><div class="social-share" data-image="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/18/Java/java%E5%9F%BA%E7%A1%80/3/"><img class="prev-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Java基础</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"><img class="next-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">设计模式（2）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/18/Java/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="设计模式（2）"><img class="cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">设计模式（2）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/myFavicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">MuChengxue</div><div class="author-info__description">记录学习，记录生活</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/muchengxue"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">记录学习，记录生活</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-number">1.1.</span> <span class="toc-text">设计模式的目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%83%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.</span> <span class="toc-text">设计模式七大原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.1.</span> <span class="toc-text">单一职责原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99-Interface-Segregation-Principle"><span class="toc-number">1.2.2.</span> <span class="toc-text">接口隔离原则(Interface Segregation Principle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E8%BD%AC%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.3.</span> <span class="toc-text">依赖倒转原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.4.</span> <span class="toc-text">里氏替换原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.5.</span> <span class="toc-text">开闭原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AA%E7%B1%B3%E7%89%B9%E6%B3%95%E5%88%99"><span class="toc-number">1.2.6.</span> <span class="toc-text">迪米特法则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.</span> <span class="toc-text">设计原则核心思想</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">二、设计模式介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">三、设计模式类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%8D%95%E4%BE%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">四、单例设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A5%BF%E6%B1%89%E5%BC%8F%EF%BC%88%E6%8E%8C%E6%8F%A1%EF%BC%8C%E9%9D%99%E6%80%81%E5%B8%B8%E9%87%8F%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">饿汉式（掌握，静态常量）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A5%BF%E6%B1%89%E5%BC%8F%EF%BC%88%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%9D%97%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">饿汉式（静态代码块）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E6%B1%89%E5%BC%8F-%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8"><span class="toc-number">4.3.</span> <span class="toc-text">懒汉式(线程不安全)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E6%B1%89%E5%BC%8F-%E6%8E%8C%E6%8F%A1%EF%BC%8C%E5%90%8C%E6%AD%A5%E6%96%B9%E6%B3%95"><span class="toc-number">4.4.</span> <span class="toc-text">懒汉式(掌握，同步方法)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E6%B1%89%E5%BC%8F-%E7%BA%BF%E7%A8%8B%E4%B8%8D%E5%AE%89%E5%85%A8%EF%BC%8C%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">4.5.</span> <span class="toc-text">懒汉式(线程不安全，同步代码块)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E9%87%8D%E6%A3%80%E9%AA%8C%E9%94%81%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">4.6.</span> <span class="toc-text">双重检验锁（重点）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">4.7.</span> <span class="toc-text">静态内部类（重点）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%EF%BC%88%E6%8E%8C%E6%8F%A1%EF%BC%89"><span class="toc-number">4.8.</span> <span class="toc-text">枚举（掌握）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-IOC%E4%B8%AD%E7%9A%84%E5%8D%95%E4%BE%8B"><span class="toc-number">4.9.</span> <span class="toc-text">spring IOC中的单例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-lang-Runtime"><span class="toc-number">4.10.</span> <span class="toc-text">java.lang.Runtime</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%92%8C%E7%BB%86%E8%8A%82%E8%AF%B4%E6%98%8E"><span class="toc-number">4.11.</span> <span class="toc-text">单例模式注意事项和细节说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-DefaultAdvisorAdapterRegistry"><span class="toc-number">4.12.</span> <span class="toc-text">spring#DefaultAdvisorAdapterRegistry</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">五、工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.1.</span> <span class="toc-text">简单工厂模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95"><span class="toc-number">5.2.</span> <span class="toc-text">工厂方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.3.</span> <span class="toc-text">抽象工厂模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A6%82%E6%8B%AC%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.4.</span> <span class="toc-text">一句话概括工厂模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-util-Calendar"><span class="toc-number">5.5.</span> <span class="toc-text">java.util.Calendar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">5.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">六、适配器模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">6.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">6.2.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%92%8C%E7%BB%86%E8%8A%82"><span class="toc-number">6.3.</span> <span class="toc-text">类适配器模式注意事项和细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DispatcherServlet-HandlerAdapter"><span class="toc-number">6.4.</span> <span class="toc-text">DispatcherServlet#HandlerAdapter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-AOP-XXXAdviceAdapter"><span class="toc-number">6.5.</span> <span class="toc-text">spring AOP#XXXAdviceAdapter</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">七、代理模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">7.1.</span> <span class="toc-text">代理模式的基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-number">7.2.</span> <span class="toc-text">静态代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="toc-number">7.3.</span> <span class="toc-text">动态代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cglib%E4%BB%A3%E7%90%86"><span class="toc-number">7.4.</span> <span class="toc-text">Cglib代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-IOC-createBeanInstance-instantiateBean"><span class="toc-number">7.5.</span> <span class="toc-text">spring IOC#createBeanInstance#instantiateBean</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#jdk%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1"><span class="toc-number">7.5.1.</span> <span class="toc-text">jdk动态代理创建代理对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cglib%E5%88%9B%E5%BB%BA%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1"><span class="toc-number">7.5.2.</span> <span class="toc-text">Cglib创建代理对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ProxyFactoryBean%E7%94%9F%E6%88%90AopProxy%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1"><span class="toc-number">7.6.</span> <span class="toc-text">ProxyFactoryBean生成AopProxy代理对象</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F"><span class="toc-number">8.</span> <span class="toc-text">八、模板模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D-1"><span class="toc-number">8.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%92%8C%E7%BB%86%E8%8A%82"><span class="toc-number">8.2.</span> <span class="toc-text">模板方法模式的注意事项和细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JUC%E4%B9%8BAQS%E7%9A%84%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95"><span class="toc-number">8.3.</span> <span class="toc-text">JUC之AQS的模板方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-IOC%E4%B9%8Brefresh"><span class="toc-number">8.4.</span> <span class="toc-text">spring IOC之refresh</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">9.</span> <span class="toc-text">解释器模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F"><span class="toc-number">10.</span> <span class="toc-text">职责链模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F%EF%BC%88Chain-Of-Responsibility%EF%BC%89"><span class="toc-number">10.1.</span> <span class="toc-text">职责链模式（Chain Of Responsibility）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%8C%E8%B4%A3%E9%93%BE%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E5%92%8C%E7%BB%86%E8%8A%82"><span class="toc-number">10.2.</span> <span class="toc-text">职责链模式的注意事项和细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-MVC"><span class="toc-number">10.3.</span> <span class="toc-text">spring MVC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">参考资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AQS的设计思路"/></a><div class="content"><a class="title" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路">AQS的设计思路</a><time datetime="2022-02-03T13:10:28.437Z" title="发表于 2022-02-03 13:10:28">2022-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="float的范围和精度"/></a><div class="content"><a class="title" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度">float的范围和精度</a><time datetime="2022-01-21T14:18:25.869Z" title="发表于 2022-01-21 14:18:25">2022-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随想1"/></a><div class="content"><a class="title" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1">随想1</a><time datetime="2021-12-18T16:15:22.363Z" title="发表于 2021-12-18 16:15:22">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis 吊打面试官"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官">Redis 吊打面试官</a><time datetime="2021-12-18T14:44:09.169Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis中的事务"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务">Redis中的事务</a><time datetime="2021-12-18T14:44:09.165Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By MuChengxue</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+      appKey: 'Q5AgpWIhyjBqzKm5oObDrcz2',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://E5eH22JQ.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        "X-LC-Key": 'Q5AgpWIhyjBqzKm5oObDrcz2',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 2/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="627070825" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="true" data-text="^_^,^_^,^_^" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

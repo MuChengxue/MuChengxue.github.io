@@ -1,0 +1,459 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HTTP和HTTPS | 暮成雪的博客</title><meta name="keywords" content="HTTP"><meta name="author" content="MuChengxue"><meta name="copyright" content="MuChengxue"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、概述HTTP协议定义了浏览器（万维网客户进程）怎样向万维网服务器请求万维网文档，以及服务器怎样把文档传送给浏览器。从层次的角度看，HTTP是面向事务的（Transaction-oriented）应用层协议，它规定了在浏览器和服务器之间的请求和响应的格式和规则，它是万维网上能够可靠交换文件（包括文本、声音、图像等各种多媒体文件）的重要基础。从协议执行过程来说，浏览器要访问WWW服务器时，首先要完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP和HTTPS">
+<meta property="og:url" content="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%92%8CHTTPS/index.html">
+<meta property="og:site_name" content="暮成雪的博客">
+<meta property="og:description" content="一、概述HTTP协议定义了浏览器（万维网客户进程）怎样向万维网服务器请求万维网文档，以及服务器怎样把文档传送给浏览器。从层次的角度看，HTTP是面向事务的（Transaction-oriented）应用层协议，它规定了在浏览器和服务器之间的请求和响应的格式和规则，它是万维网上能够可靠交换文件（包括文本、声音、图像等各种多媒体文件）的重要基础。从协议执行过程来说，浏览器要访问WWW服务器时，首先要完">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg">
+<meta property="article:published_time" content="2021-12-18T14:42:43.701Z">
+<meta property="article:modified_time" content="2020-03-10T14:51:58.000Z">
+<meta property="article:author" content="MuChengxue">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg"><link rel="shortcut icon" href="/img/myFavicon.jpg"><link rel="canonical" href="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%92%8CHTTPS/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: MuChengxue","link":"链接: ","source":"来源: 暮成雪的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-center"},
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HTTP和HTTPS',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-03-10 14:51:58'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="APlayer.min.css"><div id="aplayer"></div><script src="https://cdn.jsdelivr.net/gh/radium-bit/res@master/live2d/autoload.js" async></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/myFavicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">暮成雪的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> Book</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fas fa-gamepad"></i><span> Game</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HTTP和HTTPS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-18T14:42:43.701Z" title="发表于 2021-12-18 14:42:43">2021-12-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-10T14:51:58.000Z" title="更新于 2020-03-10 14:51:58">2020-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>13分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HTTP和HTTPS"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%92%8CHTTPS/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%92%8CHTTPS/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>HTTP协议定义了浏览器（万维网客户进程）怎样向万维网服务器请求万维网文档，以及服务器怎样把文档传送给浏览器。从层次的角度看，HTTP是面向事务的（Transaction-oriented）应用层协议，它规定了在浏览器和服务器之间的请求和响应的格式和规则，它是万维网上能够可靠交换文件（包括文本、声音、图像等各种多媒体文件）的重要基础。从协议执行过程来说，浏览器要访问WWW服务器时，首先要完成对WWW服务器的域名解析。一旦获得了服务器的IP地址，浏览器将通过TCP向服务器发送连接建立请求。  万维网的大致工作过程如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/20180708115753529?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEwNzQxNDk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>每个万维网站点都有一个服务器进程，它不断地监听<strong>TCP的端口80（默认）</strong>，当监听到连接请求后便与浏览器建立连接。TCP连接建立后，浏览器就向服务器发送请求获取某一Web页面的HTTP请求。服务器收到<strong>HTTP</strong>请求后，将构建所请求的Web页必需的信息，并通过HTTP响应返回给浏览器。浏览器再将信息进行解释，然后将Web页显示给用户。最后，TCP连接释放。<strong>在浏览器和服务器之间的请求和响应的交互，必须按照规定的格式和遵循一定的规则，这些格式和规则就是HTTP</strong>。</p>
+<h1 id="二、协议特点"><a href="#二、协议特点" class="headerlink" title="二、协议特点"></a>二、协议特点</h1><p><strong>（1）HTTP协议是无状态的</strong></p>
+<p>同一个客户第二次访问同一个服务器上的页面时，服务器的响应与第一次被访问时的相同。因为服务器并不记得曾经访问过的这个客户，也不记得为该客户曾经服务过多少次。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。为了解决这个问题， Web程序引入了Cookie机制来维护状态。</p>
+<p><strong>（2）HTTP采用TCP作为运输层协议，保证了数据的可靠传输</strong></p>
+<p>HTTP不必考虑数据在传输过程中被丢弃后又怎样被重传。请求一个万维网文档所需的时间就是该文档的传输时间（与文档大小正比）加上两杯的往返时间RTT。一个RTT用于连接TCP连接，一个请求和接收文档，TCP简历连接的三报文握手的第三个报文段中的数据就是客户对文档的请求报文。</p>
+<p><strong>（3）HTTP协议是无连接的</strong></p>
+<p>虽然HTTP使用了TCP连接，但通信的双方在交换HTTP报文之前不需要先建立HTTP连接。无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</p>
+<p><strong>（4）HTTP既可以使用非持久连接，也可以使用持久连接（HTTP/1。1支持）</strong></p>
+<p><strong>（5）</strong>支持<strong>客户端/服务器模式</strong>(客户端向服务器发送请求,服务器根据请求向客户端发送响应信息)。</p>
+<p><strong>（6）简单快速</strong>: 客户端发出请求的时候只需要传送请求方法(get/post等)和路径即可。</p>
+<p><strong>（7）灵活</strong>: HTTP允许传输任意类型的数据对象,传输类型由contentype加以标记。</p>
+<h1 id="三、HTTP的报文结构"><a href="#三、HTTP的报文结构" class="headerlink" title="三、HTTP的报文结构"></a>三、HTTP的报文结构</h1><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><p>HTTP是面向文本的（Text-Oriented），因此在报文中的每个字段都是一些ASCII码串，并且每个字段的长度都是不确定的。有两类HTTP报文：</p>
+<ul>
+<li><p>请求报文：从客户向服务器发送的请求报文，如图2所示；</p>
+<blockquote>
+<p>a 请求行: 包括请求方法+空格+URL+空格+协议版本,例如GET /index。html HTTP/1。1。<br>b 请求头: 由若干个头部字段名 + : + 值组成。用于通知服务器有关于客户端请求的信息,常见的头部字段名如下。</p>
+<blockquote>
+<p>User-Agent：产生请求的浏览器类型,例如User-Agent: Chrome/74。0。3729。169 Safari/537。36。<br>Accept：客户端可识别的内容类型列表,例如Accept: text/html。<br>Host：请求的主机名,例如Host: www。baidu。com。</p>
+</blockquote>
+<p>c 请求体不在GET方法中使用，而是在POST方法中使用。</p>
+</blockquote>
+</li>
+<li><p>响应报文：从服务器到客户的回答，如图3所示；</p>
+<blockquote>
+<p>a 状态行: 包括协议版本+空格+状态码+空格+状态码描述,例如HTTP/1。1 200 OK。<br>b 响应头: 和请求头一样,用于告知客户端服务端的信息,由多个头部字段名+空格+值组成,例如Content-Type: text/html;charset=utf-8。<br>c 响应体: 返回的就是客户端请求的数据。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180708123147695?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEwNzQxNDk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p>请求报文：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">POST /search HTTP/<span class="number">1</span>。<span class="number">1</span>  </span><br><span class="line">Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd。ms-excel, application/vnd。ms-powerpoint, </span><br><span class="line">application/msword, application/x-silverlight, application/x-shockwave-flash, *<span class="comment">/*  </span></span><br><span class="line"><span class="comment">Referer: http://www。google。cn/  </span></span><br><span class="line"><span class="comment">Accept-Language: zh-cn  </span></span><br><span class="line"><span class="comment">Accept-Encoding: gzip, deflate  </span></span><br><span class="line"><span class="comment">User-Agent: Mozilla/4。0 (compatible; MSIE 6。0; Windows NT 5。1; SV1; 。NET CLR 2。0。50727; TheWorld)  </span></span><br><span class="line"><span class="comment">Host: www。google。cn </span></span><br><span class="line"><span class="comment">Connection: Keep-Alive  </span></span><br><span class="line"><span class="comment">Cookie: PREF=ID=80a06da87be9ae3c:U=f7167333e2c3b714:NW=1:TM=1261551909:LM=1261551917:S=ybYcq2wpfefs4V9g; </span></span><br><span class="line"><span class="comment">NID=31=ojj8d-IygaEtSxLgaJmqSjVhCspkviJrB6omjamNrSm8lZhKy_yMfO2M4QMRKcH1g0iQv9u-2hfBW7bUFwVh7pGaRUb0RnHcJU37y-</span></span><br><span class="line"><span class="comment">FxlRugatx63JLv7CWMD6UB_O_r  </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">hl=zh-CN&amp;source=hp&amp;q=domety  </span></span><br></pre></td></tr></table></figure>
+
+<p>响应报文：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">Date: Mon, <span class="number">23</span> May <span class="number">2005</span> <span class="number">22</span>:<span class="number">38</span>:<span class="number">34</span> GMT</span><br><span class="line">Content-Type: text/html; charset=UTF-<span class="number">8</span></span><br><span class="line">Content-Encoding: UTF-<span class="number">8</span></span><br><span class="line">Content-Length: <span class="number">138</span></span><br><span class="line">Last-Modified: Wed, 08 Jan <span class="number">2003</span> <span class="number">23</span>:<span class="number">11</span>:<span class="number">55</span> GMT</span><br><span class="line">Server: Apache/<span class="number">1.3</span><span class="number">.3</span><span class="number">.7</span> (Unix) (Red-Hat/Linux)</span><br><span class="line">ETag: <span class="string">&quot;3f80f-1b6-3e1cb03b&quot;</span></span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;An Example Page&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  Hello World, <span class="keyword">this</span> is a very simple HTML document。</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="HTTP请求报文中8个方法"><a href="#HTTP请求报文中8个方法" class="headerlink" title="HTTP请求报文中8个方法"></a>HTTP请求报文中8个方法</h2><p><img src="https://images2018.cnblogs.com/blog/1418466/201808/1418466-20180810112625596-2103906128.png" alt="img"></p>
+<h2 id="GET请求和POST请求的区别"><a href="#GET请求和POST请求的区别" class="headerlink" title="GET请求和POST请求的区别"></a><strong>GET请求和POST请求的区别</strong></h2><p><strong>1 从HTTP报文层面:</strong> GET将请求信息放在URL中,POST将请求信息放在请求体中.因此浏览器在GET请求中会对数据<strong>长度</strong>进行一定<strong>限制</strong>,而对POST请求没有限制,注意:HTTP是<strong>不安全</strong>的,不管是什么方式,通过<strong>抓包</strong>都是可以抓到数据这点可以体现.<br><strong>2 从数据库层面:</strong> GET请求(主要做查询操作)符合<strong>幂等性</strong>(对数据库的一次操作和多次操作的结果是一致的)和<strong>安全性</strong>(对数据库的操作不改变数据库中的数据),POST不符合(因为它主要用于修改,会向服务器提交数据,比如我们的登录就是用的post).<br><strong>3 从其他层面:</strong> GET请求可以被缓存(例如参数会保存在浏览器的浏览记录中,这也是get请求被广泛应用的根本),被存储(例如get请求的url可以被保存为书签),但是POST请求都不可以.</p>
+<h2 id="HTTP状态码-五种"><a href="#HTTP状态码-五种" class="headerlink" title="HTTP状态码(五种)"></a>HTTP状态码(五种)</h2><p>1xx: 指示信息—表示请求已接收,继续处理。<br>2xx: 成功—表示请求已被成功接收,理解,接收。例如200表示请求已成功，请求所希望的响应头或数据体将随此响应返回。<br>3xx: 重定向—表示客户端要完成请求必须进行更进一步的操作。<br>4xx: 客户端错误—表示请求有语法错误或请求无法实现(比如请求参数有误)。<br>5xx: 服务端错误—服务器端未能实现合法的请求。</p>
+<h2 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h2><p>200 OK: 正常返回信息。<br>400 Bad Request: 客户端请求有语法错误,不能被服务器所理解。<br>401 Unauthorized: 请求未经授权,这个状态码必须和WWW-Authenticate一起使用。<br>403 Forbidden: 服务器收到请求,但是拒绝提供服务。<br>404 Not Found: 请求资源不存在,例如输入了错误的URL。<br>500 Internal Server Error: 服务器发生了不可预知的错误。<br>503 Server Unavailable: 服务器当前不能处理客户端的请求,可能会在一段时间后恢复正常。</p>
+<h1 id="四、Session和Cookie"><a href="#四、Session和Cookie" class="headerlink" title="四、Session和Cookie"></a>四、Session和Cookie</h1><p>说到HTTP，就不得不提Session和Cookie。但严格来说，Session和Cookie并不是http协议的一部分。由于HTTP协议设计原则是无状态的，但是近年来出现了种种需求，其中cookie的作用就是为了解决HTTP协议<strong>无状态的缺陷</strong>所作出的努力。后来出现的session机制则是又一种在客户端与服务器之间保持状态的解决方案。 <strong>具体来说cookie机制采用的是在客户端保持状态的方案，而session机制采用的是在服务器端保持状态的方案</strong>。同时我们也看到，由于采用服务器端保持状态的方案在客户端也需要保存一个标识，所以session机制可能需要借助于cookie机制来达到保存标识的目的，但实际上它还有其他选择。</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>Cookie: **作用在客户端,**即服务器发送给客户端的特殊信息,<strong>以文本形式存放在客户端</strong>,客户端每次给服务器端发送请求的时候,都会带上这些特殊的信息。</p>
+<p>例如:</p>
+<p>当我们用浏览器访问一个支持Cookie的网站的时候,如果我们提交了账号密码等信息至服务器,服务器在处理完我们发送的请求并回传响应文本的同时,也会带上这些我们提交的个人信息,但是这些信息不存放在响应体,而是存放在响应头中,当浏览器接收到服务器的响应消息后,浏览器会将这些信息存放在一个统一的位置。<br>有了上面的一系列操作之后,当客户端再次向服务端发起请求的时候,会把相应的Cookie存放在HTTP请求头中发回给服务器。<br>当服务器再次收到请求后,会解析Cookie中的信息,并生成与客户端相对应的内容(例如记住密码之类的提醒,选中之后,下次就不用再重新登录了)。<br><img src="https://img-blog.csdnimg.cn/20190718235430182.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjIzMTU1,size_16,color_FFFFFF,t_70" alt="img"></p>
+<ol>
+<li>客户端发送http请求给服务器。</li>
+<li>服务器处理请求并返回响应消息给客户端,其中响应消息的<strong>响应头中包含了Set-Cookie这个字段值的信息</strong>,例如 Set-Cookie: rememberMe=deleteMe; Path=/xg; 。</li>
+<li>客户端再次发送http请求到服务器,其中<strong>请求报文的请求头中包含了Cookie字段值 的信息</strong>,例如 Cookie: JSESSIONID=GQnkdx。</li>
+<li>服务器给客户端发出一个HTTP响应,比如问是否记住密码之类的,点击记住密码后,客户端再次登录就不需要输入密码了。</li>
+<li>其实有的是会第一次登录就提醒你是否记住密码,但是流程都差不多。</li>
+</ol>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>服务器端的机制,在服务器上保存的信息。当服务器需要为某个客户端的请求创建一个session的时候,它会先检查客户端的请求里是否已包含了<strong>jsessionid</strong>这个字段,如果有,则说明以前为此客户端创建过session,它就会解析jsessionid这个字段值,检索其对应的session并使用。如果请求中没有jsessionid这个字段或者检索不到传来的jsessionid对应的session,那么服务器就会为此客户端新创建一个session,同时生成一个与之相关的jsessionid(不会重复,也不容易破解的字符串),这个id会随着响应信息发送给客户端进行保存。</p>
+<p>Session是可以存储针对于某一个用户的浏览器以及通过其当前窗口打开的任何窗口具有针对性的用户信息存储机制。通常大家认为，只要关闭浏览器，session就消失，其实这是错误的理解。对session来说也是一样的，除非程序通知服务器删除一个session，否则服务器会一直保留。由于关闭浏览器不会导致session被删除，迫使服务器为seesion设置了一个失效时间，当距离客户端上一次使用session的时间超过这个失效时间时，服务器就可以认为客户端已经停止了活动，才会把session删除以节省存储空间。</p>
+<p>(1)第一次访问某个web站点资源时，客户端提交没有带SessionID的请求（请求报文头没有Cookie头域信息）。</p>
+<p>而web服务器会检查是否有SessionID过来，没有则创建SessionID，并根据web程序自身定义在请求哪个资源时添加属于当前会话的信息（也可为空），这个信息列表以SessionID作为标识。然后将SessionID返回给客户端（通过响应报文头的Set-Cookie头域）。</p>
+<p>(2 )客户端再次访问同个web站点时，提交带有SessionID的请求（通过Cookie头域存储SessionID）。由服务端判断session<strong>是否失效</strong>，如果未失效，可查询属于当前会话的信息列表。如果失效，则创建新的session（产生新的SessionID），而原先的session（包含session带的信息列表）则丢失，无法访问。</p>
+<h2 id="Session的实现方式"><a href="#Session的实现方式" class="headerlink" title="Session的实现方式"></a>Session的实现方式</h2><p><strong>1 使用Cookie来实现</strong></p>
+<p>服务器给每个session分配一个唯一的jsessionid,并通过cookie发送给客户端(放在响应头中的set-cookie字段中),当客户端发起新的请求的时候,将在cookie字段中携带这个jsessionid,这样服务器就能找到客户端对应的session.</p>
+<p><img src="https://img-blog.csdnimg.cn/20190719082814289.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjIzMTU1,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p><strong>2 使用URL回写来实现</strong></p>
+<p>保存SessionID的方式可以采用Cookie，这样在交互过程中浏览器可以自动的按照规则把这个SessionID发回给服务器。Cookie的命名方式类似于SessionID。有时<strong>Cookie被人为的禁止</strong>，所以出现了其他机制以便在Cookie被禁止时仍然能够把SessionID传递回服务器。这种技术叫做<strong>URL重写</strong>，就是把SessionID直接附加在URL路径的后面，附加方式也有两种，一种是作为URL路径的附加信息，表现形式为<a target="_blank" rel="noopener" href="http://www.wantsoft.com/index%E3%80%82asp;jsessionid=">http://www。wantsoft。com/index。asp;jsessionid=</a> ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764 。URL回写是指服务器在发送给浏览器页面的所有链接中,都会携带jsessionid这个参数及其值,这样客户端点击任何一个链接都会把jsessionid带回到服务器中.如果直接在浏览器地址栏输入服务器资源对应的URL来请求资源,那么存放在服务器中的session是匹配不到的,因为没有<strong>jsessionid</strong>字段及其值.</p>
+<p><strong>3 tomcat对session的实现:</strong> 一开始同时使用回写url和cookie,如果发现客户端支持cookie,就继续使用cookie而停止使用url回写,如果不支持cookie或者cookie被禁用,就只使用url回写.</p>
+<p><img src="http://p1.pstatp.com/large/pgc-image/15339631382084fb09c7edf" alt="img"></p>
+<p> <img src="http://p3.pstatp.com/large/pgc-image/15339620500200dd53d0b0e" alt="img"></p>
+<h2 id="Cookie请求和Session的区别"><a href="#Cookie请求和Session的区别" class="headerlink" title="Cookie请求和Session的区别"></a>Cookie请求和Session的区别</h2><p>1 Cookie存放在客户端浏览器上,而Session存放在服务器端.<br>2 Session相对于Cookie更安全(Cookie存放在本地,可以自己伪造).<br>3 Session由于保存在服务器上,当访问增多会占用服务器的性能,考虑到减轻服务器负担,应当使用Cookie.<br>4 Cookie只能保存字符串类型对象,而Session中可以保存任意类型的对象.<br>5 单个Cookie的容量大小一般为4KB,Session没有容量限制.</p>
+<h1 id="五、Http与Https的区别"><a href="#五、Http与Https的区别" class="headerlink" title="五、Http与Https的区别"></a>五、Http与Https的区别</h1><p>1、https协议需要到CA  （Certificate Authority，证书颁发机构）申请证书，一般免费证书较少，因而需要一定费用。(原来网易官网是http，而网易邮箱是https。)</p>
+<p>2、http是超文本传输协议，信息是明文传输，https则是具有安全性的ssl加密传输协议。</p>
+<p>3、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</p>
+<p>4、http的连接很简单，是无状态的。Https协议是由SSL+Http协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。(无状态的意思是其数据包的发送、传输和接收都是相互独立的。无连接的意思是指通信双方都不长久的维持对方的任何信息。)</p>
+<h1 id="更多HTTPS详细资料"><a href="#更多HTTPS详细资料" class="headerlink" title="更多HTTPS详细资料"></a>更多HTTPS详细资料</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mylanguage/p/5635524.html">HTTP与HTTPS对访问速度（性能）的影响</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaoming100001/article/details/81109617">HTTP和HTTPS协议，看一篇就够了</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wangtaomtk/article/details/80917081">深入浅出HTTPS工作原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38289815/article/details/80969419">Http和Https的区别（面试常考题）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Double2hao/article/details/84427663">HTTP与HTTPS总结</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">MuChengxue</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%92%8CHTTPS/">http://muchengxue.github.io/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/HTTP%E5%92%8CHTTPS/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://muchengxue.github.io" target="_blank">暮成雪的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HTTP/">HTTP</a></div><div class="post_share"><div class="social-share" data-image="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/java%20%E4%B9%8BIO/"><img class="prev-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机网络之IO</div></div></a></div><div class="next-post pull-right"><a href="/2021/12/18/Java/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/%E7%BA%A2%E9%BB%91%E6%A0%91%E4%B8%8ETreeMap/"><img class="next-cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TreeMap</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/18/Java/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E4%BB%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9C%B0%E5%9D%80%E6%A0%8F%E8%BE%93%E5%85%A5url%E5%88%B0%E6%98%BE%E7%A4%BA%E9%A1%B5%E9%9D%A2%E7%9A%84%E6%AD%A5%E9%AA%A4(%E4%BB%A5HTTP%E4%B8%BA%E4%BE%8B)/" title="从浏览器地址栏输入url到显示页面的步骤(以HTTP为例)"><img class="cover" src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">从浏览器地址栏输入url到显示页面的步骤(以HTTP为例)</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/myFavicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">MuChengxue</div><div class="author-info__description">记录学习，记录生活</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">81</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">48</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/muchengxue"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/muchengxue" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:jinyang_ke@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">记录学习，记录生活</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">一、概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8D%8F%E8%AE%AE%E7%89%B9%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">二、协议特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81HTTP%E7%9A%84%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">三、HTTP的报文结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%E4%B8%AD8%E4%B8%AA%E6%96%B9%E6%B3%95"><span class="toc-number">3.2.</span> <span class="toc-text">HTTP请求报文中8个方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET%E8%AF%B7%E6%B1%82%E5%92%8CPOST%E8%AF%B7%E6%B1%82%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.3.</span> <span class="toc-text">GET请求和POST请求的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP%E7%8A%B6%E6%80%81%E7%A0%81-%E4%BA%94%E7%A7%8D"><span class="toc-number">3.4.</span> <span class="toc-text">HTTP状态码(五种)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">3.5.</span> <span class="toc-text">常见状态码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Session%E5%92%8CCookie"><span class="toc-number">4.</span> <span class="toc-text">四、Session和Cookie</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">4.1.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">4.2.</span> <span class="toc-text">Session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">4.3.</span> <span class="toc-text">Session的实现方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie%E8%AF%B7%E6%B1%82%E5%92%8CSession%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.4.</span> <span class="toc-text">Cookie请求和Session的区别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81Http%E4%B8%8EHttps%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">5.</span> <span class="toc-text">五、Http与Https的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9AHTTPS%E8%AF%A6%E7%BB%86%E8%B5%84%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">更多HTTPS详细资料</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AQS的设计思路"/></a><div class="content"><a class="title" href="/2022/02/03/Java/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/JUC%E4%B9%8BAQS%E6%A1%86%E6%9E%B6%EF%BC%9A%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF/" title="AQS的设计思路">AQS的设计思路</a><time datetime="2022-02-03T13:10:28.437Z" title="发表于 2022-02-03 13:10:28">2022-02-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="float的范围和精度"/></a><div class="content"><a class="title" href="/2022/01/21/Java/java%E5%9F%BA%E7%A1%80/%E4%BB%8E1.0f%E8%AF%B4%E8%B5%B7/" title="float的范围和精度">float的范围和精度</a><time datetime="2022-01-21T14:18:25.869Z" title="发表于 2022-01-21 14:18:25">2022-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随想1"/></a><div class="content"><a class="title" href="/2021/12/19/%E9%9A%8F%E6%83%B3/2021-12-19/" title="随想1">随想1</a><time datetime="2021-12-18T16:15:22.363Z" title="发表于 2021-12-18 16:15:22">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis 吊打面试官"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E5%A6%88%E5%A6%88%E5%86%8D%E4%B9%9F%E4%B8%8D%E6%8B%85%E5%BF%83%E6%88%91%E9%9D%A2%E8%AF%95%E8%A2%ABRedis%E9%97%AE%E5%BE%97%E8%84%B8%E9%83%BD%E7%BB%BF%E4%BA%86/" title="Redis 吊打面试官">Redis 吊打面试官</a><time datetime="2021-12-18T14:44:09.169Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务"><img src="http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Redis中的事务"/></a><div class="content"><a class="title" href="/2021/12/18/Java/Redis/%E4%BA%8B%E5%8A%A1/" title="Redis中的事务">Redis中的事务</a><time datetime="2021-12-18T14:44:09.165Z" title="发表于 2021-12-18 14:44:09">2021-12-18</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('http://tva4.sinaimg.cn/large/005JNP0Hly1gaw01xqwk2j31hc0u0gus.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By MuChengxue</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Hi, welcome to my blog!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+      appKey: 'Q5AgpWIhyjBqzKm5oObDrcz2',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.17.0/js/md5.min.js"></script><script>window.addEventListener('load', () => {
+  const changeContent = (content) => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const getIcon = (icon, mail) => {
+    if (icon) return icon
+    let defaultIcon = '?d=monsterid'
+    let iconUrl = `https://gravatar.loli.net/avatar/${md5(mail.toLowerCase()) + defaultIcon}`
+    return iconUrl
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${btf.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom.innerHTML= result
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = () => {
+    const serverURL = 'https://E5eH22JQ.api.lncldglobal.com'
+
+    var settings = {
+      "method": "GET",
+      "headers": {
+        "X-LC-Id": 'E5eH22JQlDgiI7dGLIywVRVy-9Nh9j0Va',
+        "X-LC-Key": 'Q5AgpWIhyjBqzKm5oObDrcz2',
+        "Content-Type": "application/json"
+      },
+    }
+
+    fetch(`${serverURL}/1.1/classes/Comment?limit=6&order=-createdAt`,settings)
+      .then(response => response.json())
+      .then(data => {
+        const valineArray = data.results.map(function (e) {
+          return {
+            'avatar': getIcon(e.QQAvatar, e.mail),
+            'content': changeContent(e.comment),
+            'nick': e.nick,
+            'url': e.url + '#' + e.objectId,
+            'date': e.updatedAt,
+          }
+        })
+        saveToLocal.set('valine-newest-comments', JSON.stringify(valineArray), 2/(60*24))
+        generateHtml(valineArray)
+      }).catch(e => {
+        const $dom = document.querySelector('#card-newest-comments .aside-list')
+        $dom.innerHTML= "无法获取评论，请确认相关配置是否正确"
+      }) 
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('valine-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><div class="aplayer no-destroy" data-id="627070825" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="true" data-click="true"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="true" data-text="^_^,^_^,^_^" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/meting@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
